@@ -1,0 +1,46 @@
+/* Bottinor — design tokens.
+   Source: Bottinor Website Brand Essentials (September 2026), bottinor-colours.css.
+   In the app these become theme colours in src/app/globals.css (:root + @theme)
+   and a [data-domain="bottinor"] block with the clamp sizes. */
+:root {
+  /* Primary palette */
+  --bottinor-greige: #F3F2F0;        /* page background, light text on dark */
+  --bottinor-ivory: #F0F0E5;         /* alternative light surface (cards, panels) */
+  --bottinor-bottle-green: #162A19;  /* brand sections, headings, primary actions */
+  --bottinor-ink: #171717;           /* body copy, navigation */
+
+  /* Supporting palette — editorial accents only */
+  --bottinor-burgundy: #66050A;
+  --bottinor-grape-blue: #262B47;
+  --bottinor-cellar-brown: #49362B;
+  --bottinor-cork: #C5AD8E;
+  --bottinor-lees-champagne: #D8C9A7;
+  --bottinor-sage: #879684;
+  --bottinor-clay: #A5674D;
+  --bottinor-rose-dust: #D5A7A3;
+
+  /* Derived */
+  --bottinor-line: rgba(23, 23, 23, .16);
+  --bottinor-line-strong: rgba(23, 23, 23, .7);
+  --bottinor-line-on-dark: rgba(243, 242, 240, .22);
+  --bottinor-muted: #5b5d56;
+
+  /* Typography: Newsreader = storytelling (theme font), Manrope = structure (replaces font-global) */
+  --bottinor-font-serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --bottinor-font-sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
+
+  /* Type scale (brandbook p.07), as clamp(mobile, fluid, desktop) */
+  --bottinor-display: clamp(40px, 5.4vw, 72px);
+  --bottinor-h1: clamp(36px, 4.4vw, 64px);
+  --bottinor-h2: clamp(28px, 3.1vw, 44px);
+  --bottinor-h3: clamp(22px, 2.2vw, 32px);
+  --bottinor-large: clamp(20px, 1.9vw, 26px);
+  --bottinor-medium: clamp(17px, 1.5vw, 21px);
+  --bottinor-body: 17px;
+  --bottinor-small: 15px;
+  --bottinor-caption: 12px;
+  --bottinor-label: 11px;
+  --bottinor-label-tracking: .16em;
+
+  --bottinor-ease: cubic-bezier(.33, 0, .33, 1); /* same as --ease-in-out-belmonte */
+}

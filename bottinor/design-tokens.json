@@ -1,0 +1,37 @@
+{
+  "brand": "bottinor",
+  "source": "Bottinor Website Brand Essentials, September 2026",
+  "color": {
+    "primary": {
+      "greige": { "value": "#F3F2F0", "use": "Page background, light text on dark sections" },
+      "ivory": { "value": "#F0F0E5", "use": "Alternative light surface (cards, panels)" },
+      "bottle-green": { "value": "#162A19", "use": "Brand sections, headings, primary actions" },
+      "ink": { "value": "#171717", "use": "Body copy, navigation" }
+    },
+    "supporting": {
+      "burgundy": { "value": "#66050A" },
+      "grape-blue": { "value": "#262B47" },
+      "cellar-brown": { "value": "#49362B" },
+      "cork": { "value": "#C5AD8E" },
+      "lees-champagne": { "value": "#D8C9A7" },
+      "sage": { "value": "#879684" },
+      "clay": { "value": "#A5674D" },
+      "rose-dust": { "value": "#D5A7A3" }
+    }
+  },
+  "font": {
+    "serif": { "family": "Newsreader", "weights": [400, 500], "use": "Headings, storytelling (theme font)" },
+    "sans": { "family": "Manrope", "weights": [400, 500, 600], "use": "Body, labels, UI (font-global)" }
+  },
+  "typeScale": {
+    "display": { "desktop": "72px", "mobile": "40px" },
+    "h1": { "desktop": "64px", "mobile": "36px" },
+    "h2": { "desktop": "44px", "mobile": "28px" },
+    "h3": { "desktop": "32px", "mobile": "22px" },
+    "large": { "desktop": "26px", "mobile": "20px" },
+    "medium": { "desktop": "21px", "mobile": "17px" },
+    "body": "17px",
+    "label": { "size": "11px", "letterSpacing": "0.16em", "transform": "uppercase" }
+  },
+  "motion": { "ease": "cubic-bezier(0.33, 0, 0.33, 1)" }
+}
