@@ -116,7 +116,8 @@ ul { margin: 0; }
 
 /* banner (bannerFullscreen) — banner.styles.ts: centred h1 + rich-text intro over full-bleed photo */
 .banner { position: relative; color: var(--greige); background: var(--bottle); overflow: hidden; }
-.banner > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.banner .banner-media { position: absolute; inset: 0; }
+.banner .banner-media img { width: 100%; height: 100%; object-fit: cover; }
 .banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13, 25, 15, .55) 0%, rgba(13, 25, 15, .35) 45%, rgba(13, 25, 15, .7) 100%); }
 .banner .container { position: relative; z-index: 1; min-height: clamp(600px, 92vh, 900px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-block: 140px 80px; }
 .banner h1 { font-size: var(--display); }
@@ -347,6 +348,7 @@ ul { margin: 0; }
 .producer-intro { padding-block: clamp(48px, 6vw, 88px); }
 .producer-intro p { max-width: 980px; margin-inline: auto; font-family: var(--serif); font-size: var(--h3); line-height: 1.32; text-indent: 2.2em; }
 .story { display: grid; gap: clamp(40px, 5vw, 64px); padding-top: var(--gap); }
+.story .paragraphs:not(:last-child) .row { border-bottom: 0; }
 
 /* ---------- Articles — views/articles-view, features/article/article-tile.tsx ---------- */
 .article-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 24px; }
@@ -382,6 +384,10 @@ ul { margin: 0; }
 /* ContactView — IntroModule + TeamMemberTile grid + "View all team members" ThemedLink */
 .contact-view { display: grid; gap: clamp(48px, 6vw, 80px); padding-block: clamp(56px, 7vw, 104px) var(--gap); }
 .contact-view > * { width: 100%; }
+.contact-more { margin-top: 40px; }
+.related, .all-wines { padding-block: var(--gap); }
+.articles-page { padding-bottom: var(--gap); }
+.blocks.article-blocks { padding-top: 0; }
 
 /* ---------- Photo placeholders ---------- */
 .ph { position: relative; width: 100%; height: 100%; display: block; overflow: hidden; }

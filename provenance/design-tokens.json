@@ -1,0 +1,35 @@
+{
+  "brand": "provenance",
+  "status": "proposal",
+  "source": "LOGO_PROVENANCE_WINES_OVERVIEW.pdf (last page) for charcoal and blush; other values proposed",
+  "color": {
+    "fromLogo": {
+      "charcoal": { "value": "#474545", "use": "Dark surfaces, body text, primary actions" },
+      "blush": { "value": "#EEBEB1", "use": "Logo on dark, accents on charcoal, highlights" }
+    },
+    "proposed": {
+      "porcelain": { "value": "#FAF6F4", "use": "Page background, light text on charcoal" },
+      "shell": { "value": "#F4E7E2", "use": "Cards and panels" },
+      "rosewood": { "value": "#9A5A4E", "use": "Accent text and labels on light surfaces" },
+      "stone": { "value": "#6F6A69", "use": "Secondary text" },
+      "blush-soft": { "value": "#F2D5CC", "use": "Hover tint for shell cards" }
+    },
+    "pngExportValues": { "black": "#000000", "pink": "#F8BAAC", "note": "Differ from the PDF; to confirm" }
+  },
+  "font": {
+    "serif": { "family": "Fraunces", "weights": [300, 400, 500], "axes": "opsz, SOFT", "use": "Headings, labels (italic)" },
+    "sans": { "family": "Instrument Sans", "weights": [400, 500, 600], "use": "Body, UI (font-global)" }
+  },
+  "typeScale": {
+    "display": { "desktop": "76px", "mobile": "40px" },
+    "h1": { "desktop": "62px", "mobile": "34px" },
+    "h2": { "desktop": "44px", "mobile": "28px" },
+    "h3": { "desktop": "30px", "mobile": "22px" },
+    "large": { "desktop": "26px", "mobile": "20px" },
+    "medium": { "desktop": "21px", "mobile": "17px" },
+    "body": "17px",
+    "label": { "size": "16px", "style": "italic serif", "transform": "none" }
+  },
+  "shape": { "arch": "999px 999px 0 0", "pill": "999px" },
+  "motion": { "ease": "cubic-bezier(0.33, 0, 0.33, 1)" }
+}

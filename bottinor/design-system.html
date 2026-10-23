@@ -377,10 +377,11 @@
   </section>
 </main>
 
-<script src="assets/app.js"></script>
+<script src="assets/brand.js"></script>
+<script src="../shared/prototype.js"></script>
 <script>
 (() => {
-  const B = window.Bottinor;
+  const B = window.Proto;
   const root = getComputedStyle(document.documentElement);
   const tok = (n) => root.getPropertyValue(n).trim();
 
@@ -435,7 +436,7 @@
   document.querySelector("[data-links-dark]").innerHTML = B.tlink("Read more", "#components") + `<span class="label">About the producer</span>`;
   document.querySelector("[data-products]").innerHTML = ["meursault-les-narvaux-2023", "barolo-la-morra-2020", "champagne-rose-premier-cru"].map((s) => B.productTile(B.W[s])).join("");
   document.querySelector("[data-articles]").innerHTML = B.articles.slice(0, 3).map(B.articleTile).join("");
-  document.querySelector("[data-team]").innerHTML = [B.team.founder, ...B.team.sales.slice(0, 2)].map(B.teamTile).join("");
+  document.querySelector("[data-team]").innerHTML = [B.team.lead, ...B.team.members.slice(0, 2)].map(B.teamTile).join("");
   document.querySelector("[data-intro]").innerHTML = B.introModule({ label: "A personal approach to wine", lead: "Bottinor is a Norwegian wine company and part of the Belmonte Beverage Group.", body: ["Our role is to represent their wines, values and ambitions with care.", "Together, we build lasting market positions."], links: [["Our producers", "#components"], ["Meet the team", "#components"]] }).replace('class="container intro-module"', 'class="intro-module"');
   document.querySelector("[data-counter]").innerHTML = B.counters([["Founded", "1968"], ["Hectares of Land (Approximately)", "21"], ["Winemaker", "Marco Ferrero"]], 3);
   const w = B.W["barolo-la-morra-2020"], t = w.taste;

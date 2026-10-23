@@ -31,7 +31,7 @@ introModule, counterModule, singleImageModule, groupImageModule, paragraphCollec
 | `assets/tokens.css` | Colour, font and type-scale tokens (CSS custom properties) |
 | `design-tokens.json` | The same tokens as JSON |
 | `assets/bottinor.css` | Theme styles, one section per app component (component path in each section header) |
-| `assets/app.js` | Sample data, placeholder illustrations and page markup for the prototype |
+| `assets/brand.js` | Content and sample data; home and article pages as CMS block lists. Page markup comes from `../shared/prototype.js` |
 | `logos/` | Brand logo PNGs: full, wordmark, monogram in Bottle Green, Greige and Ink |
 
 ## Tokens
