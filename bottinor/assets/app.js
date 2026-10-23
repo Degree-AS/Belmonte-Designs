@@ -602,6 +602,10 @@
       </div>
     </div>`;
 
+  // Shared with design-system.html, which renders component previews from the same helpers.
+  window.Bottinor = { I, wines, W, producers, articles, team, bottle, scene, portrait, meter, tlink, keyInfo, kr, productTile, articleTile, teamTile, counters, introModule };
+  if (!document.getElementById("app")) return;
+
   // ---------- Router ----------
   const ROUTES = [
     ["home", "Home", "#home"], ["products", "Products", "#products"], ["product", "Product", "#p.barolo-la-morra-2020"],
@@ -624,7 +628,7 @@
 
   function proto(route) {
     if (protoHidden) return `<button class="proto-min" type="button" data-proto-show>Pages</button>`;
-    return `<nav class="proto" aria-label="Prototype pages"><span class="t">Bottinor prototype</span>${ROUTES.map(([k, t, h]) => `<a href="${h}" class="${k === route ? "on" : ""}">${t}</a>`).join("")}<button type="button" data-proto-hide aria-label="Hide page navigator">×</button></nav>`;
+    return `<nav class="proto" aria-label="Prototype pages"><span class="t">Bottinor prototype</span>${ROUTES.map(([k, t, h]) => `<a href="${h}" class="${k === route ? "on" : ""}">${t}</a>`).join("")}<a href="design-system.html">Design system</a><button type="button" data-proto-hide aria-label="Hide page navigator">×</button></nav>`;
   }
 
   function render() {

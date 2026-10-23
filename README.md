@@ -5,7 +5,7 @@ https://degree-as.github.io/Belmonte-Designs/
 
 ## Brands
 
-- Bottinor (Wine Merchant) - prototype: https://degree-as.github.io/Belmonte-Designs/bottinor/ ([DESIGN.md](bottinor/DESIGN.md))
+- Bottinor (Wine Merchant) - prototype: https://degree-as.github.io/Belmonte-Designs/bottinor/, design system: https://degree-as.github.io/Belmonte-Designs/bottinor/design-system.html ([DESIGN.md](bottinor/DESIGN.md))
 - Core Beverages
 - Provenance Wines
 

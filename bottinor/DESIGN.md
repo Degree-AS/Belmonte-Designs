@@ -1,6 +1,7 @@
 # Bottinor Wine Merchant — design
 
 Live prototype: https://degree-as.github.io/Belmonte-Designs/bottinor/
+Design system: https://degree-as.github.io/Belmonte-Designs/bottinor/design-system.html
 
 Bottinor is a new theme for the belmonte frontend. The prototype is built **only from components that already
 exist in the app**, so implementing it means adding a `bottinor` entry to the theme style maps. No new components,
@@ -13,6 +14,7 @@ Source material: *Bottinor Website Brand Essentials* (September 2026), the logo 
 
 | File | What it is |
 |---|---|
+| `design-system.html` | Design system page: logo rules, colours with live contrast ratios, typography, spacing, icons and live component previews |
 | `index.html` | Prototype entry. Pages are hash routes: `#home`, `#products`, `#p.<slug>`, `#producers`, `#pr.<slug>`, `#articles`, `#a.<slug>`, `#team`, `#contact` |
 | `assets/tokens.css` | Colour, font and type-scale tokens (CSS custom properties) |
 | `design-tokens.json` | The same tokens as JSON |
