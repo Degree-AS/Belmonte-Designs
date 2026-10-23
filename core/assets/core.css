@@ -460,16 +460,12 @@ h1, h2, h3, h4, h5 { font-weight: 500; font-stretch: var(--stretch); letter-spac
 .hdr-brand img { width: 172px; }
 @media (max-width: 1000px) { .hdr-brand img { width: 136px; } }
 
-/* HeaderDialog — numbered links (as pinnacle's "01." prefix) */
-.menu-body nav { counter-reset: menu; }
-.menu-body nav a { counter-increment: menu; display: flex; align-items: baseline; gap: 18px; font-weight: 500; font-stretch: var(--stretch); }
-.menu-body nav a::before { content: counter(menu, decimal-leading-zero) "."; font: 600 14px var(--sans); letter-spacing: .1em; color: var(--amber); }
+/* HeaderDialog — Archivo links, Amber on hover */
+.menu-body nav a { font-weight: 500; font-stretch: var(--stretch); }
 .menu-body nav a:hover { color: var(--amber); padding-left: 0; }
 
-/* Footer — numbered primary links (footer.styles.ts `numbers`, as pinnacle) */
-.ft-primary { counter-reset: ft; }
-.ft-primary a { counter-increment: ft; display: flex; align-items: baseline; gap: 16px; font-weight: 500; font-stretch: var(--stretch); }
-.ft-primary a::before { content: counter(ft, decimal-leading-zero) "."; font: 600 13px var(--sans); letter-spacing: .1em; color: var(--amber); }
+/* Footer — Archivo primary links */
+.ft-primary a { font-weight: 500; font-stretch: var(--stretch); }
 .ft-bottom .brand { width: 160px; }
 
 /* banner — deeper overlay, heavier title */

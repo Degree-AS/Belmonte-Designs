@@ -11,7 +11,7 @@
       "chalk": { "value": "#F2F3EE", "use": "Cards and panels on Mist" },
       "graphite": { "value": "#2A2F2E", "use": "Second dark surface" },
       "slate": { "value": "#545A57", "use": "Secondary text" },
-      "amber": { "value": "#D4882B", "use": "Accent: rules, underlines, numbering, main call to action. Not for text on light backgrounds" }
+      "amber": { "value": "#D4882B", "use": "Accent: rules, underlines, main call to action. Not for text on light backgrounds" }
     }
   },
   "font": {

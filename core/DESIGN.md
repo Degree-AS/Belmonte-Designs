@@ -28,11 +28,10 @@ proposal, including the positioning.
   core range at fair prices, from producers who deliver the same quality every vintage.
 - **Palette:** Mist page ground, Ink for the header (dark on every page), footer, menu and dark bands. Chalk for cards,
   Graphite as a second dark, Slate for secondary text. **Amber `#D4882B`** is the single accent, used for rules,
-  underlines, numbering and the one call to action per page; it is never used for text on light backgrounds.
+  underlines and the one call to action per page; it is never used for text on light backgrounds.
 - **Type:** Archivo semi-expanded (width 112%) for headings and labels, echoing the wide CORE wordmark; labels are
   uppercase with wide tracking like BEVERAGES. Hanken Grotesk for body and UI.
-- **Shape:** square corners and 1 px Ink frames around tiles, counters, filters and the product section; numbered menu
-  and footer links.
+- **Shape:** square corners and 1 px Ink frames around tiles, counters, filters and the product section.
 
 ## Components
 
@@ -41,8 +40,8 @@ Every row is a `core` entry in an existing `*.styles.ts` map, choosing among sty
 | App component | Core styling | Precedent |
 |---|---|---|
 | `layout/header` + `LogoRenderer` | Ink header on every page, group logo + "part of…" left, Mist wordmark centred | CMS header colour Black |
-| `HeaderDialog` | Ink, Mist links numbered `01.` in Amber | pinnacle (numbered) |
-| `layout/footer` | Ink, numbered primary links | pinnacle `numbers` key |
+| `HeaderDialog` | Ink, Mist links in Archivo, Amber on hover | — |
+| `layout/footer` | Ink, Archivo primary links | default footer |
 | `ThemedLink` | Uppercase 12 px, Amber underline, bold arrow | new arrow SVG |
 | `blocks/banner` | Centred title, deep Ink overlay | default |
 | `blocks/intro` | Default left layout, Amber bar before the label | default |
