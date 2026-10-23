@@ -1,0 +1,33 @@
+{
+  "brand": "core",
+  "status": "proposal",
+  "source": "Colours used in the supplied logo files (ink, mist); other values proposed",
+  "color": {
+    "fromLogo": {
+      "ink": { "value": "#0B0F0F", "use": "Header, footer, dark bands, body text" },
+      "mist": { "value": "#E0E1D8", "use": "Page background, logo on dark" }
+    },
+    "proposed": {
+      "chalk": { "value": "#F2F3EE", "use": "Cards and panels on Mist" },
+      "graphite": { "value": "#2A2F2E", "use": "Second dark surface" },
+      "slate": { "value": "#545A57", "use": "Secondary text" },
+      "amber": { "value": "#D4882B", "use": "Accent: rules, underlines, numbering, main call to action. Not for text on light backgrounds" }
+    }
+  },
+  "font": {
+    "display": { "family": "Archivo", "weights": [400, 500, 600, 700], "width": "112%", "use": "Headings, uppercase labels" },
+    "sans": { "family": "Hanken Grotesk", "weights": [400, 500, 600], "use": "Body, UI (font-global)" }
+  },
+  "typeScale": {
+    "display": { "desktop": "76px", "mobile": "40px" },
+    "h1": { "desktop": "58px", "mobile": "34px" },
+    "h2": { "desktop": "40px", "mobile": "26px" },
+    "h3": { "desktop": "28px", "mobile": "21px" },
+    "large": { "desktop": "24px", "mobile": "19px" },
+    "medium": { "desktop": "19px", "mobile": "17px" },
+    "body": "17px",
+    "label": { "size": "11px", "letterSpacing": "0.22em", "transform": "uppercase" }
+  },
+  "shape": { "radius": "0", "frame": "1px solid #0B0F0F" },
+  "motion": { "ease": "cubic-bezier(0.33, 0, 0.33, 1)" }
+}

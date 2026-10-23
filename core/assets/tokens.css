@@ -1,0 +1,40 @@
+/* Core Beverages — design tokens (proposal).
+   Ink and Mist are the two colours used in the supplied logo files (black/near-black #0B0F0F and the
+   pale grey-green #E0E1D8). Everything else is proposed. In the app these become theme colours in
+   src/app/globals.css (:root + @theme) and a [data-domain="core"] block with the clamp sizes. */
+:root {
+  /* From the logo files */
+  --core-ink: #0B0F0F;        /* header, footer, dark bands, body text */
+  --core-mist: #E0E1D8;       /* page background, logo on dark */
+
+  /* Proposed */
+  --core-chalk: #F2F3EE;      /* cards and panels on Mist */
+  --core-graphite: #2A2F2E;   /* second dark surface, hover rows */
+  --core-slate: #545A57;      /* secondary text (AA on Mist) */
+  --core-amber: #D4882B;      /* accent: fills, rules, highlights — not for text on light backgrounds */
+
+  /* Derived */
+  --core-line: rgba(11, 15, 15, .18);
+  --core-line-strong: #0B0F0F;
+  --core-line-on-dark: rgba(224, 225, 216, .22);
+
+  /* Typography: Archivo (semi-expanded) for headings and labels, Hanken Grotesk for body and UI */
+  --core-font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --core-font-sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --core-display-stretch: 112%;
+
+  /* Type scale, as clamp(mobile, fluid, desktop) */
+  --core-display: clamp(40px, 5.6vw, 76px);
+  --core-h1: clamp(34px, 4.2vw, 58px);
+  --core-h2: clamp(26px, 3vw, 40px);
+  --core-h3: clamp(21px, 2vw, 28px);
+  --core-large: clamp(19px, 1.8vw, 24px);
+  --core-medium: clamp(17px, 1.4vw, 19px);
+  --core-body: 17px;
+  --core-small: 15px;
+  --core-caption: 12px;
+  --core-label: 11px;
+  --core-label-tracking: .22em;   /* echoes the spaced BEVERAGES in the logo */
+
+  --core-ease: cubic-bezier(.33, 0, .33, 1);
+}

@@ -53,7 +53,9 @@
     const [lx, ly, lw, lh] = s.label;
     const id = "g" + w.vm;
     const initials = p.name.split(/\s+/).filter((x) => /^[A-ZÀ-Ý]/.test(x)).slice(-2).map((x) => x[0]).join("");
-    const short = w.name.replace(/\s\d{4}$/, "").split(" ").slice(0, 2).join(" ");
+    // Up to two words on the label, one if they would not fit
+    const words = w.name.replace(/\s\d{4}$/, "").split(" ");
+    const short = words.slice(0, 2).join(" ").length > 14 ? words[0] : words.slice(0, 2).join(" ");
     const cx = s.path.match(/^M(\d+)/)[1], cw = s.path.match(/h(\d+)/)[1];
     return `<svg viewBox="0 0 80 300" role="img" aria-label="${esc(w.name)}"><defs><linearGradient id="${id}" x1="0" x2="1"><stop offset="0" stop-color="${g[0]}"/><stop offset=".35" stop-color="${g[1]}"/><stop offset="1" stop-color="${g[0]}"/></linearGradient></defs>
       <path d="${s.path}" fill="url(#${id})"/>
