@@ -11,8 +11,8 @@ https://degree-as.github.io/Belmonte-Designs/
 
 ## Structure
 
-- `versions/vN/<brand>/` - frozen design version per brand: `design-tokens.json`, CSS custom properties, `DESIGN.md`, preview, logos
-- The belmonte frontend pins a version (`versions/vN/`), never the live URL
+- `<brand>/` - one folder per brand (`bottinor/`, `core/`, `provenance/`): `design-tokens.json`, CSS custom properties, `DESIGN.md`, preview, logos
+- The belmonte frontend pins a git tag or commit of this repo, never the live `main`
 
-Pattern: [Molde-Jarnvare-Designs](https://github.com/Degree-AS/Molde-Jarnvare-Designs).
+Based on [Molde-Jarnvare-Designs](https://github.com/Degree-AS/Molde-Jarnvare-Designs), without its `versions/vN/` folders.
 Backlog: Azure DevOps Epic #20262 (Feature #20284 - AI design).
