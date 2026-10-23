@@ -191,57 +191,59 @@
     return `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11.4" fill="none" stroke="#162A19" stroke-width=".6"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="#162A19" stroke-width=".6"/><circle cx="12" cy="12" r="8.45" fill="none" stroke="#162A19" stroke-width="5.6" stroke-dasharray="${len} ${C}" transform="rotate(-90 12 12)"/></svg>`;
   }
 
+  // ---------- Dev view annotations ----------
+  // cms(): a Crystallize shape / block / piece and the app component that renders it (orange label in dev view).
+  // fld(): the Crystallize field (or code source) behind one element (blue label in dev view).
+  const cms = (source, comp, detail = "") => ` data-cms="${esc(source)}" data-comp="${esc(comp)}" data-tip="${esc(source + " → " + comp + (detail ? "\n" + detail : ""))}"`;
+  const fld = (name) => ` data-field="${esc(name)}" data-tip="${esc("Field: " + name)}"`;
+
   // ---------- Shared components ----------
   // Each helper mirrors one component of the belmonte app; only fields that component renders are shown.
-  const tlink = (text, href, cls = "") => `<a class="tlink ${cls}" href="${href}">${esc(text)} ${I.arrow}</a>`;
+  const tlink = (text, href, cls = "", extra = "") => `<a class="tlink ${cls}" href="${href}"${extra}>${esc(text)} ${I.arrow}</a>`;
+  // Product page key info (FetchProductPage has region); the list query does not fetch region
   const keyInfo = (w) => [w.type, w.country, w.region, "0,75 L", w.alc.replace(".", ",")].join(" | ");
+  const tileInfo = (w) => [w.type, w.country, "0,75 L", w.alc.replace(".", ",")].join(" | ");
 
-  // features/product-tile/product-tile.tsx: image, name, key info, price, price caption
-  const productTile = (w) => `<a class="p-tile" href="#p.${w.slug}">
-      <div class="img">${bottle(w)}</div>
-      <h2>${esc(w.name)}</h2>
-      <p class="meta">${esc(keyInfo(w))}</p>
-      <p class="price">${kr(w.price)}</p>
+  // features/product-tile/product-tile.tsx ← defaultProduct
+  const productTile = (w) => `<a class="p-tile" href="#p.${w.slug}"${cms("defaultProduct", "features/product-tile", "Fields: name, productSubtype, country, volume, alcoholContent, defaultVariant.priceVariants, defaultVariant.firstImage")}>
+      <div class="img"${fld("defaultVariant.firstImage")}>${bottle(w)}</div>
+      <h2${fld("name")}>${esc(w.name)}</h2>
+      <p class="meta"${fld("productSubtype · country · volume · alcoholContent")}>${esc(tileInfo(w))}</p>
+      <p class="price"${fld("priceVariants › vinmonopolet-price")}>${kr(w.price)}</p>
       <p class="vm">price at Vinmonopolet incl. VAT</p>
     </a>`;
 
-  // features/article/article-tile.tsx: thumbnail, name (h5), "Read article" link
-  const articleTile = (a) => `<a class="a-tile" href="#a.${a.slug}">
-      <div class="img">${media(a.img)}</div>
-      <h5>${esc(a.title)}</h5>
+  // features/article/article-tile.tsx ← article (child of articles)
+  const articleTile = (a) => `<a class="a-tile" href="#a.${a.slug}"${cms("article", "features/article/article-tile", "Fields: thumbnail, name, path or externalLink")}>
+      <div class="img"${fld("thumbnail")}>${media(a.img)}</div>
+      <h5${fld("name")}>${esc(a.title)}</h5>
       <span class="tlink">Read article ${I.arrow}</span>
     </a>`;
 
-  // features/team-members/team-member-tile.tsx: photo, name, roles, email, phone
-  const teamTile = (m, i) => `<article class="t-tile">
-      <div class="img">${portrait(m.name, i)}</div>
-      <h3>${esc(m.name)}</h3>
-      <p class="role">${esc(m.role)}</p>
-      <div class="contact"><span>${I.mail}${esc(m.email)}</span><span>${I.phone}${esc(m.phone)}</span></div>
+  // features/team-members/team-member-tile.tsx ← employee
+  const teamTile = (m, i) => `<article class="t-tile"${cms("employee", "features/team-members/team-member-tile", "Fields: picture, name, roles.position, bio, email, phone")}>
+      <div class="img"${fld("picture")}>${portrait(m.name, i)}</div>
+      <h3${fld("name")}>${esc(m.name)}</h3>
+      <p class="role"${fld("roles › position")}>${esc(m.role)}</p>
+      <div class="contact"><span${fld("email")}>${I.mail}${esc(m.email)}</span><span${fld("phone")}>${I.phone}${esc(m.phone)}</span></div>
     </article>`;
 
-  // blocks/counter
-  const counters = (items, n = 4) => `<dl class="counters" style="--n:${n}">${items.map(([label, value]) => `<div><dt>${esc(label)}</dt><dd class="${value.length > 7 ? "text" : ""}">${esc(value)}</dd></div>`).join("")}</dl>`;
+  // blocks/counter ← counterModule (counters: label, value) or producer attributes.properties
+  const counters = (items, n = 4, source = "counterModule") => `<dl class="counters" style="--n:${n}"${cms(source, "blocks/counter")}>${items.map(([label, value]) => `<div><dt>${esc(label)}</dt><dd class="${value.length > 7 ? "text" : ""}">${esc(value)}</dd></div>`).join("")}</dl>`;
 
-  // blocks/intro: optional label, intro rich text, optional body, optional link row
-  const introModule = ({ label, lead, body = [], links = [] }) => `<section class="container intro-module">
-      ${label ? `<span class="label rule">${esc(label)}</span>` : "<span></span>"}
+  // blocks/intro ← introModule (label, intro, body, links.items, textAlignment, smallVerticalSpace)
+  const introModule = ({ label, lead, body = [], links = [], source = "blocks › introModule" }) => `<section class="container intro-module"${cms(source, "blocks/intro", "Fields: label, intro, body, links.items (name, path), textAlignment, smallVerticalSpace")}>
+      ${label ? `<span class="label rule"${fld("label")}>${esc(label)}</span>` : "<span></span>"}
       <div class="text">
-        <p class="lead">${esc(lead)}</p>
-        ${body.length ? `<div class="body">${body.map((p) => `<p>${esc(p)}</p>`).join("")}</div>` : ""}
-        ${links.length ? `<div class="links">${links.map(([t, h]) => tlink(t, h)).join("")}</div>` : ""}
+        <p class="lead"${fld("intro")}>${esc(lead)}</p>
+        ${body.length ? `<div class="body"${fld("body")}>${body.map((p) => `<p>${esc(p)}</p>`).join("")}</div>` : ""}
+        ${links.length ? `<div class="links"${fld("links")}>${links.map(([t, h]) => tlink(t, h)).join("")}</div>` : ""}
       </div>
     </section>`;
 
-  // blocks/products: optional uppercase title + ProductList
-  const productsModule = (title, slugs) => `<section class="container">
-      ${title ? `<div class="module-head"><span class="label rule">${esc(title)}</span></div>` : ""}
-      <div class="product-list">${slugs.map((s) => productTile(W[s])).join("")}</div>
-    </section>`;
-
-  // blocks/latest-articles: uppercase label + link, 4 tiles
-  const latestArticles = (title, list) => `<section class="container">
-      <div class="module-head"><span class="label rule">${esc(title)}</span>${tlink("All articles", "#articles")}</div>
+  // blocks/latest-articles ← latestArticles (label, link) + latest article children
+  const latestArticles = (title, list) => `<section class="container"${cms("blocks › latestArticles", "blocks/latest-articles", "Fields: label, link. Tiles: latest article items")}>
+      <div class="module-head"><span class="label rule"${fld("label")}>${esc(title)}</span>${tlink("All articles", "#articles", "", fld("link"))}</div>
       <div class="article-list">${list.slice(0, 4).map(articleTile).join("")}</div>
     </section>`;
 
@@ -251,27 +253,27 @@
   function header(route) {
     const overlay = route === "home";
     const tone = overlay ? "greige" : "bottle-green";
-    return `<header class="site-header ${overlay ? "overlay" : ""}">
+    return `<header class="site-header ${overlay ? "overlay" : ""}"${cms("layout › header (HeaderPiece)", "layout/header", "Fields: headerLinks, menuLinks, color, hideLogo, hideBrand")}>
       <div class="container">
-        <a class="hdr-logo" href="#home" aria-label="Back to home"><img src="assets/belmonte-group-logo-${tone}.svg" alt=""><span>part of Belmonte Beverage Group</span></a>
-        <a class="hdr-brand" href="#home" aria-label="Bottinor Wine Merchant, home"><img src="assets/wordmark-${tone}.png" alt="Bottinor Wine Merchant"></a>
+        <a class="hdr-logo" href="#home" aria-label="Back to home"${fld("code: LogoRenderer")}><img src="assets/belmonte-group-logo-${tone}.svg" alt=""><span>part of Belmonte Beverage Group</span></a>
+        <a class="hdr-brand" href="#home" aria-label="Bottinor Wine Merchant, home"${fld("code: BrandRenderer")}><img src="assets/wordmark-${tone}.png" alt="Bottinor Wine Merchant"></a>
         <nav class="hdr-right" aria-label="Main">
-          ${NAV.map(([t, h, k]) => `<a href="${h}" class="${route.startsWith(k) ? "on" : ""}">${t}</a>`).join("")}
-          <button class="menu-btn" type="button" data-open-menu aria-haspopup="dialog">${I.menu}<b>MENU</b></button>
+          <span class="hdr-links"${fld("headerLinks")}>${NAV.map(([t, h, k]) => `<a href="${h}" class="${route.startsWith(k) ? "on" : ""}">${t}</a>`).join("")}</span>
+          <button class="menu-btn" type="button" data-open-menu aria-haspopup="dialog"${fld("menuLinks → opens HeaderDialog")}>${I.menu}<b>MENU</b></button>
         </nav>
       </div>
     </header>`;
   }
 
   function menuDialog() {
-    return `<div class="menu-dialog dark" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+    return `<div class="menu-dialog dark" role="dialog" aria-modal="true" aria-label="Menu" hidden${cms("layout › header › menuLinks", "layout/header/header-dialog")}>
       <div class="container top">
         <img src="assets/belmonte-group-logo-greige.svg" alt="">
         <button class="close" type="button" data-close-menu>CLOSE ${I.close}</button>
       </div>
       <div class="container menu-body">
         <span></span>
-        <nav aria-label="Menu">
+        <nav aria-label="Menu"${fld("menuLinks")}>
           <a href="#home">Home</a><a href="#producers">Our producers</a><a href="#products">Our selection</a><a href="#articles">Articles</a><a href="#team">Our team</a><a href="#contact">Contact</a>
         </nav>
       </div>
@@ -279,15 +281,15 @@
   }
 
   function footer() {
-    return `<footer class="site-footer dark">
+    return `<footer class="site-footer dark"${cms("layout › footer (FooterPiece)", "layout/footer", "Fields: footerLinks, footerSecondaryLinks, hideLogo, hideBrand")}>
       <div class="container">
-        <nav class="ft-primary" aria-label="Footer">
+        <nav class="ft-primary" aria-label="Footer"${fld("footerLinks")}>
           <a href="#producers">Our producers</a><a href="#products">Our selection</a><a href="#articles">Articles</a><a href="#team">Our team</a><a href="#contact">Contact</a>
         </nav>
-        <nav class="ft-secondary" aria-label="Footer secondary">
+        <nav class="ft-secondary" aria-label="Footer secondary"${fld("footerSecondaryLinks")}>
           <a>Privacy policy</a><a>Cookie settings</a><a>Alcohol and health</a><a>Instagram</a><a>LinkedIn</a>
         </nav>
-        <div class="ft-bottom">
+        <div class="ft-bottom"${fld("code: LogoRenderer + BrandRenderer + copyright")}>
           <img class="logo" src="assets/belmonte-group-logo-greige.svg" alt="Belmonte Beverage Group">
           <img class="brand" src="assets/wordmark-greige.png" alt="Bottinor Wine Merchant">
           <span class="copy">Copyright © ${new Date().getFullYear()} Belmonte Beverage Group</span>
@@ -299,90 +301,91 @@
   // ---------- Pages ----------
   const pages = {};
 
-  // Home: app/(home)/page.tsx → Blocks
+  // Home: app/(home)/page.tsx ← domain shape, blocks[] limited to the blocks FetchDomainPage requests
   pages.home = () => `
-    <section class="banner" aria-label="Banner">
-      <img src="assets/hero-bottles.jpg" alt="A hand arranging dark wine bottles">
+    <section class="banner" aria-label="Banner"${cms("domain › blocks › bannerFullscreen", "blocks/banner", "Fields: title, intro, image, useParallax")}>
+      <img src="assets/hero-bottles.jpg" alt="A hand arranging dark wine bottles"${fld("image")}>
       <div class="container">
-        <h1>Committed to your wines.<br>Focused on Norway.</h1>
-        <p class="intro">Personal partnerships. Local insight. A lasting commitment to your winery.</p>
+        <h1${fld("title")}>Committed to your wines.<br>Focused on Norway.</h1>
+        <p class="intro"${fld("intro")}>Personal partnerships. Local insight. A lasting commitment to your winery.</p>
       </div>
     </section>
     <div class="blocks">
       ${introModule({
+        source: "domain › blocks › introModule",
         label: "A personal approach to wine",
         lead: "Bottinor is a Norwegian wine company and part of the Belmonte Beverage Group. We work closely with a select group of producers, acting as an extension of their wineries in Norway.",
         body: ["Our role is to represent their wines, values and ambitions with care. We combine close personal partnerships with a structured approach to the Norwegian market.", "Together, we build lasting market positions that reflect each winery’s identity and long-term strategy."],
         links: [["Our producers", "#producers"], ["Meet the team", "#team"]],
       })}
 
-      <section class="container group-image" aria-label="Images">
-        <div class="large"><img class="cover" src="assets/hero-bottles.jpg" alt="" style="object-position:62% 40%"></div>
-        <div class="small">${scene("lees", 7, "Producer photography")}</div>
+      <section class="container group-image" aria-label="Images"${cms("domain › blocks › groupImageModule", "blocks/group-image", "Fields: primaryImage, secondaryImage, reverseOrder, imagePosition")}>
+        <div class="large"${fld("primaryImage")}><img class="cover" src="assets/hero-bottles.jpg" alt="" style="object-position:62% 40%"></div>
+        <div class="small"${fld("secondaryImage")}>${scene("lees", 7, "Producer photography")}</div>
       </section>
 
       <div>
-        ${introModule({ label: "How we work", lead: "Your ambitions. Our shared direction. We combine local market expertise with close, hands-on partnerships." })}
-        <section class="container paragraphs" style="margin-top:clamp(40px,5vw,64px)">
-          <div class="row"><span class="label">Understand</span><div><h3>Start with the winery.</h3><p>Every collaboration begins with understanding the winery, its identity, priorities and ambitions. Together, we develop a strategy for Norway that connects those ambitions with the opportunities in the market.</p></div></div>
+        ${introModule({ source: "domain › blocks › introModule", label: "How we work", lead: "Your ambitions. Our shared direction. We combine local market expertise with close, hands-on partnerships." })}
+        <section class="container paragraphs" style="margin-top:clamp(40px,5vw,64px)"${cms("domain › blocks › paragraphCollection", "blocks/paragraph-collection", "Repeated: title, body (rich text)")}>
+          <div class="row"><span class="label"${fld("title")}>Understand</span><div${fld("body")}><h3>Start with the winery.</h3><p>Every collaboration begins with understanding the winery, its identity, priorities and ambitions. Together, we develop a strategy for Norway that connects those ambitions with the opportunities in the market.</p></div></div>
           <div class="row"><span class="label">Build</span><div><h3>Find the right route.</h3><p>Our work covers the full route to market, from portfolio strategy, pricing and Vinmonopolet tenders to distribution, sales, marketing and on-trade development.</p></div></div>
           <div class="row"><span class="label">Develop</span><div><h3>Stay closely involved.</h3><p>After launch, we monitor performance, share market insight and identify opportunities for further development. Clear priorities, measurable objectives and transparent reporting keep our producers involved in both decisions and results.</p></div></div>
         </section>
       </div>
 
+      <section class="container" aria-label="Quote"${cms("domain › blocks › richTextModule", "blocks/rich-text", "Fields: text (rich text with a quote), textAlign, largeVerticalSpacing, textColor")}>
+        <div class="rich-text"${fld("text")}>
+          <blockquote>“I want the producers I work with to feel that they have a colleague here.”</blockquote>
+          <p class="label muted">Christoffer Bergsted, Founder</p>
+        </div>
+      </section>
+
       <div>
-        ${productsModule("Our selection", ["meursault-les-narvaux-2023", "barolo-la-morra-2020", "champagne-brut-reserve", "riesling-kabinett-graach-2023"])}
-        <div class="container links-block" style="margin-top:40px">${tlink("See all wines", "#products")}</div>
+        ${introModule({ source: "domain › blocks › introModule", label: "Our producers", lead: "A small group of wineries, each keeping its own identity. We provide the local relationship." })}
+        <section class="container producer-list-block" aria-label="Producers" style="margin-top:clamp(32px,4vw,48px)"${cms("domain › blocks › producerList", "blocks/producer-list", "Fields: maxQuantity, allProducersLink. Names: producer items")}>
+          <div class="producer-names"${fld("producer › name")}>${producers.map((p) => `<a href="#pr.${p.slug}">${esc(p.name)}</a>`).join("")}</div>
+          ${tlink("Show all producers", "#producers", "", fld("allProducersLink"))}
+        </section>
       </div>
 
-      <section class="container quote-block" aria-label="Quote">
-        <blockquote>“I want the producers I work with to feel that they have a colleague here.”</blockquote>
-        <cite class="label muted">Christoffer Bergsted, Founder</cite>
-      </section>
-
-      <section class="container producer-list-block" aria-label="Producers">
-        <div class="producer-names">${producers.map((p) => `<a href="#pr.${p.slug}">${esc(p.name)}</a>`).join("")}</div>
-        ${tlink("Show all producers", "#producers")}
-      </section>
-
-      <section class="container employee-block" aria-label="Employees">
-        <p class="label rule">A personal introduction</p>
+      <section class="container employee-block" aria-label="Employees"${cms("domain › blocks › employees", "blocks/employee", "Fields: label, employeeList → employee (name, roles, picture, email, phone, bio)")}>
+        <p class="label rule"${fld("label")}>A personal introduction</p>
         <article class="employee">
-          <div class="img">${portrait(team.founder.name, 1)}</div>
+          <div class="img"${fld("employee › picture")}>${portrait(team.founder.name, 1)}</div>
           <div>
-            <h4>Hello, I’m Christoffer.</h4>
-            <p class="role">${esc(team.founder.role)}</p>
-            <div class="contact"><span>${esc(team.founder.email)}</span><span>${esc(team.founder.phone)}</span></div>
-            <div class="bio">
-              <p>I founded Bottinor out of a genuine passion for wine, the people behind it, and the challenge of building long-lasting positions in the Norwegian market.</p>
-              <p>My approach is personal and hands-on. I take time to understand each winery, what matters to the people behind it, where they want to go and how I can represent them well in Norway.</p>
+            <h4${fld("employee › name")}>${esc(team.founder.name)}</h4>
+            <p class="role"${fld("employee › roles")}>${esc(team.founder.role)}</p>
+            <div class="contact"${fld("employee › email, phone")}><span>${esc(team.founder.email)}</span><span>${esc(team.founder.phone)}</span></div>
+            <div class="bio"${fld("employee › bio")}>
+              <p>Christoffer founded Bottinor out of a genuine passion for wine, the people behind it, and the challenge of building long-lasting positions in the Norwegian market.</p>
+              <p>His approach is personal and hands-on: understanding each winery, what matters to the people behind it, and how to represent them well in Norway.</p>
             </div>
           </div>
         </article>
       </section>
 
-      <div>
-        ${introModule({ label: "Part of a bigger family", lead: "A personal commitment. A collective strength." })}
-        <section class="container" style="margin-top:clamp(40px,5vw,64px)">
-          ${counters([["Years of combined industry experience in the group", "250+"], ["Belmonte Beverage Group founded", "2022"], ["Partner wineries in the portfolio", String(producers.length)], ["Hotels in the Strawberry group", "220+"]])}
-        </section>
-      </div>
+      ${introModule({
+        source: "domain › blocks › introModule",
+        label: "Part of a bigger family",
+        lead: "A personal commitment. A collective strength.",
+        body: ["Belmonte Beverage Group has hand-picked key employees with over 250 years of industry experience combined, and has quickly established itself as an innovative challenger in the Norwegian import industry.", "Through Strawberry Equities, the Stordalen family is the majority owner of Belmonte Beverage Group."],
+      })}
 
       ${latestArticles("Latest articles", articles)}
 
-      <section class="container" aria-label="Newsletter">
+      <section class="container" aria-label="Newsletter"${cms("domain › blocks › newsletter", "blocks/newsletter", "Fields: formTitle, checkboxes, confirmationTitle, confirmationDescription, milchampConfig")}>
         <div class="newsletter">
-          <h2>Market notes from Norway, four times a year.</h2>
+          <h2${fld("formTitle")}>Market notes from Norway, four times a year.</h2>
           <form data-newsletter novalidate>
-            <div class="checks"><label><input type="checkbox" id="nl-prod" checked> I am a producer</label><label><input type="checkbox" id="nl-trade"> I work in hospitality</label></div>
+            <div class="checks"${fld("checkboxes")}><label><input type="checkbox" id="nl-prod" checked> I am a producer</label><label><input type="checkbox" id="nl-trade"> I work in hospitality</label></div>
             <div class="input"><label for="nl-email" class="sr">Email</label><input id="nl-email" type="email" placeholder="Your email" required><button type="submit" aria-label="Subscribe">${I.arrow}</button></div>
-            <p class="done" hidden>Thank you. You will receive the next issue.</p>
+            <p class="done" hidden${fld("confirmationTitle / confirmationDescription")}>Thank you. You will receive the next issue.</p>
           </form>
         </div>
       </section>
     </div>`;
 
-  // Products list: app/(commerce)/products/page.tsx
+  // Products list: app/(commerce)/products/page.tsx ← defaultProduct catalogue + facets
   const state = { q: "", type: new Set(), country: new Set(), producer: new Set(), price: new Set(), sort: "relevance" };
   const PRICE = [["0–199 kr", 0, 199.99], ["200–399 kr", 200, 399.99], ["400–599 kr", 400, 599.99], ["600+ kr", 600, 1e9]];
   const facet = (key, values, label) => `<details ${key === "type" || key === "country" ? "open" : ""}><summary>${label}</summary><div class="opts">${values.map(([v, n]) => `<label><input type="checkbox" data-f="${key}" value="${esc(v)}" ${state[key].has(v) ? "checked" : ""}><span class="box">${I.check}</span>${esc(v)}<span class="n">${n}</span></label>`).join("")}</div></details>`;
@@ -405,12 +408,12 @@
   }
 
   pages.products = () => `
-    <section class="container page-title"><h1>Our selection</h1></section>
+    <section class="container page-title"${cms("translation: Products.ourSelection", "app/(commerce)/products/page.tsx", "Title is a translation key, not CMS content")}><h1>Our selection</h1></section>
     <section class="container products-page">
       <aside class="side" aria-label="Search and filters">
-        <div class="search">${I.search}<label for="q" class="sr">Search</label><input id="q" type="search" placeholder="Search our selection" value="${esc(state.q)}"></div>
+        <div class="search"${cms("query: search text", "features/product-search")}>${I.search}<label for="q" class="sr">Search</label><input id="q" type="search" placeholder="Search our selection" value="${esc(state.q)}"></div>
         <button class="filter-toggle" type="button" data-toggle-filters>Filter ${I.chevron}</button>
-        <div class="filters">
+        <div class="filters"${cms("FetchProductFacets (defaultProduct facets)", "features/product-filters", "Facets: productSubtype, country, price, producer, foodPairing, volume, alcoholContent, certification, packaging. Config: product-filters.config.ts")}>
           ${facet("type", countBy((w) => w.type), "Type")}
           ${facet("country", countBy((w) => w.country), "Country")}
           ${facet("price", PRICE.map(([l, a, b]) => [l, wines.filter((w) => w.price >= a && w.price <= b).length]).filter(([, n]) => n), "Price")}
@@ -423,12 +426,12 @@
         </div>
       </aside>
       <div>
-        <div class="list-top"><div class="tags" data-tags></div>
-          <div class="sort"><label for="sort" class="sr">Sort by</label><select id="sort">
+        <div class="list-top"><div class="tags" data-tags${cms("selected filters", "features/product-filters (tags)")}></div>
+          <div class="sort"${cms("sorting: DefaultProductSort", "features/product-sorting")}><label for="sort" class="sr">Sort by</label><select id="sort">
             ${[["relevance", "Relevance"], ["name-asc", "Name (Ascending)"], ["name-desc", "Name (Descending)"], ["price-asc", "Price (Lowest first)"], ["price-desc", "Price (Highest first)"]].map(([v, t]) => `<option value="${v}" ${state.sort === v ? "selected" : ""}>${t}</option>`).join("")}
           </select>${I.chevron}</div>
         </div>
-        <div class="product-list cols-3" data-list></div>
+        <div class="product-list cols-3" data-list${cms("FetchProductList → defaultProduct[]", "features/product-list", "12 per page, infinite scroll")}></div>
       </div>
     </section>`;
 
@@ -440,129 +443,133 @@
     const tags = [];
     ["type", "country", "price", "producer"].forEach((k) => state[k].forEach((v) => tags.push(`<button class="tag" type="button" data-remove="${k}" data-v="${esc(v)}">${esc(v)} ${I.close}</button>`)));
     document.querySelector("[data-tags]").innerHTML = tags.length ? tags.join("") + `<button class="tag clear" type="button" data-clear>Remove all</button>` : "";
+    applyDev();
   }
 
-  // Product detail: app/(product)/producers/[slug]/[productSlug] → ProductDetail, AboutProducer, RelatedProducts
+  // Product detail: app/(product)/producers/[slug]/[productSlug] ← defaultProduct + parent producer
   pages.product = (slug) => {
     const w = W[slug] || wines[0], p = P[w.producer];
     const related = wines.filter((x) => x.producer === w.producer && x.slug !== w.slug);
     const t = w.taste;
+    const PD = "features/product-detail";
     return `
-    <div class="container pd">
-      <div class="pd-image">${bottle(w)}</div>
+    <div class="container pd"${cms("defaultProduct", PD + "/product-detail", "Section order: default branch of product-detail.tsx")}>
+      <div class="pd-image"${cms("defaultVariant.firstImage", PD + "/product-image")}>${bottle(w)}</div>
       <section class="pd-section" aria-label="Product details">
-        <div class="pd-title">
-          <a class="producer" href="#pr.${p.slug}">${esc(p.name)} ${I.arrow}</a>
-          <h1>${esc(w.name)}</h1>
+        <div class="pd-title"${cms("name + parent producer", PD + "/product-title")}>
+          <a class="producer" href="#pr.${p.slug}"${fld("parent › producer.name, path")}>${esc(p.name)} ${I.arrow}</a>
+          <h1${fld("name")}>${esc(w.name)}</h1>
         </div>
-        <p class="pd-key">${esc(keyInfo(w))}</p>
-        <div class="pd-block"><p class="label">Characteristics</p><p class="pd-char">${esc(w.char)}</p></div>
-        <div class="pd-price">
-          <div><p class="amount">${kr(w.price)}</p><p class="label">Price at Vinmonopolet incl. VAT</p></div>
-          ${tlink("Vinmonopolet", "#p." + w.slug)}
+        <p class="pd-key"${cms("productSubtype · country · region · volume · alcoholContent", PD + "/product-key-info")}>${esc(keyInfo(w))}</p>
+        <div class="pd-block"${cms("shortDescription", PD + "/product-characteristic")}><p class="label">Characteristics</p><p class="pd-char">${esc(w.char)}</p></div>
+        <div class="pd-price"${cms("defaultVariant.priceVariants + vinmonopoletId", PD + "/product-price", "Bottinor uses vinmonopolet-price (belmonte uses horeca-price)")}>
+          <div><p class="amount"${fld("priceVariants › vinmonopolet-price")}>${kr(w.price)}</p><p class="label">Price at Vinmonopolet incl. VAT</p></div>
+          ${tlink("Vinmonopolet", "#p." + w.slug, "", fld("vinmonopoletId → vinmonopolet.no/p/{id}"))}
         </div>
-        <div>
-          <div class="spec-row">${I.taste}<ul class="meters">${[["Body", t.body], ["Freshness", t.freshness], ["Tannins", t.tannins], ["Sweetness", t.sweetness], ["Oak", t.oak], ["Herb", t.herb], ["Fruitness", t.fruitness]].map(([l, v]) => `<li title="${l}: ${v} of 12">${l} ${meter(v)}</li>`).join("")}</ul></div>
-          <div class="spec-row">${I.pairing}<p>${w.pairing.join(", ")}</p></div>
-          <div class="spec-row">${I.grape}<p>${esc(w.grapes)}</p></div>
+        <div${cms("tasteProfile · foodPairing · grapeVariety", PD + "/product-specification")}>
+          <div class="spec-row"${fld("tasteProfile (0–12)")}>${I.taste}<ul class="meters">${[["Body", t.body], ["Freshness", t.freshness], ["Tannins", t.tannins], ["Sweetness", t.sweetness], ["Oak", t.oak], ["Herb", t.herb], ["Fruitness", t.fruitness]].map(([l, v]) => `<li title="${l}: ${v} of 12">${l} ${meter(v)}</li>`).join("")}</ul></div>
+          <div class="spec-row"${fld("foodPairing")}>${I.pairing}<p>${w.pairing.join(", ")}</p></div>
+          <div class="spec-row"${fld("grapeVariety")}>${I.grape}<p>${esc(w.grapes)}</p></div>
         </div>
-        <div class="pd-block"><p class="label">About wine</p><p>${esc(w.desc)}</p></div>
-        <ul class="pd-table">
+        <div class="pd-block"${cms("description", PD + "/about-product")}><p class="label">About wine</p><p>${esc(w.desc)}</p></div>
+        <ul class="pd-table"${cms("packagingType, closureType, sugarContent, country, region, subRegion, skanlogNumber, vinmonopoletId, epdNumber, gtin, allergens", PD + "/product-table", "Rows render only when the field has a value")}>
           ${[["Packaging type", "Glass bottle"], ["Closure type", w.type === "Sparkling" ? "Cork with muselet" : "Natural cork"], ["Sugar", w.taste.sweetness > 3 ? "38 g/l" : "Under 3 g/l"], ["Country", w.country], ["Location", p.district], ["Region", p.region], ["Vinmonopol number", w.vm], ["GTIN", "70" + w.vm + "00012"], ["Allergens", "Contains sulphites"]].map(([a, b]) => `<li><span>${a}</span><span>${esc(b)}</span></li>`).join("")}
         </ul>
-        <div class="pd-attach">
+        <div class="pd-attach"${cms("code: product sheet PDF + image download", PD + "/product-attachments")}>
           <div class="dl"><a>${I.file}Download product sheet</a><a>${I.image}Download product image</a></div>
           <span class="muted">Alcohol use can have various harmful effects. <u>Click here to read more.</u></span>
         </div>
       </section>
     </div>
-    <section class="about-producer dark" aria-label="About the producer">
+    <section class="about-producer dark" aria-label="About the producer"${cms("parent › producer (name, intro, hero, path)", PD + "/about-producer")}>
       <div class="container">
-        <div class="img">${scene(p.scene, 11, "Producer hero")}</div>
+        <div class="img"${fld("hero")}>${scene(p.scene, 11, "Producer hero")}</div>
         <div>
           <span class="label rule">About the producer</span>
-          <h2>${esc(p.name)}</h2>
-          <p class="intro">${esc(p.intro)}</p>
-          ${tlink("Read more", "#pr." + p.slug)}
+          <h2${fld("name")}>${esc(p.name)}</h2>
+          <p class="intro"${fld("intro")}>${esc(p.intro)}</p>
+          ${tlink("Read more", "#pr." + p.slug, "", fld("path"))}
         </div>
       </div>
     </section>
-    ${related.length ? `<section class="container" style="padding-block:var(--gap)" aria-label="Related wines">
+    ${related.length ? `<section class="container" style="padding-block:var(--gap)" aria-label="Related wines"${cms("parent › producer.children (defaultProduct)", PD + "/related-products")}>
       <div class="module-head"><span class="label rule">Wines from ${esc(p.name)}</span></div>
       <div class="product-list">${related.map(productTile).join("")}</div>
     </section>` : ""}`;
   };
 
-  // Producers list: app/(producers)/producers/page.tsx
+  // Producers list: app/(producers)/producers/page.tsx ← producers folder + producer items
   const pstate = { q: "", country: "" };
   pages.producers = () => `
-    <section class="container page-title"><h1>Our producers</h1></section>
+    <section class="container page-title"${cms("producers (folder) › title", "app/(producers)/producers/page.tsx", "Also: backgroundColor, meta")}><h1>Our producers</h1></section>
     <div class="container">
       <div class="producers-controls">
-        <div class="search">${I.search}<label for="pq" class="sr">Search producers</label><input id="pq" type="search" placeholder="Search our producers" value="${esc(pstate.q)}"></div>
-        <div class="sort"><label for="pc" class="sr">Country</label><select id="pc"><option value="">All countries</option>${countBy((w) => w.country).map(([c]) => `<option ${pstate.country === c ? "selected" : ""} value="${esc(c)}">${esc(c)} - ${producers.filter((p) => p.country === c).length}</option>`).join("")}</select>${I.chevron}</div>
+        <div class="search"${cms("query: search text", "features/producer (ProducerSearch)")}>${I.search}<label for="pq" class="sr">Search producers</label><input id="pq" type="search" placeholder="Search our producers" value="${esc(pstate.q)}"></div>
+        <div class="sort"${cms("FetchProducerFacets › Country", "features/producer (ProducerFilterCountry)")}><label for="pc" class="sr">Country</label><select id="pc"><option value="">All countries</option>${countBy((w) => w.country).map(([c]) => `<option ${pstate.country === c ? "selected" : ""} value="${esc(c)}">${esc(c)} - ${producers.filter((p) => p.country === c).length}</option>`).join("")}</select>${I.chevron}</div>
       </div>
-      <div class="producer-list" data-plist></div>
+      <div class="producer-list" data-plist${cms("FetchProducerList → producer[]", "features/producer/producer-list", "50 per page, infinite scroll")}></div>
     </div>`;
 
   function renderProducers() {
     const el = document.querySelector("[data-plist]");
     if (!el) return;
     const list = producers.filter((p) => (!pstate.country || p.country === pstate.country) && (!pstate.q || (p.name + p.district + p.country).toLowerCase().includes(pstate.q.toLowerCase())));
-    el.innerHTML = list.length ? list.map((p, i) => `<a class="producer-row" href="#pr.${p.slug}">
-        <h2>${esc(p.name)}</h2><span class="country">${esc(p.country)}</span><span class="district">${esc(p.district)}</span>
+    el.innerHTML = list.length ? list.map((p, i) => `<a class="producer-row" href="#pr.${p.slug}"${i === 0 ? cms("producer", "features/producer/single-producer", "Fields: name, path, hero, attributes.properties (Country, District)") : ""}>
+        <h2${i === 0 ? fld("name") : ""}>${esc(p.name)}</h2><span class="country"${i === 0 ? fld("properties › Country") : ""}>${esc(p.country)}</span><span class="district"${i === 0 ? fld("properties › District") : ""}>${esc(p.district)}</span>
         <span class="float" aria-hidden="true">${scene(p.scene, i + 2)}</span>
       </a>`).join("") : `<p class="empty">No producers match your search.</p>`;
+    applyDev();
   }
 
-  // Producer detail: app/(producers)/producers/[slug] → ProducerDetail + "Wines from"
+  // Producer detail: app/(producers)/producers/[slug] ← producer shape
   pages.producer = (slug) => {
     const p = P[slug] || producers[0];
     const list = wines.filter((w) => w.producer === p.slug);
+    const PRD = "features/producer-detail";
     return `
-    <div class="container producer-head">
-      <h1>${esc(p.name)}</h1>
-      <div class="row"><span>#${esc(p.country)} | #${esc(p.district)}</span>${tlink("All wines", "#all-wines", "down")}</div>
+    <div class="container producer-head"${cms("producer › name + attributes.properties", PRD, "Header: name, #Country | #District, All wines link")}>
+      <h1${fld("name")}>${esc(p.name)}</h1>
+      <div class="row"><span${fld("properties › Country, District")}>#${esc(p.country)} | #${esc(p.district)}</span>${tlink("All wines", "#all-wines", "down")}</div>
     </div>
-    <div class="container"><div class="producer-hero">${scene(p.scene, 21, "Producer hero")}</div></div>
-    <div class="container producer-intro"><p>${esc(p.intro)}</p></div>
+    <div class="container"><div class="producer-hero"${cms("producer › hero", PRD + " (hero image)")}>${scene(p.scene, 21, "Producer hero")}</div></div>
+    <div class="container producer-intro"${cms("producer › intro", PRD + " (intro, rich text)")}><p>${esc(p.intro)}</p></div>
     <div class="container">
-      ${counters([["Founded", p.founded], ["Hectares of Land (Approximately)", p.ha], ["Numbers of different wines", p.wines], ["Production Per year (bottles)", p.bottles], ["Winemaker", p.winemaker], ["Varietals", p.varietals]], 3)}
+      ${counters([["Founded", p.founded], ["Hectares of Land (Approximately)", p.ha], ["Numbers of different wines", p.wines], ["Production Per year (bottles)", p.bottles], ["Winemaker", p.winemaker], ["Varietals", p.varietals]], 3, "producer › attributes.properties")}
     </div>
     <div class="container story">
-      <figure class="single-image large">${scene("cellar", 31, "Story image")}</figure>
-      <div class="paragraphs">
-        <div class="row"><span class="label">The vineyards</span><p>${esc(p.varietals)} grown in ${esc(p.region)}. Work in the vineyard follows the seasons and the needs of each parcel, with as little intervention as possible and a clear focus on healthy soils.</p></div>
+      <figure class="single-image large"${cms("producer › story[0].firstImage", "blocks/single-image")}>${scene("cellar", 31, "Story image")}</figure>
+      <div class="paragraphs"${cms("producer › story[0] (title, body)", "blocks/paragraph-collection")}>
+        <div class="row"><span class="label"${fld("title")}>The vineyards</span><p${fld("body")}>${esc(p.varietals)} grown in ${esc(p.region)}. Work in the vineyard follows the seasons and the needs of each parcel, with as little intervention as possible and a clear focus on healthy soils.</p></div>
       </div>
-      <div class="paragraphs">
+      <div class="paragraphs"${cms("producer › story[1] (title, body)", "blocks/paragraph-collection")}>
         <div class="row"><span class="label">In the cellar</span><p>Gentle handling, native fermentations where possible and patient ageing. The aim is wines that express where they come from and the people behind them.</p></div>
       </div>
     </div>
-    <section class="container" id="all-wines" style="padding-block:var(--gap)" aria-label="Wines">
+    <section class="container" id="all-wines" style="padding-block:var(--gap)" aria-label="Wines"${cms("producer children → defaultProduct[]", "features/product-list (#all-wines)")}>
       <div class="module-head"><span class="label rule">Wines from ${esc(p.name)}</span></div>
       <div class="product-list">${list.map(productTile).join("")}</div>
     </section>`;
   };
 
-  // Articles list: views/articles-view
+  // Articles list: views/articles-view ← articles shape + article children
   pages.articles = () => `
-    <section class="container page-title"><h1>Articles</h1></section>
+    <section class="container page-title"${cms("articles › title", "views/articles-view")}><h1>Articles</h1></section>
     <section class="container" style="padding-bottom:var(--gap)">
-      <div class="article-list">${articles.map(articleTile).join("")}</div>
+      <div class="article-list"${cms("articles › children (shape: article)", "features/article/article-list", "16 per page, infinite scroll")}>${articles.map(articleTile).join("")}</div>
     </section>`;
 
-  // Article: views/article-view → ArticleTitle + Blocks
+  // Article: views/article-view ← article shape: title, subtitle, blocks[] (no latestArticles in article blocks)
   pages.article = (slug) => {
     const a = A[slug] || articles[0];
     return `
-    <header class="container article-head">
-      <h1>${esc(a.title)}</h1>
-      <p>${esc(a.sub)}</p>
+    <header class="container article-head"${cms("article › title, subtitle", "features/article/article-title")}>
+      <h1${fld("title")}>${esc(a.title)}</h1>
+      <p${fld("subtitle")}>${esc(a.sub)}</p>
     </header>
     <div class="blocks" style="padding-top:0">
-      <div class="container"><figure class="single-image large">${media(a.img, "Single image")}</figure></div>
-      <div class="container">
-        <div class="rich-text">
+      <div class="container"><figure class="single-image large"${cms("article › blocks › singleImageModule", "blocks/single-image", "Fields: image, size")}>${media(a.img, "Single image")}</figure></div>
+      <div class="container"${cms("article › blocks › richTextModule", "blocks/rich-text", "Fields: text, textAlign, largeVerticalSpacing, textColor")}>
+        <div class="rich-text"${fld("text")}>
           <p>For an international producer, Norway can look simple from a distance: one retail monopoly, one set of rules, one route to the consumer. In practice it is one of the most structured and demanding wine markets in the world, and the details decide whether a wine finds its place.</p>
           <p>Most new listings at Vinmonopolet start with a product request. It describes the kind of wine the monopoly is looking for, often down to country, style, grape, price range and volume, and importers respond with the wines they believe fit.</p>
           <h2>From request to tasting</h2>
@@ -571,39 +578,39 @@
           <ul><li>Agree the strategy and which wines to put forward</li><li>Prepare documentation, pricing and samples</li><li>Follow up after listing with sales, on-trade and reporting</li></ul>
         </div>
       </div>
-      <section class="container group-image reverse" aria-label="Images">
-        <div class="large">${scene("lees", 41, "Group image")}</div>
-        <div class="small"><img class="cover" src="assets/crop-hand-portrait.jpg" alt=""></div>
+      <section class="container group-image reverse" aria-label="Images"${cms("article › blocks › groupImageModule", "blocks/group-image", "reverseOrder: true")}>
+        <div class="large"${fld("primaryImage")}>${scene("lees", 41, "Group image")}</div>
+        <div class="small"${fld("secondaryImage")}><img class="cover" src="assets/crop-hand-portrait.jpg" alt=""></div>
       </section>
-      <section class="container quote-block" aria-label="Quote">
-        <blockquote>“Being a winery’s local representative is a responsibility we take seriously.”</blockquote>
-        <cite class="label muted">Christoffer Bergsted, Founder</cite>
+      <section class="container quote-block" aria-label="Quote"${cms("article › blocks › quoteModule", "blocks/quote", "Fields: quote, attribution")}>
+        <blockquote${fld("quote")}>“Being a winery’s local representative is a responsibility we take seriously.”</blockquote>
+        <cite class="label muted"${fld("attribution")}>Christoffer Bergsted, Founder</cite>
       </section>
-      ${latestArticles("More articles", articles.filter((x) => x.slug !== a.slug))}
     </div>`;
   };
 
-  // Team: views/team-view (non-belmonte TeamView) → h1 + TeamMemberTiles
+  // Team: views/team-view (non-belmonte TeamView) ← team-members shape + employee children
   pages.team = () => `
-    <section class="container page-title"><h1>Our team</h1></section>
-    <section class="container team-tiles">${[team.founder, ...team.sales].map(teamTile).join("")}</section>`;
+    <section class="container page-title"${cms("team-members › title", "views/team-view")}><h1>Our team</h1></section>
+    <section class="container team-tiles"${cms("team-members › children (shape: employee)", "views/team-view (tiles)")}>${[team.founder, ...team.sales].map(teamTile).join("")}</section>`;
 
-  // Contact: views/contact-view → IntroModule + TeamMemberTiles + "View all team members"
+  // Contact: views/contact-view ← contact shape: introModule piece + employeeList piece
   pages.contact = () => `
     <div class="contact-view">
       ${introModule({
+        source: "contact › introModule",
         label: "Contact",
         lead: "Whether you are a winery looking for representation in Norway, or a restaurant interested in our wines, we would like to hear from you.",
         body: ["For producers and partnerships, contact Christoffer Bergsted at christoffer@bottinor.no.", "For restaurants, hotels and wine bars, our on-trade team works with key accounts and independent venues across Norway."],
       })}
-      <div class="container">
-        <div class="team-grid">${[team.founder, ...team.sales.slice(0, 3)].map(teamTile).join("")}</div>
-        <div style="margin-top:40px">${tlink("View all team members", "#team")}</div>
+      <div class="container"${cms("contact › employeeList (employeeContact, link)", "views/contact-view")}>
+        <div class="team-grid"${fld("employeeContact.items")}>${[team.founder, ...team.sales.slice(0, 3)].map(teamTile).join("")}</div>
+        <div style="margin-top:40px">${tlink("View all team members", "#team", "", fld("link"))}</div>
       </div>
     </div>`;
 
   // Shared with design-system.html, which renders component previews from the same helpers.
-  window.Bottinor = { I, wines, W, producers, articles, team, bottle, scene, portrait, meter, tlink, keyInfo, kr, productTile, articleTile, teamTile, counters, introModule };
+  window.Bottinor = { I, wines, W, producers, articles, team, bottle, scene, portrait, meter, tlink, keyInfo, tileInfo, kr, productTile, articleTile, teamTile, counters, introModule };
   if (!document.getElementById("app")) return;
 
   // ---------- Router ----------
@@ -623,19 +630,33 @@
   }
 
   const app = document.getElementById("app");
-  let protoHidden = false;
-  try { protoHidden = localStorage.getItem("bottinor-proto-hidden") === "1"; } catch (e) { /* storage unavailable */ }
+  const store = { get: (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } } };
+  let protoHidden = store.get("bottinor-proto-hidden") === "1";
+  let dev = /(^|[?&])dev\b/.test(location.search) || store.get("bottinor-dev") === "1";
+
+  // Dev view: annotated elements need a positioning context for their labels
+  function applyDev() {
+    document.body.classList.toggle("dev", dev);
+    document.querySelectorAll("[data-tip]").forEach((el) => (dev ? (el.title = el.dataset.tip) : el.removeAttribute("title")));
+    if (!dev) return;
+    document.querySelectorAll("[data-cms],[data-field]").forEach((el) => {
+      if (getComputedStyle(el).position === "static") el.style.position = "relative";
+    });
+  }
 
   function proto(route) {
     if (protoHidden) return `<button class="proto-min" type="button" data-proto-show>Pages</button>`;
-    return `<nav class="proto" aria-label="Prototype pages"><span class="t">Bottinor prototype</span>${ROUTES.map(([k, t, h]) => `<a href="${h}" class="${k === route ? "on" : ""}">${t}</a>`).join("")}<a href="design-system.html">Design system</a><button type="button" data-proto-hide aria-label="Hide page navigator">×</button></nav>`;
+    return `<nav class="proto" aria-label="Prototype pages"><span class="t">Bottinor prototype</span>${ROUTES.map(([k, t, h]) => `<a href="${h}" class="${k === route ? "on" : ""}">${t}</a>`).join("")}<a href="design-system.html">Design system</a><button class="dev-toggle ${dev ? "on" : ""}" type="button" data-dev aria-pressed="${dev}">Dev view</button><button type="button" data-proto-hide aria-label="Hide page navigator">×</button></nav>`;
   }
+
+  const devLegend = () => `<aside class="dev-legend" aria-label="Dev view legend"><b>Dev view</b><span><i class="k-cms"></i>Crystallize shape / block → app component</span><span><i class="k-fld"></i>Field</span><span class="hint">Hover an outlined element for its full field list.</span></aside>`;
 
   function render() {
     const [route, slug] = parse(location.hash);
-    app.innerHTML = `${header(route)}<main>${pages[route](slug)}</main>${footer()}${menuDialog()}${proto(route)}`;
+    app.innerHTML = `${header(route)}<main>${pages[route](slug)}</main>${footer()}${menuDialog()}${proto(route)}${devLegend()}`;
     if (route === "products") renderList();
     if (route === "producers") renderProducers();
+    applyDev();
     window.scrollTo(0, 0);
   }
 
@@ -645,17 +666,25 @@
   window.addEventListener("hashchange", () => { if (location.hash !== "#all-wines") render(); });
 
   document.addEventListener("click", (e) => {
-    const t = e.target.closest("[data-open-menu],[data-close-menu],[data-remove],[data-clear],[data-proto-hide],[data-proto-show],[data-toggle-filters],.menu-dialog nav a,a[href='#all-wines']");
+    const t = e.target.closest("[data-open-menu],[data-close-menu],[data-remove],[data-clear],[data-proto-hide],[data-proto-show],[data-toggle-filters],[data-dev],.menu-dialog nav a,a[href='#all-wines']");
     if (!t) return;
     if (t.matches("a[href='#all-wines']")) { e.preventDefault(); document.getElementById("all-wines")?.scrollIntoView({ behavior: "smooth" }); return; }
-    if (t.matches("[data-open-menu]")) { const d = document.querySelector(".menu-dialog"); d.hidden = false; document.body.style.overflow = "hidden"; d.querySelector("[data-close-menu]").focus(); }
+    if (t.matches("[data-open-menu]")) { const d = document.querySelector(".menu-dialog"); d.hidden = false; document.body.style.overflow = "hidden"; d.querySelector("[data-close-menu]").focus(); applyDev(); }
     if (t.matches("[data-close-menu], .menu-dialog nav a")) closeMenu();
     if (t.matches("[data-remove]")) { state[t.dataset.remove].delete(t.dataset.v); document.querySelectorAll(`[data-f="${t.dataset.remove}"]`).forEach((c) => { if (c.value === t.dataset.v) c.checked = false; }); renderList(); }
     if (t.matches("[data-clear]")) { ["type", "country", "price", "producer"].forEach((k) => state[k].clear()); document.querySelectorAll("[data-f]").forEach((c) => (c.checked = false)); renderList(); }
     if (t.matches("[data-toggle-filters]")) document.querySelector(".filters").classList.toggle("open");
+    if (t.matches("[data-dev]")) {
+      dev = !dev;
+      store.set("bottinor-dev", dev ? "1" : "0");
+      t.classList.toggle("on", dev);
+      t.setAttribute("aria-pressed", String(dev));
+      if (!dev) document.querySelectorAll("[data-cms],[data-field]").forEach((el) => (el.style.position = ""));
+      applyDev();
+    }
     if (t.matches("[data-proto-hide],[data-proto-show]")) {
       protoHidden = t.matches("[data-proto-hide]");
-      try { localStorage.setItem("bottinor-proto-hidden", protoHidden ? "1" : "0"); } catch (err) { /* ignore */ }
+      store.set("bottinor-proto-hidden", protoHidden ? "1" : "0");
       (document.querySelector(".proto") || document.querySelector(".proto-min")).outerHTML = proto(parse(location.hash)[0]);
     }
   });

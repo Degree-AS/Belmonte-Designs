@@ -10,6 +10,18 @@ CMS shapes or fields.
 Source material: *Bottinor Website Brand Essentials* (September 2026), the logo package, the website copy
 (`tekst_til_nettsiden.docx`) and the current one-page site at bottinor.com.
 
+## Dev view
+
+The prototype has a **Dev view** toggle in the bottom bar (or open `index.html?dev`). It outlines every element and labels it:
+
+- **orange:** the Crystallize shape, block or piece and the app component that renders it, e.g. `domain › blocks › introModule → blocks/intro`
+- **blue:** the field behind an element, e.g. `shortDescription`, `priceVariants › vinmonopolet-price`
+
+Hover an outlined element for the full field list. Page content is limited to what the shapes allow:
+`domain` (home) blocks are bannerFullscreen, bannerGallery, introModule, groupImageModule, singleImageModule,
+paragraphCollection, richTextModule, employees, producerList, latestArticles, newsletter; `article` blocks are
+introModule, counterModule, singleImageModule, groupImageModule, paragraphCollection, richTextModule, quoteModule.
+
 ## Files
 
 | File | What it is |

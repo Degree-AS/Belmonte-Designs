@@ -69,6 +69,7 @@ ul { margin: 0; }
 .hdr-logo span { font-size: 10px; font-weight: 600; letter-spacing: var(--bottinor-label-tracking); text-transform: uppercase; line-height: 1.5; max-width: 15ch; opacity: .8; }
 .hdr-brand img { width: 168px; }
 .hdr-right { display: flex; justify-content: flex-end; align-items: center; gap: clamp(20px, 2.6vw, 40px); }
+.hdr-links { display: flex; gap: clamp(20px, 2.6vw, 40px); }
 .hdr-right a { font-size: 14px; font-weight: 500; text-decoration: none; padding-block: 4px; border-bottom: 1px solid transparent; }
 .hdr-right a:hover, .hdr-right a.on { border-bottom-color: currentColor; }
 .menu-btn { display: inline-flex; align-items: center; gap: 10px; background: none; border: 0; padding: 4px 0; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: var(--bottinor-label-tracking); }
@@ -397,6 +398,30 @@ ul { margin: 0; }
 .proto a:hover { background: rgba(243, 242, 240, .12); }
 .proto a.on { background: #F3F2F0; color: #171717; }
 .proto button { background: none; border: 0; color: inherit; opacity: .6; padding: 6px 10px; cursor: pointer; font-size: 14px; }
+.proto .dev-toggle { opacity: 1; font-size: 12px; font-weight: 500; padding: 6px 11px; margin-left: 4px; border: 1px solid rgba(243, 242, 240, .35); border-radius: 999px; white-space: nowrap; }
+.proto .dev-toggle.on { background: #E8590C; border-color: #E8590C; color: #fff; }
+
+/* ---------- Dev view (prototype only): Crystallize source → app component ----------
+   Orange: shape / block / piece and the component that renders it. Blue: the field behind an element. */
+.dev-legend { display: none; }
+.dev .dev-legend { display: flex; flex-direction: column; gap: 6px; position: fixed; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); left: max(12px, env(safe-area-inset-left, 0px)); z-index: 95; max-width: 280px; padding: 12px 14px; background: #fff; color: #171717; border: 1px solid #E8590C; font: 500 12px/1.4 var(--sans); box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
+.dev-legend b { font-size: 13px; }
+.dev-legend span { display: flex; gap: 8px; align-items: center; }
+.dev-legend i { width: 12px; height: 12px; flex: none; }
+.dev-legend .k-cms { background: #E8590C; }
+.dev-legend .k-fld { background: #1971C2; }
+.dev-legend .hint { color: #5b5d56; }
+.dev [data-cms] { outline: 1.5px dashed #E8590C; outline-offset: -1px; }
+.dev [data-cms]::before { content: attr(data-cms) "  →  " attr(data-comp); position: absolute; top: 0; left: 0; z-index: 60; max-width: 100%; padding: 3px 7px; background: #E8590C; color: #fff; font: 600 10.5px/1.35 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; text-transform: none; text-align: left; white-space: normal; pointer-events: none; }
+.dev [data-field] { outline: 1px solid rgba(25, 113, 194, .85); outline-offset: 1px; }
+.dev [data-field]::after { content: attr(data-field); position: absolute; top: 0; right: 0; z-index: 61; max-width: 100%; padding: 2px 6px; background: #1971C2; color: #fff; font: 600 10px/1.35 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; text-transform: none; text-align: right; white-space: normal; pointer-events: none; }
+.dev [data-cms][data-field]::after { top: auto; bottom: 0; }
+/* Labels sit just above the outlined element so they don't cover its content */
+.dev [data-cms]::before, .dev [data-field]::after { top: auto; bottom: 100%; }
+.dev .site-header[data-cms]::before, .dev .banner[data-cms]::before, .dev .menu-dialog[data-cms]::before { top: 0; bottom: auto; }
+.dev [data-cms], .dev [data-field] { overflow: visible; }
+.dev .banner[data-cms] { overflow: hidden; }
+
 .proto-min { position: fixed; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 90; background: rgba(23, 23, 23, .92); color: #F3F2F0; border: 0; border-radius: 999px; padding: 10px 14px; font-size: 12px; cursor: pointer; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
