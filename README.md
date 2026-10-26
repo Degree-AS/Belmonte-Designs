@@ -17,5 +17,7 @@ https://degree-as.github.io/Belmonte-Designs/
 - Static files, no build: open `<brand>/index.html` through any static server (`python3 -m http.server`)
 - The belmonte frontend pins a git tag or commit of this repo, never the live `main`
 
+How to edit the prototypes, the component map and how to add a brand: see [CLAUDE.md](CLAUDE.md).
+
 Based on [Molde-Jarnvare-Designs](https://github.com/Degree-AS/Molde-Jarnvare-Designs), without its `versions/vN/` folders.
 Backlog: Azure DevOps Epic #20262 (Feature #20284 - AI design).
