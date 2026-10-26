@@ -1,0 +1,3 @@
+.fireflies.env
+*.env
+serve.mjs
