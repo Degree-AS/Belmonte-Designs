@@ -38,15 +38,16 @@ Every row is a `provenance` entry in an existing `*.styles.ts` map, choosing amo
 
 | App component | Provenance styling | Precedent |
 |---|---|---|
-| `layout/header` + `LogoRenderer` | Group logo + "part of…" left, signature wordmark centred (196 px), links + MENU right; Blush wordmark over the home banner | arcade/magma |
+| `layout/header` + `LogoRenderer` | Group logo + "part of…" left, signature wordmark centred (196 px), MENU only on the right (headerLinks left empty, client 2026-10-27) | arcade/magma |
 | `HeaderDialog` | Charcoal, centred Blush links | arcade (centred) |
-| `layout/footer` | Charcoal, centred Blush primary links, centred secondary links | default footer |
+| `layout/footer` | **Belmonte green `#162A19`** (as Bottinor), centred Blush primary links, centred secondary links (client 2026-10-27) | pinnacle (dark green + pink) |
+| `blocks/banner-gallery` | Home hero: centred title, intro top left, four images around it, below the header | magma |
 | `ThemedLink` | Long horizontal arrow, 2px Blush underline | new arrow SVG |
 | `blocks/banner` | Centred title over brand image, soft charcoal overlay | default |
 | `blocks/intro` | `textAlignment: center`, one column, italic label with Blush dot | CMS field |
 | `blocks/group-image` | Arch on the small image | — |
 | `blocks/rich-text`, `blocks/quote` | Centred light italic quotes, Rosewood drop cap | — |
-| `blocks/producer-list` | Centred names with Blush dot separators | — |
+| `blocks/producer-list` | Centred names with Blush dot separators; two links under the names (see below) | — |
 | `blocks/counter` | Centred values, no rules | belmonte/arcade (centred) |
 | `blocks/employee` | Arch portrait | — |
 | `blocks/newsletter` | Charcoal panel | — |
@@ -54,8 +55,8 @@ Every row is a `provenance` entry in an existing `*.styles.ts` map, choosing amo
 | Products page | Pill filter tags, rounded checkboxes | — |
 | `ProductDetail` | **One centred column**, arch image, pill Vinmonopolet link, Blush zebra table; default section order | belmonte/arcade |
 | `AboutProducer` | Charcoal band, **stacked and centred**, arch image, Blush name | belmonte/arcade |
-| `SingleProducer` | Rosewood on hover, arch hover image | — |
-| `ProducerDetail` | Default centred header, italic centred intro | belmonte/arcade |
+| `SingleProducer` | Rosewood on hover, **no hover image** (client: name, country, region only) | bona-fide |
+| `ProducerDetail` | Name left with a rounded "All wines" pill right, #Country \| #District below, left intro with indent, key facts as adjacent framed boxes (label above value) | bona-fide (Ridge Vineyards page) |
 | `ArticleTile` | 4:5 arch thumbnails | — |
 | `TeamMemberTile` | Arch portrait, centred text | arcade (centred) |
 
@@ -66,9 +67,31 @@ a `[data-domain="provenance"]` block in `globals.css`, the signature SVG in `bra
 `themed-actions-elements.tsx`, `provenance` in the arcade/magma/bona-fide branch of `logo-renderer.tsx`,
 and `domainOrder` in `TeamsView`.
 
+## Review 2026-10-27 (Romain, Christoffer, Degree)
+
+Agreed in the meeting and built in the prototype:
+
+- Home follows the **Magma** layout: banner-gallery hero → Our producers (intro + names + "Meet all producers" and
+  "See full selection") → Our story → single image → What we do + group image → Our team (tiles + "Meet the team")
+  → latest articles → newsletter. The separate "Our selection" section and the sustainability section were removed.
+- Header: MENU only. Footer: Belmonte green `#162A19` with Blush links ("own colour, but a reminder that we are
+  linked to Belmonte").
+- Producers page: rows without the hover image. Producer page: as Bona Fide's producer page.
+- Products page and product page: kept as they were.
+- Wording: "producers", never "growers".
+- Team: a slot for the colleague who joins in January 2027 (name and role to come).
+
+Needs app/CMS work (shown in the dev view as "NEW FIELD"):
+
+- `producerList`: a second link next to `allProducersLink` (full selection).
+- `employees` block on home: several employees as tiles plus a link to the team page.
+- `banner-gallery` exists in the app (magma) but must be allowed for the provenance domain.
+- Team page grouping (management team and the rest of the team as separate groups) is not supported by the flat
+  team list; it needs a group field. Not built.
+
 ## Open questions for the client
 
 - PDF and PNG exports disagree: Charcoal `#474545` vs `#000000`, Blush `#EEBEB1` vs `#F8BAAC`. Which are the master values?
 - Confirm the proposed supporting colours and typefaces.
 - The SVG logos in the package were empty (stripped by a mail filter); vector artwork is needed.
-- No website copy, photography or team details were supplied. Growers, wines, articles and people in the prototype are samples.
+- No website copy, photography or team details were supplied. Producers, wines, articles and people in the prototype are samples.

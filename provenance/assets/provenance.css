@@ -129,6 +129,34 @@ ul { margin: 0; }
 .banner h1 { font-size: var(--display); }
 .banner .intro { margin-top: 28px; max-width: 40ch; font-size: var(--medium); line-height: 1.5; opacity: .92; }
 
+/* Section bands (prototype; proposed CMS field: block background colour) — consecutive blocks with the same band
+   share one full-width section; adjacent bands touch */
+.band { position: relative; display: flex; flex-direction: column; gap: var(--gap); padding-block: var(--gap); }
+.band > * { width: 100%; }
+.band.ivory { background: var(--ivory); }
+.band.dark { background: var(--bottle); color: var(--greige); --line: var(--line-light); --muted: rgba(243, 242, 240, .72); }
+.band.dark .label { color: var(--lees); }
+.blocks > .band + .band { margin-top: calc(-1 * var(--gap)); }
+
+/* banner-gallery — magma's hero (datatype="banner-gallery"): centred title, intro top left, four images
+   scattered around it (tall left, small top right, tall right, wide bottom centre); below the header */
+.banner-gallery { position: relative; height: clamp(560px, 57vw, 820px); margin-top: 28px; }
+.banner-gallery h1 { position: absolute; z-index: 2; left: 0; right: 0; top: 42%; transform: translateY(-50%); margin-inline: auto; max-width: 38%; text-align: center; font-size: var(--h1); line-height: 1.16; color: var(--bottle); }
+.banner-gallery .intro { position: absolute; z-index: 2; top: 4%; left: 11.6%; max-width: 38ch; font-size: var(--medium); line-height: 1.45; }
+.banner-gallery .img { position: absolute; overflow: hidden; }
+.banner-gallery .i1 { left: 3.7%; top: 20%; width: 21.4%; aspect-ratio: 241 / 357; }
+.banner-gallery .i2 { left: 66.6%; top: 0; width: 13.6%; aspect-ratio: 153 / 207; }
+.banner-gallery .i3 { left: 74.4%; top: 33%; width: 21.4%; aspect-ratio: 241 / 354; }
+.banner-gallery .i4 { left: 35.2%; top: 67%; width: 29.1%; aspect-ratio: 328 / 178; }
+@media (max-width: 760px) {
+  .banner-gallery { height: auto; display: grid; gap: 24px; padding-block: 32px; }
+  .banner-gallery h1, .banner-gallery .intro { position: static; transform: none; }
+  .banner-gallery .intro { order: 2; max-width: none; text-align: center; }
+  .banner-gallery .imgs { order: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .banner-gallery .img { position: relative; inset: auto; width: auto; }
+  .banner-gallery .i4 { grid-column: 1 / -1; }
+}
+
 /* intro (introModule) — intro-module.styles.ts: label left, serif intro with first-line indent, body, link row */
 .intro-module { display: grid; grid-template-columns: 4fr 8fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
 .intro-module .text { display: grid; gap: 24px; }
@@ -190,6 +218,8 @@ ul { margin: 0; }
 .employee .bio { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); display: grid; gap: 14px; max-width: 54ch; }
 @media (max-width: 860px) { .employee { grid-template-columns: 1fr; } .employee .img { max-width: 420px; } }
 
+.employee .bio blockquote { margin: 6px 0; padding-left: 22px; border-left: 1px solid var(--bottle); font-family: var(--serif); font-style: italic; font-size: var(--large); line-height: 1.3; }
+
 /* newsletter — ivory panel, serif title, checkboxes, underline input with arrow button */
 .newsletter { background: var(--ivory); padding: clamp(40px, 6vw, 80px) var(--pad); display: grid; justify-items: center; text-align: center; gap: 28px; }
 .newsletter h2 { font-size: var(--h2); max-width: 22ch; }
@@ -238,6 +268,11 @@ ul { margin: 0; }
 .p-tile .meta { margin-block: 12px; font-size: var(--caption); color: var(--muted); }
 .p-tile .price { font-family: var(--serif); font-size: var(--medium); font-variant-numeric: tabular-nums; margin-top: auto; }
 .p-tile .vm { font-size: 11px; color: var(--muted); }
+
+/* Product photo from Vinmonopolet (white background, blended into the card) */
+.p-tile .img .vm-photo { height: 220px; width: auto; mix-blend-mode: multiply; transition: transform .45s var(--ease); }
+.p-tile:hover .img .vm-photo { transform: translateY(-6px); }
+.pd-image .vm-photo { position: absolute; inset: 11% 0; width: 100%; height: 78%; object-fit: contain; mix-blend-mode: multiply; }
 
 /* ---------- Products page — app/(commerce)/products (page.styles.ts, product-filters, select) ---------- */
 .products-page { display: grid; grid-template-columns: minmax(220px, 312px) 1fr; gap: clamp(24px, 3vw, 48px); padding-bottom: var(--gap); }
@@ -469,7 +504,9 @@ h1, h2, h3, h4, h5 { font-weight: 300; letter-spacing: -.015em; font-variation-s
 .menu-body nav a { color: var(--blush); }
 .menu-body nav a:hover { color: var(--greige); padding-left: 0; }
 
-/* Footer — the base footer is centred; Provenance keeps it centred with blush primary links */
+/* Footer — the base footer is centred; Provenance keeps it centred with blush primary links on
+   Belmonte dark green (client request 2026-10-27) */
+.site-footer { background: var(--provenance-belmonte-green); }
 .ft-primary { align-items: center; text-align: center; }
 .ft-primary a { color: var(--blush); }
 .ft-secondary { justify-content: center; }
@@ -502,11 +539,13 @@ h1, h2, h3, h4, h5 { font-weight: 300; letter-spacing: -.015em; font-variation-s
 .quote-block blockquote { font-weight: 300; }
 .quote-block blockquote::before { width: 6px; height: 6px; border-radius: 50%; background: var(--blush); }
 
-/* producer-list block — centred names with blush dot separators */
+/* producer-list block — centred names with blush dot separators (kept by the client 2026-10-27) */
 .producer-list-block { text-align: center; }
 .producer-names { justify-content: center; }
 .producer-names a:not(:last-child)::before { content: "·"; right: -18px; color: var(--blush); }
 .producer-list-block .tlink { margin-inline: auto; }
+.producer-list-block .links { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 36px; }
+.producer-list-block .links .tlink { margin: 0; }
 
 /* counter — centred values, no rules */
 .counters > div { border-top: 0; text-align: center; align-items: center; padding-top: 0; }
@@ -555,12 +594,25 @@ h1, h2, h3, h4, h5 { font-weight: 300; letter-spacing: -.015em; font-variation-s
 .about-producer .intro { margin-inline: auto; }
 .about-producer .label.rule { justify-content: center; }
 
-/* SingleProducer row — rosewood on hover */
+/* SingleProducer row — rosewood on hover; no floating hero image (client: name, region, country only) */
 .producer-row:hover h2 { color: var(--rosewood); }
-.producer-row .float { border-radius: var(--arch); aspect-ratio: 4 / 5; }
+.producer-row .float { display: none; }
 
-/* ProducerDetail — italic intro */
-.producer-intro p { text-indent: 0; text-align: center; font-style: italic; font-weight: 300; }
+/* ProducerDetail — as bona-fide (client choice 2026-10-27): name left with a rounded "All wines" pill on the right,
+   #Country | #District below, left-aligned intro with first-line indent, key facts as adjacent boxes (label above value) */
+.producer-head { display: grid; grid-template-columns: 1fr auto; justify-items: start; align-items: center; text-align: left; gap: 20px 24px; }
+.producer-head h1 { grid-column: 1; font-size: var(--h1); }
+.producer-head .row { display: contents; }
+.producer-head .row > span { grid-column: 1; grid-row: 2; font-weight: 500; }
+.producer-head .row > .tlink { grid-column: 2; grid-row: 1; border: 1px solid currentColor; border-radius: 999px; padding: 6px 18px; font-size: 14px; text-transform: uppercase; letter-spacing: .04em; }
+.producer-intro p { max-width: none; margin-inline: 0; text-align: left; text-indent: 2.2em; font-size: var(--large); font-weight: 300; }
+.producer-intro + .container .counters { display: flex; flex-wrap: wrap; gap: 0; }
+.producer-intro + .container .counters > div { flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; padding: 12px 32px; margin: 0 -1px -1px 0; border: 1px solid currentColor; text-align: left; }
+.producer-intro + .container .counters dd, .producer-intro + .container .counters dd.text { font-size: var(--large); line-height: 1.3; }
+@media (max-width: 760px) {
+  .producer-head { grid-template-columns: 1fr; }
+  .producer-head .row > .tlink { grid-column: 1; grid-row: 3; }
+}
 
 /* ArticleTile — arch thumbnails */
 .a-tile .img { aspect-ratio: 4 / 5; border-radius: var(--arch); }

@@ -133,12 +133,29 @@ region (the app's list query does not fetch it); the product page key info does.
 Home and article pages are lists of blocks in `brand.js`. The engine refuses blocks the shape does not allow
 (it renders a visible warning instead), mirroring the app's discovery queries:
 
-- **`domain` (home):** `banner`, `intro`, `groupImage`, `singleImage`, `paragraphs`, `richText`, `employees`,
-  `producerList`, `latestArticles`, `newsletter`
+- **`domain` (home):** `banner`, `bannerGallery`, `intro`, `groupImage`, `singleImage`, `paragraphs`, `richText`,
+  `employees`, `producerList`, `latestArticles`, `newsletter`
 - **`article`:** `intro`, `counter`, `singleImage`, `groupImage`, `paragraphs`, `richText`, `quote`
 
 Not on home: products, quote, counter and links blocks (they exist only on the generic `page` shape). Use a
 `richText` block with a `<blockquote>` for a quote on home. Do not edit `ALLOWED` to get around this.
+(`bannerGallery` is magma's `banner-gallery` hero, which the app already renders on a domain page.)
+
+### Proposed options (prototype only, agreed in the 2026-10-27 client review)
+
+These were built because the clients asked for them; each needs a CMS field or small app change before it can be
+implemented, and the dev view labels them "NEW FIELD". Use them only where a brand's `DESIGN.md` says so.
+
+- Any block: `band: "ivory" | "dark"`. Consecutive blocks with the same band share one full-width coloured section
+  (`.band`).
+- `intro`: `layout: "split"` (label + large statement left, body right), `layout: "media"` / `"media right"` with
+  `image` (image left or right, optional `image.caption`). Line breaks in `lead` with `\n` (media layout).
+- `producerList`: `links: [[text, href], …]` instead of `link`; no link at all if both are left out.
+- `employees`: `heading` (shown instead of the name), or `tiles: n` (+ `skipLead`, `link`) for a row of team tiles.
+- Wines: `vmPhoto: "<Vinmonopolet product number>"` shows the Vinmonopolet photo; otherwise the illustrated bottle.
+
+In `shared/prototype.js` write `\n` in strings with an editor, not through a shell heredoc (the shell eats the
+backslash).
 
 ### <brand>/assets/brand.js (content and data)
 

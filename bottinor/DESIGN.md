@@ -82,6 +82,39 @@ a `[data-domain="bottinor"]` block in `globals.css`, the brand SVG in `brand-ren
 `themed-actions-elements.tsx`, `bottinor` in the arcade/magma/bona-fide branch of `logo-renderer.tsx`,
 and `domainOrder` in `TeamsView`.
 
+## Review 2026-10-27 (Christoffer, Romain, Degree)
+
+Agreed in the meeting and built in the prototype (home follows bottinor.com):
+
+- Home: banner → "A personal approach to wine" / **An extension of your winery in Norway.** (statement left, text
+  right) → **Our philosophy** on Ivory (framed image left, three-line statement, serif subtitle, body;
+  "What partnership means to us" kept for now) → **Our producers** (image right, names below) → **Hello, I'm
+  Christoffer.** (first person, quote inside) → **On-trade: The right wine. The right place. The right people.**
+  (statement left, text right) → the sales team as tiles (no heading) → latest articles → newsletter.
+- Removed: "How we work" (Understand / Build / Develop), the standalone founder quote, "Part of a bigger family"
+  (already said in the intro), the links in the first intro, the group image above the philosophy.
+- Products, producers and producer pages: kept as they were.
+- Colours and fonts checked against the Brand Essentials PDF (all match); body text raised to 18 px (p.07).
+- Audience: producers first, Norwegian trade second (as the brand guide).
+- Latest articles stay; the content will be evergreen (regions, grapes) rather than news. The label may change.
+
+Needs app/CMS work (shown in the dev view as "NEW FIELD"):
+
+- Section background per block (Ivory / Bottle Green bands).
+- `introModule`: an image (philosophy, producers) and the "split" / "media" layouts.
+- `employees`: a heading other than the name ("Hello, I'm Christoffer."), and several employees as tiles plus a
+  team link.
+- "What partnership means to us" is an accordion on bottinor.com; the app has no accordion block, so it is shown open.
+
+Data and images (after the meeting):
+
+- Degree sends an overview of which product and producer fields come from D365 and other sources.
+- Product images: Vinmonopolet photo by product number
+  (`https://bilder.vinmonopolet.no/cache/1500x1500-0/{number}-1.jpg`) by default; if there is none (e.g. grocery
+  products), an image uploaded once to an internal store. The prototype supports `vmPhoto` per wine and falls back to
+  the illustrated bottle.
+- Team names and emails in the prototype contain errors; correct data is in (or will go into) Crystallize.
+
 ## Placeholders in the prototype
 
 - Wines, producers, articles, prices and Vinmonopolet numbers are sample content.

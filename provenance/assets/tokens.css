@@ -12,6 +12,7 @@
   --provenance-shell: #F4E7E2;      /* cards and panels (blush mixed into porcelain) */
   --provenance-rosewood: #9A5A4E;   /* accent text and labels on light surfaces (AA on porcelain) */
   --provenance-stone: #6F6A69;      /* secondary text */
+  --provenance-belmonte-green: #162A19; /* Bottinor Bottle Green; footer (client request 2026-10-27). Alt: app dark-green #243E33 (Pinnacle footer) */
 
   /* Derived */
   --provenance-blush-soft: #F2D5CC; /* hover tint for shell cards */

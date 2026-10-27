@@ -71,3 +71,9 @@ In Crystallize: a `/core` folder (home, layout, articles, team, contact) and a `
 - Positioning and assortment: is Core the everyday/house-wine range? Spirits, beer or bag-in-box too?
 - Only PNG logos were supplied; vector artwork is needed.
 - No copy, photography or team details were supplied. Producers, wines, articles and people are samples.
+
+## Review 2026-10-27
+
+Core was not discussed in the review (time ran out). It still has its original proposal. In the meeting the group
+said all three new sites should start from the Magma home layout; the `bannerGallery` block and the other new
+prototype options (see `CLAUDE.md`) are available for Core when it is reviewed.

@@ -108,9 +108,13 @@
     storyScene: "cellar",
     producers, wines, articles,
     team: {
+      // First person, as on bottinor.com (client 2026-10-27)
       lead: { ...team.founder, bio: [
-        "Christoffer founded Bottinor out of a genuine passion for wine, the people behind it, and the challenge of building long-lasting positions in the Norwegian market.",
-        "His approach is personal and hands-on: understanding each winery, what matters to the people behind it, and how to represent them well in Norway.",
+        "My name is Christoffer and I founded Bottinor out of a genuine passion for wine, the people behind it, and the challenge of building long lasting positions in the Norwegian market.",
+        "Over the years, I have worked closely with producers across the world, helping them navigate one of the world’s most unique and demanding wine markets.",
+        "My approach is personal and hands-on. I take time to understand each winery, what matters to the people behind it, where they want to go and how I can represent them well in Norway.",
+        "“I want the producers I work with to feel that they have a colleague here.”",
+        "Someone who understands their priorities, keeps them informed and follows through. For me, success means finding the right audience for our wines and building open and honest partnerships over time.",
       ] },
       members: team.sales,
     },
@@ -118,23 +122,31 @@
     // domain shape › blocks[] (only blocks FetchDomainPage requests)
     home: [
       { type: "banner", title: "Committed to your wines.<br>Focused on Norway.", intro: "Personal partnerships. Local insight. A lasting commitment to your winery.", image: { photo: "assets/hero-bottles.jpg" } },
-      { type: "intro", label: "A personal approach to wine",
-        lead: "Bottinor is a Norwegian wine company and part of the Belmonte Beverage Group. We work closely with a select group of producers, acting as an extension of their wineries in Norway.",
-        body: ["Our role is to represent their wines, values and ambitions with care. We combine close personal partnerships with a structured approach to the Norwegian market.", "Together, we build lasting market positions that reflect each winery’s identity and long-term strategy."],
-        links: [["Our producers", "#producers"], ["Meet the team", "#team"]] },
-      { type: "groupImage", large: { photo: "assets/hero-bottles.jpg" }, small: { scene: "lees", seed: 7, note: "Producer photography" } },
-      { type: "intro", label: "How we work", lead: "Your ambitions. Our shared direction. We combine local market expertise with close, hands-on partnerships." },
-      { type: "paragraphs", rows: [
-        { title: "Understand", heading: "Start with the winery.", body: "Every collaboration begins with understanding the winery, its identity, priorities and ambitions. Together, we develop a strategy for Norway that connects those ambitions with the opportunities in the market." },
-        { title: "Build", heading: "Find the right route.", body: "Our work covers the full route to market, from portfolio strategy, pricing and Vinmonopolet tenders to distribution, sales, marketing and on-trade development." },
-        { title: "Develop", heading: "Stay closely involved.", body: "After launch, we monitor performance, share market insight and identify opportunities for further development. Clear priorities, measurable objectives and transparent reporting keep our producers involved in both decisions and results." },
+      // 2026-10-27 meeting: "An extension of your winery in Norway" is the core statement (as on bottinor.com);
+      // sections alternate light / ivory / bottle green so each new section is clear
+      { type: "intro", layout: "split", label: "A personal approach to wine",
+        lead: "An extension of your winery in Norway.",
+        body: ["Bottinor is a Norwegian wine company and part of the Belmonte Beverage Group. We work closely with a select group of producers, acting as an extension of their wineries in Norway.", "Our role is to represent their wines, values and ambitions with care. We combine close personal partnerships with a structured approach to the Norwegian market.", "Together, we build lasting market positions that reflect each winery’s identity and long-term strategy."] },
+      // Our philosophy (from bottinor.com) replaces "How we work" (client 2026-10-27: philosophy matters more)
+      { type: "intro", band: "ivory", layout: "media", image: { scene: "sage", seed: 3, note: "Vineyard photography", caption: "Rooted in place. Connected by people." }, label: "Our philosophy", lead: "The place.\nThe people.\nThe reason we care.",
+        body: ["Wine is a bridge between places, cultures and people.", "Bottinor is built on a genuine passion for wine and the people who make it. To us, wine is more than a drink.",
+          "We seek wines with a clear sense of origin and identity. Wines that not only offer exceptional quality, but also express where they come from and the people behind them.",
+          "Our portfolio is personal and deliberately curated. Every wine has a clear purpose, and every producer represents something we genuinely believe in."] },
+      { type: "paragraphs", band: "ivory", rows: [
+        { title: "What partnership means to us", heading: "Part of each winery’s team.", body: "We see ourselves as part of each winery’s team. That means understanding its values, respecting its priorities and ensuring that its identity and ambitions guide our work in Norway. Being a winery’s local representative is a responsibility we take seriously. We earn that trust through honest dialogue, careful decisions and consistent follow-through." },
       ] },
-      { type: "richText", html: "<blockquote>“I want the producers I work with to feel that they have a colleague here.”</blockquote><p class=\"label muted\">Christoffer Bergsted, Founder</p>" },
-      { type: "intro", label: "Our producers", lead: "A small group of wineries, each keeping its own identity. We provide the local relationship." },
+      // Our producers, then a picture, as one light section after the philosophy (client 2026-10-27)
+      { type: "intro", layout: "media right", image: { scene: "lees", seed: 7, note: "Producer photography" }, label: "Our producers",
+        lead: "A small group of wineries,\neach keeping its own identity.",
+        body: ["We provide the local relationship: close, personal follow-up and a structured approach to the Norwegian market, so each winery is represented the way it would represent itself."] },
       { type: "producerList", link: "Show all producers" },
-      { type: "employees", label: "A personal introduction" },
-      { type: "intro", label: "Part of a bigger family", lead: "A personal commitment. A collective strength.",
-        body: ["Belmonte Beverage Group has hand-picked key employees with over 250 years of industry experience combined, and has quickly established itself as an innovative challenger in the Norwegian import industry.", "Through Strawberry Equities, the Stordalen family is the majority owner of Belmonte Beverage Group."] },
+      { type: "employees", label: "A personal introduction", heading: "Hello, I’m Christoffer." },
+      // The whole team on the front page, to show its size (client 2026-10-27)
+      { type: "intro", layout: "split", label: "On-trade", lead: "The right wine. The right place. The right people.",
+        body: ["Restaurants, hotels and wine bars are an important part of how we build a lasting presence for our producers in Norway.",
+          "Our on-trade team works with key accounts and independent venues across the country, focusing on the right fit between each wine, the venue and its guests.",
+          "We bring knowledge of the wines and the people behind them into those relationships, helping each venue understand what makes the wines relevant to its list."] },
+      { type: "employees", tiles: 12, skipLead: true, link: "Meet the team" },
       { type: "latestArticles", label: "Latest articles" },
       { type: "newsletter", title: "Market notes from Norway, four times a year.", checkboxes: ["I am a producer", "I work in hospitality"], done: "Thank you. You will receive the next issue." },
     ],

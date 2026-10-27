@@ -48,7 +48,10 @@
   };
   const GLASS = { red: ["#1c1714", "#2c2420"], white: ["#b9b98a", "#d4d3ab"], rose: ["#e2aea4", "#efc9c0"], sparkling: ["#1c2a1d", "#2b3d2c"], clear: ["#d8d2c4", "#ece7dc"] };
 
+  // Product photo from Vinmonopolet by product number (as the client does today); illustrated bottle as fallback
+  const VM_PHOTO = (n) => `https://bilder.vinmonopolet.no/cache/1500x1500-0/${n}-1.jpg`;
   function bottle(w) {
+    if (w.vmPhoto) return `<img class="vm-photo" src="${VM_PHOTO(w.vmPhoto)}" alt="${esc(w.name)}" loading="lazy">`;
     const s = SHAPES[w.shape], g = GLASS[w.glass], p = P[w.producer];
     const [lx, ly, lw, lh] = s.label;
     const id = "g" + w.vm;
@@ -175,7 +178,8 @@
   const counters = (items, n = 4, source = "counterModule") => `<dl class="counters" style="--n:${n}"${cms(source, "blocks/counter")}>${items.map(([label, value]) => `<div><dt>${esc(label)}</dt><dd class="${value.length > 7 ? "text" : ""}">${esc(value)}</dd></div>`).join("")}</dl>`;
 
   // blocks/intro ← introModule (label, intro, body, links.items, textAlignment, smallVerticalSpace)
-  const introModule = ({ label, lead, body = [], links = [], source = "blocks › introModule" }) => `<section class="container intro-module"${cms(source, "blocks/intro", "Fields: label, intro, body, links.items (name, path), textAlignment, smallVerticalSpace")}>
+  const introModule = ({ label, lead, body = [], links = [], layout = "", image, source = "blocks › introModule" }) => `<section class="container intro-module ${layout}"${cms(source, "blocks/intro", "Fields: label, intro, body, links.items (name, path), textAlignment, smallVerticalSpace")}>
+      ${image ? `<figure class="im-img"${fld("NEW FIELD: image (proposed)")}><div class="im-frame">${media(image)}</div>${image.caption ? `<figcaption>${esc(image.caption)}</figcaption>` : ""}</figure>` : ""}
       ${label ? `<span class="label rule"${fld("label")}>${esc(label)}</span>` : "<span></span>"}
       <div class="text">
         <p class="lead"${fld("intro")}>${esc(lead)}</p>
@@ -200,6 +204,12 @@
           <p class="intro"${fld("intro")}>${esc(b.intro)}</p>
         </div>
       </section>`,
+    // Magma's hero (datatype="banner-gallery"): centred title, intro top left, four images around it
+    bannerGallery: (b, shape) => `<section class="container banner-gallery" aria-label="Banner"${cms(shape + " › blocks › bannerGallery", "blocks/banner-gallery", "Fields: title, intro, images (4)")}>
+        <div class="intro"${fld("intro")}>${b.intro}</div>
+        <h1${fld("title")}>${b.title}</h1>
+        <div class="imgs"${fld("images")}>${b.images.map((im, i) => `<div class="img i${i + 1}">${media(im, im.note || "")}</div>`).join("")}</div>
+      </section>`,
     intro: (b, shape) => introModule({ ...b, source: shape + " › blocks › introModule" }),
     groupImage: (b, shape) => `<section class="container group-image ${b.reverse ? "reverse" : ""}" aria-label="Images"${cms(shape + " › blocks › groupImageModule", "blocks/group-image", "Fields: primaryImage, secondaryImage, reverseOrder, imagePosition")}>
         <div class="large"${fld("primaryImage")}>${media(b.large)}</div>
@@ -215,19 +225,28 @@
       </section>`,
     producerList: (b, shape) => `<section class="container producer-list-block" aria-label="Producers"${cms(shape + " › blocks › producerList", "blocks/producer-list", "Fields: maxQuantity, allProducersLink. Names: producer items")}>
         <div class="producer-names"${fld("producer › name")}>${producers.map((p) => `<a href="#pr.${p.slug}">${esc(p.name)}</a>`).join("")}</div>
-        ${tlink(b.link, "#producers", "", fld("allProducersLink"))}
+        ${b.links
+          // Proposed: a second link (e.g. full selection) next to allProducersLink — needs a new CMS field
+          ? `<div class="links">${b.links.map(([t, h], i) => tlink(t, h, "", fld(i ? "NEW FIELD: secondaryLink" : "allProducersLink"))).join("")}</div>`
+          : tlink(b.link, "#producers", "", fld("allProducersLink"))}
       </section>`,
     employees: (b, shape) => {
+      // Proposed variant: several employees as team tiles plus a link to the team page (employeeList holds a list)
+      if (b.tiles) return `<section class="container employee-block" aria-label="Team"${cms(shape + " › blocks › employees", "blocks/employee", "Fields: label, employeeList → employee. Tile layout + team link: proposed")}>
+        ${b.label ? `<p class="label rule"${fld("label")}>${esc(b.label)}</p>` : ""}
+        <div class="team-grid">${(b.skipLead ? team.members : [team.lead, ...team.members]).slice(0, b.tiles).map(teamTile).join("")}</div>
+        ${b.link ? `<p class="contact-more">${tlink(b.link, "#team", "", fld("NEW FIELD: team link"))}</p>` : ""}
+      </section>`;
       const m = team.lead;
       return `<section class="container employee-block" aria-label="Employees"${cms(shape + " › blocks › employees", "blocks/employee", "Fields: label, employeeList → employee (name, roles, picture, email, phone, bio)")}>
         ${b.label ? `<p class="label rule"${fld("label")}>${esc(b.label)}</p>` : ""}
         <article class="employee">
           <div class="img"${fld("employee › picture")}>${portrait(m.name, 1)}</div>
           <div>
-            <h4${fld("employee › name")}>${esc(m.name)}</h4>
+            <h4${fld(b.heading ? "NEW FIELD: heading (proposed, e.g. a first-person greeting)" : "employee › name")}>${esc(b.heading || m.name)}</h4>
             <p class="role"${fld("employee › roles")}>${esc(m.role)}</p>
             <div class="contact"${fld("employee › email, phone")}><span>${esc(m.email)}</span><span>${esc(m.phone)}</span></div>
-            <div class="bio"${fld("employee › bio")}>${m.bio.map((p) => `<p>${esc(p)}</p>`).join("")}</div>
+            <div class="bio"${fld("employee › bio")}>${m.bio.map((p) => p.startsWith("“") ? `<blockquote>${esc(p)}</blockquote>` : `<p>${esc(p)}</p>`).join("")}</div>
           </div>
         </article>
       </section>`;
@@ -248,19 +267,33 @@
   };
   // Blocks each shape accepts, per the belmonte discovery queries (FetchDomainPage, FetchArticlePage)
   const ALLOWED = {
-    domain: ["banner", "intro", "groupImage", "singleImage", "paragraphs", "richText", "employees", "producerList", "latestArticles", "newsletter"],
+    domain: ["banner", "bannerGallery", "intro", "groupImage", "singleImage", "paragraphs", "richText", "employees", "producerList", "latestArticles", "newsletter"],
     article: ["intro", "counter", "singleImage", "groupImage", "paragraphs", "richText", "quote"],
   };
-  const renderBlocks = (list, shape, ctx) => list.map((b) => {
+  const renderBlock = (b, shape, ctx) => {
     if (!ALLOWED[shape].includes(b.type)) return `<p class="container empty">Block “${esc(b.type)}” is not available on the ${shape} shape.</p>`;
     return BLOCKS[b.type](b, shape, ctx);
-  }).join("");
+  };
+  // Proposed (needs a CMS field, e.g. block background colour): consecutive blocks with the same `band`
+  // ("ivory" | "dark") share one full-width coloured section
+  const renderBlocks = (list, shape, ctx) => {
+    let out = "", i = 0;
+    while (i < list.length) {
+      const band = list[i].band;
+      if (!band) { out += renderBlock(list[i++], shape, ctx); continue; }
+      let inner = "";
+      while (i < list.length && list[i].band === band) inner += renderBlock(list[i++], shape, ctx);
+      out += `<div class="band ${band}"${fld("NEW FIELD: background colour")}>${inner}</div>`;
+    }
+    return out;
+  };
 
   // ---------- Header / footer / menu ----------
   const NAV = B.nav;
 
   function header(route) {
-    const overlay = route === "home";
+    // The header overlays only a full-screen banner; banner-gallery sits below the header (as magma)
+    const overlay = route === "home" && B.home[0]?.type === "banner";
     const L = B.logo;
     return `<header class="site-header ${overlay ? "overlay" : ""}"${cms("layout › header (HeaderPiece)", "layout/header", "Fields: headerLinks, menuLinks, color, hideLogo, hideBrand")}>
       <div class="container">
@@ -309,8 +342,10 @@
   // Home: app/(home)/page.tsx ← domain shape, blocks[]
   pages.home = () => {
     const [first, ...rest] = B.home;
-    const lead = first.type === "banner" ? BLOCKS.banner(first, "domain") : "";
-    return `${lead}<div class="blocks">${renderBlocks(first.type === "banner" ? rest : B.home, "domain")}</div>`;
+    // A banner or banner-gallery leads the page outside the spaced block list
+    const isLead = first.type === "banner" || first.type === "bannerGallery";
+    const lead = isLead ? BLOCKS[first.type](first, "domain") : "";
+    return `${lead}<div class="blocks">${renderBlocks(isLead ? rest : B.home, "domain")}</div>`;
   };
 
   // Products list: app/(commerce)/products/page.tsx ← defaultProduct catalogue + facets

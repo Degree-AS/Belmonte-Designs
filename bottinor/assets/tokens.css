@@ -36,7 +36,7 @@
   --bottinor-h3: clamp(22px, 2.2vw, 32px);
   --bottinor-large: clamp(20px, 1.9vw, 26px);
   --bottinor-medium: clamp(17px, 1.5vw, 21px);
-  --bottinor-body: 17px;
+  --bottinor-body: 18px;              /* Brand Essentials p.07: body 18 px */
   --bottinor-small: 15px;
   --bottinor-caption: 12px;
   --bottinor-label: 11px;

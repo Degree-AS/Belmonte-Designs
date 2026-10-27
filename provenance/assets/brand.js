@@ -45,11 +45,11 @@
   ];
 
   const articles = [
-    { slug: "what-provenance-means", title: "What provenance means in a glass", sub: "Why we only work with wines that can be traced to a grower, a place and a vintage.", img: { scene: "lines-charcoal", seed: 4 } },
+    { slug: "what-provenance-means", title: "What provenance means in a glass", sub: "Why we only work with wines that can be traced to a producer, a place and a vintage.", img: { scene: "lines-charcoal", seed: 4 } },
     { slug: "a-week-in-sancerre", title: "A week in Sancerre", sub: "Harvest notes from the Rey family’s flint and chalk slopes.", img: { scene: "blush", seed: 6 } },
     { slug: "provence-rose-all-year", title: "Provence rosé is not only for summer", sub: "Pale, dry rosé and the Norwegian table, from shellfish to Sunday lunch.", img: { scene: "dusk", seed: 2 } },
     { slug: "gruner-and-nordic-food", title: "Grüner Veltliner and Nordic food", sub: "Why a Wachau Federspiel works with cured fish, root vegetables and dill.", img: { scene: "stone", seed: 8 } },
-    { slug: "how-we-choose-a-grower", title: "How we choose a grower", sub: "Five questions we ask before a wine joins the portfolio.", img: { scene: "lines-blush", seed: 3 } },
+    { slug: "how-we-choose-a-producer", title: "How we choose a producer", sub: "Five questions we ask before a wine joins the portfolio.", img: { scene: "lines-blush", seed: 3 } },
     { slug: "from-vineyard-to-vinmonopolet", title: "From vineyard to Vinmonopolet", sub: "The route a bottle takes before it reaches a Norwegian shelf.", img: { scene: "night", seed: 5 } },
   ];
 
@@ -85,7 +85,8 @@
       },
       lightScenes: ["blush", "stone", "lines-blush"],
     },
-    nav: [["Producers", "#producers", "producer"], ["Our selection", "#products", "product"], ["Journal", "#articles", "article"]],
+    // HeaderPiece.headerLinks left empty (client: the MENU is enough)
+    nav: [],
     footerSecondary: ["Privacy policy", "Cookie settings", "Alcohol and health", "Instagram", "LinkedIn"],
     titles: { articles: "Journal" },
     demo: { product: "cotes-de-provence-rose-2025", producer: "vaillant-rey" },
@@ -94,40 +95,44 @@
     team: {
       lead: { ...person("Ingrid Solberg", "Managing Director"), bio: [
         "Ingrid has spent twenty years in the Norwegian wine trade, on the restaurant floor and as an importer.",
-        "She visits every grower in the portfolio at least once a year and still tastes every new vintage before it is offered in Norway.",
+        "She visits every producer in the portfolio at least once a year and still tastes every new vintage before it is offered in Norway.",
       ] },
-      members: [person("Jonas Berg", "Sales Director"), person("Mari Haugen", "Key Account Manager"), person("Anders Lie", "Area Sales Manager"), person("Sofie Dahl", "Brand Manager"), person("Henrik Moe", "Area Sales Manager"), person("Thea Nilsen", "On-trade Manager"), person("Erik Strand", "Area Sales Manager")],
+      members: [person("Jonas Berg", "Sales Director"), person("Mari Haugen", "Key Account Manager"), person("Anders Lie", "Area Sales Manager"), person("Sofie Dahl", "Brand Manager"), person("Henrik Moe", "Area Sales Manager"), person("Thea Nilsen", "On-trade Manager"), person("Erik Strand", "Area Sales Manager"), person("New colleague", "Joining January 2027")],
     },
 
     // domain shape › blocks[] (only blocks FetchDomainPage requests)
     home: [
-      { type: "banner", title: "Wines that know<br>where they come from.", intro: "Small growers, single places and honest wines, selected for Norway.", image: { scene: "lines-charcoal", seed: 3, note: "Brand photography" } },
+      { type: "bannerGallery", title: "Wines that know<br>where they come from.",
+        intro: "<p>Small producers, single places and honest wines, <strong>selected for Norway.</strong></p>",
+        images: [
+          { scene: "blush", seed: 3, note: "Hero image 1" }, { scene: "dusk", seed: 7, note: "Hero image 2" },
+          { scene: "stone", seed: 11, note: "Hero image 3" }, { scene: "lines-charcoal", seed: 4, note: "Hero image 4" },
+        ] },
+      // Front page agreed in the 2026-10-27 meeting: Magma layout; our producers (with links to all producers and the
+      // full selection), our story, what we do, team, articles, newsletter. The second link under the producer names
+      // needs a new CMS field on producerList (to do in the app).
+      { type: "intro", label: "Our producers", lead: "Six family estates in four countries, each chosen for a place." },
+      { type: "producerList", links: [["Meet all producers", "#producers"], ["See full selection", "#products"]] },
       { type: "intro", label: "Our story",
-        lead: "Provenance Wines brings wines with a clear origin to Norway. Every bottle can be traced to a grower, a place and a vintage.",
-        body: ["We work with a small number of family estates and visit each of them every year. We choose wines for the place they come from, not for a trend."],
-        links: [["Our producers", "#producers"], ["Our selection", "#products"]] },
-      { type: "groupImage", large: { scene: "blush", seed: 5, note: "Vineyard photography" }, small: { scene: "dusk", seed: 9, note: "Grower portrait" } },
-      { type: "intro", label: "What we look for", lead: "Three things every wine in our portfolio has in common." },
-      { type: "paragraphs", rows: [
-        { title: "A place", heading: "You can taste where it grew.", body: "Single vineyards, single villages or a clearly defined area. The soil and climate should be part of the wine, not hidden by it." },
-        { title: "A grower", heading: "Someone we know by name.", body: "Family estates that farm their own vines and make their own wine. We know who picked the grapes and who decided when." },
-        { title: "Balance", heading: "Made for the table.", body: "Fresh acidity, ripe fruit and moderate oak. Wines that work with food and are as good on the second glass as on the first." },
-      ] },
-      { type: "richText", html: "<blockquote>“A wine should taste of the place it comes from.”</blockquote><p class=\"label\">Provenance Wines</p>" },
-      { type: "intro", label: "Our growers", lead: "Six family estates in four countries, each chosen for a place." },
-      { type: "producerList", link: "Meet all growers" },
-      { type: "employees", label: "Your contact" },
+        lead: "Provenance Wines brings wines with a clear origin to Norway. Every bottle can be traced to a producer, a place and a vintage.",
+        body: ["We work with a small number of family estates and visit each of them every year. We choose wines for the place they come from, not for a trend."] },
+      { type: "singleImage", image: { scene: "blush", seed: 5, note: "Vineyard photography" } },
+      { type: "intro", label: "What we do",
+        lead: "We visit our producers every year, taste every new vintage with them and bring the wines to Norway ourselves.",
+        body: ["From the first visit to the restaurant list, we follow each wine the whole way, so the producer's work arrives as it was meant."] },
+      { type: "groupImage", large: { scene: "stone", seed: 21, note: "Vineyard visit" }, small: { scene: "dusk", seed: 9, note: "Producer portrait" } },
+      { type: "employees", label: "Our team", tiles: 4, link: "Meet the team" },
       { type: "latestArticles", label: "From the journal" },
-      { type: "newsletter", title: "Stories from our growers, a few times a year.", checkboxes: ["I work in hospitality", "I am a producer"], done: "Thank you. You will receive the next letter." },
+      { type: "newsletter", title: "Stories from our producers, a few times a year.", checkboxes: ["I work in hospitality", "I am a producer"], done: "Thank you. You will receive the next letter." },
     ],
 
     // article shape › blocks[] (after the cover singleImage, which comes from the article's thumbnail)
     articleBlocks: [
-      { type: "richText", html: `<p>Provenance is a simple idea: a wine should be able to tell you where it comes from. Not only the country or the region, but the slope, the grower and the year it was made.</p>
-        <p>That is why we work with family estates that farm their own vines. When a grower knows every parcel, the decisions about picking, pressing and ageing are made for that place, and you can taste it.</p>
+      { type: "richText", html: `<p>Provenance is a simple idea: a wine should be able to tell you where it comes from. Not only the country or the region, but the slope, the producer and the year it was made.</p>
+        <p>That is why we work with family estates that farm their own vines. When a producer knows every parcel, the decisions about picking, pressing and ageing are made for that place, and you can taste it.</p>
         <h2>Five questions we ask</h2>
-        <ul><li>Does the grower farm the vineyards themselves?</li><li>Can we name the place, not just the region?</li><li>Is the wine balanced and made for food?</li><li>Will it keep its character from vintage to vintage?</li><li>Can we support it in Norway for years, not for one season?</li></ul>
-        <blockquote>We would rather have six growers we know well than sixty we do not.</blockquote>` },
+        <ul><li>Does the producer farm the vineyards themselves?</li><li>Can we name the place, not just the region?</li><li>Is the wine balanced and made for food?</li><li>Will it keep its character from vintage to vintage?</li><li>Can we support it in Norway for years, not for one season?</li></ul>
+        <blockquote>We would rather have six producers we know well than sixty we do not.</blockquote>` },
       { type: "groupImage", reverse: true, large: { scene: "stone", seed: 41, note: "Group image" }, small: { scene: "blush", seed: 12, note: "Portrait" } },
       { type: "quote", quote: "“The best wines in our portfolio are the ones you can place on a map with your eyes closed.”", attribution: "Ingrid Solberg, Managing Director" },
     ],
@@ -135,14 +140,14 @@
     // producer shape › story[] (title, body); {placeholders} filled from the producer
     producerStory: [
       { title: "The place", body: "{region} in {district}. The estate farms {ha} hectares of {varietals}, and each parcel is picked and vinified on its own so the differences between them stay in the wine." },
-      { title: "The grower", body: "{winemaker} leads the estate today. We visit every year at harvest and taste each new vintage together before it is offered in Norway." },
+      { title: "The producer", body: "{winemaker} leads the estate today. We visit every year at harvest and taste each new vintage together before it is offered in Norway." },
     ],
 
     // contact shape › introModule
     contact: {
       label: "Contact",
-      lead: "We would like to hear from you, whether you run a restaurant, a wine bar or a hotel, or you are a grower looking for a partner in Norway.",
-      body: ["For the portfolio and new growers, contact Ingrid Solberg at ingrid@provenancewines.no.", "For restaurants, hotels and wine bars, our on-trade team works with venues across Norway."],
+      lead: "We would like to hear from you, whether you run a restaurant, a wine bar or a hotel, or you are a producer looking for a partner in Norway.",
+      body: ["For the portfolio and new producers, contact Ingrid Solberg at ingrid@provenancewines.no.", "For restaurants, hotels and wine bars, our on-trade team works with venues across Norway."],
     },
   };
 })();

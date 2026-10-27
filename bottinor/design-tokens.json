@@ -30,7 +30,7 @@
     "h3": { "desktop": "32px", "mobile": "22px" },
     "large": { "desktop": "26px", "mobile": "20px" },
     "medium": { "desktop": "21px", "mobile": "17px" },
-    "body": "17px",
+    "body": "18px",
     "label": { "size": "11px", "letterSpacing": "0.16em", "transform": "uppercase" }
   },
   "motion": { "ease": "cubic-bezier(0.33, 0, 0.33, 1)" }

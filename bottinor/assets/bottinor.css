@@ -123,6 +123,34 @@ ul { margin: 0; }
 .banner h1 { font-size: var(--display); }
 .banner .intro { margin-top: 28px; max-width: 40ch; font-size: var(--medium); line-height: 1.5; opacity: .92; }
 
+/* Section bands (prototype; proposed CMS field: block background colour) — consecutive blocks with the same band
+   share one full-width section; adjacent bands touch */
+.band { position: relative; display: flex; flex-direction: column; gap: var(--gap); padding-block: var(--gap); }
+.band > * { width: 100%; }
+.band.ivory { background: var(--ivory); }
+.band.dark { background: var(--bottle); color: var(--greige); --line: var(--line-light); --muted: rgba(243, 242, 240, .72); }
+.band.dark .label { color: var(--lees); }
+.blocks > .band + .band { margin-top: calc(-1 * var(--gap)); }
+
+/* banner-gallery — magma's hero (datatype="banner-gallery"): centred title, intro top left, four images
+   scattered around it (tall left, small top right, tall right, wide bottom centre); below the header */
+.banner-gallery { position: relative; height: clamp(560px, 57vw, 820px); margin-top: 28px; }
+.banner-gallery h1 { position: absolute; z-index: 2; left: 0; right: 0; top: 42%; transform: translateY(-50%); margin-inline: auto; max-width: 38%; text-align: center; font-size: var(--h1); line-height: 1.16; color: var(--bottle); }
+.banner-gallery .intro { position: absolute; z-index: 2; top: 4%; left: 11.6%; max-width: 38ch; font-size: var(--medium); line-height: 1.45; }
+.banner-gallery .img { position: absolute; overflow: hidden; }
+.banner-gallery .i1 { left: 3.7%; top: 20%; width: 21.4%; aspect-ratio: 241 / 357; }
+.banner-gallery .i2 { left: 66.6%; top: 0; width: 13.6%; aspect-ratio: 153 / 207; }
+.banner-gallery .i3 { left: 74.4%; top: 33%; width: 21.4%; aspect-ratio: 241 / 354; }
+.banner-gallery .i4 { left: 35.2%; top: 67%; width: 29.1%; aspect-ratio: 328 / 178; }
+@media (max-width: 760px) {
+  .banner-gallery { height: auto; display: grid; gap: 24px; padding-block: 32px; }
+  .banner-gallery h1, .banner-gallery .intro { position: static; transform: none; }
+  .banner-gallery .intro { order: 2; max-width: none; text-align: center; }
+  .banner-gallery .imgs { order: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .banner-gallery .img { position: relative; inset: auto; width: auto; }
+  .banner-gallery .i4 { grid-column: 1 / -1; }
+}
+
 /* intro (introModule) — intro-module.styles.ts: label left, serif intro with first-line indent, body, link row */
 .intro-module { display: grid; grid-template-columns: 4fr 8fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
 .intro-module .text { display: grid; gap: 24px; }
@@ -132,6 +160,45 @@ ul { margin: 0; }
 .intro-module .body p { break-inside: avoid; }
 .intro-module .links { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid var(--line); }
 @media (max-width: 860px) { .intro-module { grid-template-columns: 1fr; } .intro-module .body { columns: 1; } }
+
+/* intro, layout "split" (prototype; as bottinor.com, client 2026-10-27): label and large statement left,
+   body right in one column, links under the body */
+.intro-module.split { grid-template-columns: 1fr 1fr; row-gap: 20px; }
+.intro-module.split .text { display: contents; }
+.intro-module.split > .label { grid-column: 1; grid-row: 1; }
+.intro-module.split .lead { grid-column: 1; grid-row: 2; align-self: start; max-width: 12ch; font-size: var(--h1); line-height: 1.06; text-indent: 0; color: var(--bottle); }
+.intro-module.split .body { grid-column: 2; grid-row: 1 / span 2; align-self: center; columns: 1; max-width: 56ch; }
+.intro-module.split .links { grid-column: 2; grid-row: 3; }
+.dark .intro-module.split .lead { color: inherit; }
+@media (max-width: 860px) {
+  .intro-module.split { grid-template-columns: 1fr; }
+  .intro-module.split .body { grid-column: 1; grid-row: 3; }
+  .intro-module.split .links { grid-column: 1; grid-row: 4; }
+}
+
+/* intro, layout "media" (prototype; proposed image field) — as bottinor.com's philosophy: framed image left
+   (thin Bottle Green frame offset behind it), label, three-line statement, serif subtitle and body on the right */
+.intro-module.media { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 20px clamp(48px, 7vw, 112px); align-items: start; align-content: center; }
+.intro-module.media .im-img { position: relative; z-index: 0; grid-column: 1; grid-row: 1 / span 2; align-self: center; margin: 0 40px 0 0; }
+.intro-module.media .im-frame { position: relative; z-index: 1; aspect-ratio: 752 / 848; overflow: hidden; }
+.intro-module.media .im-img::after { content: ""; position: absolute; z-index: 0; top: 52px; right: -40px; bottom: -40px; left: 40px; border: 1px solid rgba(22, 42, 25, .3); border-top: 0; border-left-color: transparent; }
+.intro-module.media .im-img::before { content: ""; position: absolute; z-index: 0; top: 52px; right: -40px; width: 40px; border-top: 1px solid rgba(22, 42, 25, .3); }
+.intro-module.media figcaption { position: relative; z-index: 1; margin-top: 18px; padding-bottom: 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.intro-module.media > .label { grid-column: 2; grid-row: 1; align-self: end; padding-top: 8px; }
+.intro-module.media .text { grid-column: 2; grid-row: 2; gap: 20px; }
+.intro-module.media .lead { white-space: pre-line; font-size: clamp(34px, 3.8vw, 56px); line-height: 1.04; text-indent: 0; color: var(--bottle); }
+.intro-module.media .body { columns: 1; max-width: 56ch; }
+.intro-module.media .body p:first-child { margin-bottom: 6px; font-family: var(--serif); font-size: var(--large); line-height: 1.3; color: var(--bottle); }
+/* "media right": image on the right, text on the left (frame mirrored) */
+.intro-module.media.right { grid-template-columns: 1fr 1fr; }
+.intro-module.media.right .im-img { grid-column: 2; margin: 0 0 0 40px; }
+.intro-module.media.right > .label, .intro-module.media.right .text { grid-column: 1; }
+.intro-module.media.right .im-img::after { left: auto; right: 40px; left: -40px; border-left-color: rgba(22, 42, 25, .3); border-right-color: transparent; }
+.intro-module.media.right .im-img::before { right: auto; left: -40px; }
+@media (max-width: 860px) {
+  .intro-module.media { grid-template-columns: 1fr; grid-template-rows: none; }
+  .intro-module.media .im-img, .intro-module.media > .label, .intro-module.media .text { grid-column: 1; grid-row: auto; }
+}
 
 /* group-image — group-image.styles: large 771×616 + small 312×390 */
 .group-image { display: grid; grid-template-columns: 771fr 312fr; gap: 24px; align-items: end; }
@@ -184,6 +251,8 @@ ul { margin: 0; }
 .employee .bio { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); display: grid; gap: 14px; max-width: 54ch; }
 @media (max-width: 860px) { .employee { grid-template-columns: 1fr; } .employee .img { max-width: 420px; } }
 
+.employee .bio blockquote { margin: 6px 0; padding-left: 22px; border-left: 1px solid var(--bottle); font-family: var(--serif); font-style: italic; font-size: var(--large); line-height: 1.3; }
+
 /* newsletter — ivory panel, serif title, checkboxes, underline input with arrow button */
 .newsletter { background: var(--ivory); padding: clamp(40px, 6vw, 80px) var(--pad); display: grid; justify-items: center; text-align: center; gap: 28px; }
 .newsletter h2 { font-size: var(--h2); max-width: 22ch; }
@@ -232,6 +301,11 @@ ul { margin: 0; }
 .p-tile .meta { margin-block: 12px; font-size: var(--caption); color: var(--muted); }
 .p-tile .price { font-family: var(--serif); font-size: var(--medium); font-variant-numeric: tabular-nums; margin-top: auto; }
 .p-tile .vm { font-size: 11px; color: var(--muted); }
+
+/* Product photo from Vinmonopolet (white background, blended into the card) */
+.p-tile .img .vm-photo { height: 220px; width: auto; mix-blend-mode: multiply; transition: transform .45s var(--ease); }
+.p-tile:hover .img .vm-photo { transform: translateY(-6px); }
+.pd-image .vm-photo { position: absolute; inset: 11% 0; width: 100%; height: 78%; object-fit: contain; mix-blend-mode: multiply; }
 
 /* ---------- Products page — app/(commerce)/products (page.styles.ts, product-filters, select) ---------- */
 .products-page { display: grid; grid-template-columns: minmax(220px, 312px) 1fr; gap: clamp(24px, 3vw, 48px); padding-bottom: var(--gap); }
