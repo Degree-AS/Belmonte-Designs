@@ -6,16 +6,16 @@
 <title>Provenance Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..500,0..100;1,9..144,300..500,0..100&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
 <link rel="stylesheet" href="assets/tokens.css">
 <link rel="stylesheet" href="assets/provenance.css">
 <style>
   /* Documentation layout. Component previews below use assets/provenance.css unchanged. */
   .ds { display: grid; grid-template-columns: 260px minmax(0, 1fr); min-height: 100vh; }
   .ds-nav { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 32px 28px 48px; background: var(--bottle); color: var(--greige); display: flex; flex-direction: column; gap: 4px; }
-  .ds-nav .brand { width: 170px; margin-bottom: 18px; }
+  .ds-nav .brand { width: 180px; margin-bottom: 18px; }
   .ds-nav .meta { font-size: 12px; opacity: .7; margin-bottom: 24px; line-height: 1.5; }
-  .ds-nav .grp { margin: 18px 0 6px; font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--blush); }
+  .ds-nav .grp { margin: 18px 0 6px; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--pink); }
   .ds-nav a { font-size: 14px; text-decoration: none; padding: 4px 0; opacity: .85; }
   .ds-nav a:hover { opacity: 1; text-decoration: underline; }
   .ds-main { min-width: 0; }
@@ -25,14 +25,14 @@
   .ds-hero p { margin-top: 24px; max-width: 62ch; font-size: var(--medium); color: var(--muted); }
   .ds-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
   .ds-facts div { border-top: 1px solid var(--line); padding-top: 14px; font-size: 13px; color: var(--muted); }
-  .ds-facts strong { display: block; font-family: var(--serif); font-weight: 300; font-size: 28px; color: var(--ink); line-height: 1.2; }
+  .ds-facts strong { display: block; font-family: var(--sans); font-weight: 500; font-size: 28px; color: var(--ink); line-height: 1.2; }
   .ds-sec { padding-block: clamp(56px, 7vw, 96px); border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
   .ds-sec > h2 { font-size: var(--h1); margin-top: 14px; }
   .ds-sec > .lead { margin-top: 18px; max-width: 64ch; font-size: var(--medium); color: var(--muted); }
   .ds-sec > h3 { font-size: var(--h3); margin: 56px 0 20px; }
   .ds-sec > p.note { margin-top: 16px; max-width: 70ch; font-size: 15px; }
-  .ds code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; background: rgba(238, 190, 177, .35); padding: 1px 5px; }
-  .tag-proposal { display: inline-block; font: 600 10px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; padding: 4px 7px; border-radius: 999px; background: var(--ivory); color: var(--rosewood); vertical-align: middle; }
+  .ds code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--stone); padding: 1px 5px; }
+  .tag-proposal { display: inline-block; font: 600 10px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; padding: 4px 7px; background: var(--stone); color: var(--earth); vertical-align: middle; }
 
   .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
   .card { background: var(--ivory); padding: 24px; display: grid; gap: 10px; align-content: start; }
@@ -46,7 +46,7 @@
 
   .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
   .dos > div { padding: 22px 24px; border-top: 2px solid var(--bottle); background: var(--ivory); }
-  .dos > div.dont { border-top-color: var(--rosewood); }
+  .dos > div.dont { border-top-color: var(--earth); }
   .dos .label { display: block; margin-bottom: 10px; }
   .dos ul { padding-left: 18px; display: grid; gap: 6px; font-size: 15px; }
 
@@ -54,48 +54,53 @@
   .logo-tile { aspect-ratio: 4 / 3; display: grid; place-items: center; padding: 28px; position: relative; }
   .logo-tile img { max-width: 82%; width: auto; }
   .logo-tile.light { background: var(--greige); outline: 1px solid var(--line); outline-offset: -1px; }
-  .logo-tile.shell { background: var(--ivory); }
+  .logo-tile.white { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; }
+  .logo-tile.earth { background: var(--earth); }
   .logo-tile.dark { background: var(--bottle); }
   .logo-tile span { position: absolute; left: 14px; bottom: 10px; font-size: 11px; color: var(--muted); }
-  .logo-tile.dark span { color: rgba(250, 246, 244, .7); }
+  .logo-tile.dark span, .logo-tile.earth span { color: rgba(247, 243, 239, .75); }
   .clear { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 24px; }
   .clear figure { margin: 0; background: var(--ivory); padding: 28px; display: grid; justify-items: center; gap: 14px; }
-  .clear .box { outline: 1px dashed var(--rosewood); }
+  .clear .box { outline: 1px dashed var(--earth); }
   .clear figcaption { font-size: 13px; color: var(--muted); text-align: center; }
 
-  .swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+  .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
   .sw { display: grid; background: #fff; outline: 1px solid var(--line); outline-offset: -1px; }
   .sw .chip { aspect-ratio: 16 / 9; display: flex; align-items: flex-end; padding: 12px; font-size: 12px; font-weight: 600; }
   .sw .info { padding: 14px; display: grid; gap: 4px; font-size: 13px; background: var(--greige); }
-  .sw .info strong { font-family: var(--serif); font-weight: 400; font-size: 19px; }
+  .sw .info strong { font-weight: 600; font-size: 17px; color: var(--ink); }
   .sw .info code { justify-self: start; }
   .sw button { justify-self: start; background: none; border: 0; padding: 0; font-size: 12px; text-decoration: underline; cursor: pointer; color: var(--muted); }
   .pairs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
   .pair { padding: 22px; display: grid; gap: 14px; min-height: 170px; align-content: space-between; }
-  .pair .sample { font-family: var(--serif); font-weight: 300; font-size: 26px; line-height: 1.15; }
+  .pair .sample { font-weight: 500; font-size: 24px; line-height: 1.15; letter-spacing: -.02em; }
   .pair .meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 12px; }
-  .badge { font-size: 10px; font-weight: 600; letter-spacing: .12em; padding: 4px 7px; background: rgba(255, 255, 255, .85); color: #2F2D2D; border-radius: 999px; }
-  .badge.fail { background: #9A5A4E; color: #FAF6F4; }
+  .badge { font-size: 10px; font-weight: 600; letter-spacing: .12em; padding: 4px 7px; background: rgba(255, 255, 255, .85); color: #1B2B1D; }
+  .badge.fail { background: #8B463B; color: #F7F3EF; }
 
   .specimen { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 28px; }
   .specimen > div { background: var(--ivory); padding: 28px; display: grid; gap: 16px; }
   .specimen .big { font-size: 96px; line-height: 1; }
   .specimen .chars { font-size: 18px; letter-spacing: .02em; color: var(--muted); }
   .scale-row td:nth-child(2) { width: 52%; }
-  .scale-sample { line-height: 1.1; overflow-wrap: anywhere; font-family: var(--serif); font-weight: 300; }
+  .scale-sample { line-height: 1.1; overflow-wrap: anywhere; font-weight: 500; letter-spacing: -.02em; color: var(--ink); }
 
   .space-bars { display: grid; gap: 10px; margin-top: 24px; }
   .space-bars div { display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 16px; font-size: 13px; }
-  .space-bars i { display: block; height: 14px; background: var(--blush); }
+  .space-bars i { display: block; height: 14px; background: var(--sage); }
   .shapes { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 24px; align-items: end; }
   .shapes figure { margin: 0; display: grid; gap: 10px; font-size: 12px; color: var(--muted); justify-items: center; }
-  .shapes .arch { width: 120px; aspect-ratio: 4 / 5; border-radius: var(--arch); background: var(--blush); }
-  .shapes .pill { padding: 9px 20px; border: 1px solid var(--bottle); border-radius: 999px; font-size: 14px; color: var(--ink); }
-  .shapes .square { width: 120px; aspect-ratio: 1; background: var(--ivory); }
+  .shapes .index { position: relative; width: 180px; padding: 18px 20px; font-size: 12px; color: var(--ink); }
+  .shapes .index::before, .shapes .index::after { content: ""; position: absolute; width: 12px; height: 12px; border: 1px solid var(--earth); }
+  .shapes .index::before { left: 0; top: 0; border-right: 0; border-bottom: 0; }
+  .shapes .index::after { right: 0; bottom: 0; border-left: 0; border-top: 0; }
+  .shapes .index b { display: block; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--earth); }
+  .shapes .btn-forest { padding: 12px 22px; background: var(--bottle); color: var(--greige); font-size: 14px; font-weight: 600; }
+  .shapes .square { width: 120px; aspect-ratio: 4 / 5; background: var(--stone); }
 
   .preview { margin-top: 20px; border: 1px solid var(--line); background: var(--greige); }
   .preview .stage { padding: clamp(20px, 3vw, 40px); }
-  .preview .cap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 10px 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); background: #F3EEEB; }
+  .preview .cap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 10px 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); background: var(--stone); }
   .row-prev { display: flex; flex-wrap: wrap; gap: 32px; align-items: center; }
   .tiles-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .tiles-3.narrow { max-width: 860px; }
@@ -104,17 +109,18 @@
   .icons svg { width: 32px; height: 32px; color: var(--bottle); }
   .icons figure.wide svg { width: 40px; height: 24px; }
   .mini-band { background: var(--bottle); color: var(--greige); }
-  .photo-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; margin-top: 32px; }
-  .photo-grid > div { aspect-ratio: 4 / 5; overflow: hidden; }
-  .photo-grid > div:first-child { aspect-ratio: auto; }
-  .photo-grid > div:nth-child(2) { border-radius: var(--arch); }
+  .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; }
+  .photo-grid figure { margin: 0; display: grid; gap: 10px; }
+  .photo-grid figure > div { aspect-ratio: 4 / 3; overflow: hidden; }
+  .photo-grid figcaption { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+  .photo-grid figcaption span { display: block; margin-top: 4px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
 
   @media (max-width: 1000px) {
     .ds { grid-template-columns: 1fr; }
     .ds-nav { position: static; height: auto; flex-direction: row; flex-wrap: wrap; gap: 6px 16px; padding: 20px 24px; }
     .ds-nav .brand, .ds-nav .meta { flex-basis: 100%; }
     .ds-nav .grp { display: none; }
-    .ds-facts, .cards, .logo-grid, .pairs, .tiles-3, .swatches { grid-template-columns: 1fr 1fr; }
+    .ds-facts, .cards, .logo-grid, .pairs, .tiles-3, .swatches, .photo-grid { grid-template-columns: 1fr 1fr; }
     .specimen { grid-template-columns: 1fr; }
   }
   @media (max-width: 560px) {
@@ -126,8 +132,8 @@
 </head>
 <body class="ds">
 <nav class="ds-nav" aria-label="Design system">
-  <img class="brand" src="assets/wordmark-blush.png" alt="Provenance Wines">
-  <div class="meta">Design system · v0.1 proposal<br>October 2026 · theme for the BBG frontend</div>
+  <img class="brand" src="assets/wordmark-pink.png" alt="Provenance Wines">
+  <div class="meta">Design system · v1.0<br>From the Visual Identity, 29 October 2026 · theme for the BBG frontend</div>
   <div class="grp">Foundation</div>
   <a href="#intro">Introduction</a>
   <a href="#voice">Voice &amp; audience</a>
@@ -150,13 +156,14 @@
 
 <main class="ds-main">
   <header class="ds-inner ds-hero">
-    <span class="label rule">Provenance Wines · Design system proposal</span>
+    <span class="label rule">Provenance Wines · Design system</span>
     <h1>Wines that know where they come from.</h1>
-    <p>A proposed visual identity for the Provenance Wines website, built from the signature logo and its blush-on-charcoal colourway. Like every Belmonte Beverage Group brand, it is a theme of the shared frontend: the same components, styled for Provenance.</p>
+    <p class="accent-lead" style="font-family:var(--accent);font-size:var(--provenance-accent);color:var(--earth);max-width:40ch">Personal in character. Precise in everything else.</p>
+    <p>The Provenance Wines Visual Identity (v1.0, 29 October 2026) applied to the website. Like every Belmonte Beverage Group brand, it is a theme of the shared frontend: the same components and layout, styled for Provenance.</p>
     <div class="ds-facts">
-      <div><strong>2 + 4</strong>colours from the logo + proposed</div>
-      <div><strong>2</strong>typefaces (proposed)</div>
-      <div><strong>1</strong>signature logo, 3 colourways</div>
+      <div><strong>3 + 4</strong>core + supporting colours</div>
+      <div><strong>2</strong>typefaces: Manrope, Newsreader</div>
+      <div><strong>1</strong>signature, 3 colourways</div>
       <div><strong>9</strong>page templates</div>
     </div>
   </header>
@@ -164,52 +171,52 @@
   <section class="ds-inner ds-sec" id="intro">
     <span class="label">01 · Introduction</span>
     <h2>Where this comes from</h2>
-    <p class="lead">The only brand material supplied is the logo file (LOGO_PROVENANCE_WINES_OVERVIEW). Its last page, a blush signature on charcoal, sets the palette. Everything else on this page is a proposal for the client to confirm.</p>
+    <p class="lead">The brand book “A sense of place” (Provenance Wines Visual Identity, proposal v1.0) owns the identity: signature, colours, typography, photography and tone. This page applies it to the website components and checks it on screen.</p>
     <div class="cards">
-      <div class="card"><span class="label">Source</span><h4>Signature logo</h4><p>Handwritten “Provenance Wines” in charcoal, blush and white. Charcoal #474545 and Blush #EEBEB1 are measured from the PDF.</p></div>
+      <div class="card"><span class="label">Source</span><h4>Visual Identity v1.0</h4><p>Keep the signature, give it a stronger frame, make provenance visible. Warm Ivory and Forest Green are the everyday foundation; Signature Pink identifies.</p></div>
       <div class="card"><span class="label">Rule</span><h4>Style, not structure</h4><p>Provenance reuses the BBG components and CMS content. Only colours, type, shapes and small interaction details change.</p></div>
-      <div class="card"><span class="label">Status</span><h4>Proposal</h4><p>Supporting colours, typefaces, copy, wines, producers and people are all examples to react to.</p></div>
+      <div class="card"><span class="label">Status</span><h4>Prototype</h4><p>Photos are art-direction placeholders, not the final website photography. Wines, sample producers and people are examples.</p></div>
     </div>
   </section>
 
   <section class="ds-inner ds-sec" id="voice">
-    <span class="label">02 · Voice &amp; audience <span class="tag-proposal">Proposal</span></span>
-    <h2>Name the place. Name the producer.</h2>
-    <p class="lead">The signature logo is personal and warm. The voice follows it: calm, specific and close to the people who make the wine. Every wine is introduced through its place and its producer.</p>
+    <span class="label">02 · Voice &amp; audience</span>
+    <h2>Knowledgeable. Human. Direct.</h2>
+    <p class="lead">Write like a well-informed partner across the table. Use concrete details, active sentences and measured confidence. A partner to producers, a clear guide for the trade.</p>
     <div class="dos">
       <div><span class="label">Who we speak to</span><ul><li>Norwegian restaurants, wine bars and hotels</li><li>Producers looking for a partner in Norway</li><li>Not consumers: Norwegian law bans alcohol advertising, so the site speaks to the trade</li></ul></div>
-      <div><span class="label">How we write</span><ul><li>Lead with the place: village, slope, soil</li><li>Name the producer and what they decide</li><li>Short sentences, no superlatives</li></ul></div>
+      <div><span class="label">How we write</span><ul><li>Write this: “We work closely with the producers we represent.”</li><li>Avoid this: “The world’s finest wines, curated for unforgettable moments.”</li><li>Use the slogan exactly: <i>Wines that know where they come from.</i></li></ul></div>
     </div>
   </section>
 
   <section class="ds-inner ds-sec" id="logo">
     <span class="label">03 · Visual language</span>
     <h2>Logo</h2>
-    <p class="lead">A single signature in three colourways. The strokes are thin, so the logo needs room and a calm background.</p>
+    <p class="lead">The signature stays: an existing asset with a human hand. Preserve the full mark, its rhythm and its original proportions. Signature Pink on a solid Forest field is the master identity.</p>
     <div class="logo-grid">
-      <div class="logo-tile dark"><img src="assets/wordmark-blush.png" alt="Signature, Blush on Charcoal"><span>Blush on Charcoal · primary</span></div>
-      <div class="logo-tile light"><img src="assets/wordmark-charcoal.png" alt="Signature, Charcoal on Porcelain"><span>Charcoal on Porcelain</span></div>
-      <div class="logo-tile dark"><img src="assets/wordmark-white.png" alt="Signature, White on Charcoal"><span>White on Charcoal</span></div>
+      <div class="logo-tile dark"><img src="assets/wordmark-pink.png" alt="Signature, Pink on Forest"><span>Pink on Forest · preferred</span></div>
+      <div class="logo-tile white"><img src="assets/wordmark-forest.png" alt="Signature, Forest on white"><span>Forest on light · preferred</span></div>
+      <div class="logo-tile white"><img src="assets/wordmark-earth.png" alt="Signature, Earth Red on white"><span>Earth Red · warm alternative</span></div>
     </div>
-    <h3>Clear space and size <span class="tag-proposal">Proposal</span></h3>
+    <h3>Clear space and size</h3>
     <div class="clear">
-      <figure><img class="box" src="assets/wordmark-charcoal.png" alt="" style="width:240px;padding:26px"><figcaption>Clear space: half the height of the capital P on every side</figcaption></figure>
-      <figure><img class="box" src="assets/wordmark-charcoal.png" alt="" style="width:150px;padding:16px"><figcaption>Minimum width on screen: 150 px (header 196 px desktop, 150 px mobile)</figcaption></figure>
+      <figure><img class="box" src="assets/wordmark-forest.png" alt="" style="width:240px;padding:20px"><figcaption>Clear space x = ⅓ of the visible logo height, on all sides, measured from the outermost strokes including the long underline</figcaption></figure>
+      <figure><img class="box" src="assets/wordmark-forest.png" alt="" style="width:180px;padding:15px"><figcaption>Minimum visible width: 180 px on screen (header 196 px desktop, 160 px mobile). Below that, use the plain company name</figcaption></figure>
     </div>
     <div class="dos">
-      <div><span class="label">Do</span><ul><li>Blush or white on Charcoal and dark photography</li><li>Charcoal on Porcelain and Shell</li><li>Keep the long underline stroke of the P intact</li></ul></div>
-      <div class="dont"><span class="label">Don’t</span><ul><li>Set the logo below 150 px wide</li><li>Place Blush or white artwork on light backgrounds</li><li>Recreate the signature in a script font</li></ul></div>
+      <div><span class="label">Do</span><ul><li>Pink on a solid Forest field; Forest on light backgrounds</li><li>White reversed out of Earth Red as a utility version</li><li>Endorse with “Part of Belmonte Beverage Group” in Manrope, kept separate from the signature</li></ul></div>
+      <div class="dont"><span class="label">Don’t</span><ul><li>Stretch, rotate, crop strokes or add effects</li><li>Place the logo on busy photography; use a solid panel beside the image</li><li>Use Pink on Ivory (1.84:1) except at large scale after a legibility check</li></ul></div>
     </div>
-    <p class="note">The supplied PNG exports use pure black (#000000) and a lighter pink (#F8BAAC), while the PDF uses Charcoal (#474545) and Blush (#EEBEB1). The prototype recolours the artwork to the PDF values; the final values need confirming.</p>
+    <p class="note">The prototype recolours the supplied PNG artwork to the brand book’s HEX values. The brand book says the geometry comes from the supplied SVG; that SVG is still needed for the app.</p>
   </section>
 
   <section class="ds-inner ds-sec" id="colour">
     <span class="label">04 · Visual language</span>
     <h2>Colour</h2>
-    <p class="lead">Charcoal and Blush come from the logo. Four proposed colours make them work on screen: a warm Porcelain ground, a Shell surface, Rosewood for accent text (Blush is too light for text on light backgrounds) and Stone for secondary text.</p>
-    <h3>From the logo</h3>
+    <p class="lead">Three colours do most of the work: Warm Ivory as the breathing space, Forest Green as the structure and Signature Pink as the personal accent. Keep the supporting cast small. Suggested balance: 55% Ivory, 25% Forest, 10% Pink, 5% Stone, 3% Sage, 2% Earth.</p>
+    <h3>Core</h3>
     <div class="swatches" data-swatches="logo"></div>
-    <h3>Proposed <span class="tag-proposal">Proposal</span></h3>
+    <h3>Supporting</h3>
     <div class="swatches" data-swatches="proposed"></div>
     <h3>Approved pairings</h3>
     <p class="note">Contrast ratios are calculated live from the tokens. Body text needs at least 4.5:1 (WCAG AA); large headings at least 3:1.</p>
@@ -217,26 +224,25 @@
   </section>
 
   <section class="ds-inner ds-sec" id="type">
-    <span class="label">05 · Visual language <span class="tag-proposal">Proposal</span></span>
+    <span class="label">05 · Visual language</span>
     <h2>Typography</h2>
-    <p class="lead">Fraunces, a soft serif set light, carries the warmth of the signature without competing with it. Instrument Sans keeps information clear. Labels use Fraunces italic instead of uppercase, as a quieter echo of the handwriting. Both families are on Google Fonts with Norwegian characters.</p>
+    <p class="lead">Modern clarity, an editorial accent. Manrope carries headlines, body copy, navigation, facts and tables. Newsreader is a restrained second voice for the slogan, a short introduction or an occasional quotation. Sentence case; paragraphs left aligned at 45–75 characters.</p>
     <div class="specimen">
-      <div><span class="label">Fraunces · 300–500 · headings and labels</span><span class="big" style="font-family:var(--serif);font-weight:300">Aa</span><p style="font-family:var(--serif);font-weight:300;font-size:28px;line-height:1.2">Wines that know where they come from.</p><p class="chars" style="font-family:var(--serif)">Æ Ø Å æ ø å · <i>Côtes de Provence</i> · 0123456789</p></div>
-      <div><span class="label">Instrument Sans · 400–600 · body and UI</span><span class="big" style="font-family:var(--sans)">Aa</span><p style="font-size:18px">Small producers, single places and honest wines, selected for Norway.</p><p class="chars">Æ Ø Å æ ø å · Grüner Veltliner · 0123456789</p></div>
+      <div><span class="label">Manrope · 400, 500, 600, 700 · primary</span><span class="big" style="font-weight:500;color:var(--ink)">Aa</span><p style="font-size:26px;font-weight:500;line-height:1.2;letter-spacing:-.02em;color:var(--ink)">Origin. Relationships. Commercial strength.</p><p class="chars">Æ Ø Å æ ø å · é è ô ç · 0123456789</p></div>
+      <div><span class="label">Newsreader · 400 + italic · editorial accent</span><span class="big" style="font-family:var(--accent);color:var(--earth)">Aa</span><p style="font-family:var(--accent);font-size:28px;line-height:1.2;color:var(--ink)"><i>A sense of place.</i></p><p class="chars" style="font-family:var(--accent)">Æ Ø Å æ ø å · Côtes de Provence · 0123456789</p></div>
     </div>
     <h3>Type scale</h3>
     <div class="tbl-wrap">
       <table class="tbl">
         <thead><tr><th>Token</th><th>Sample</th><th>Desktop / mobile</th><th>Used for</th></tr></thead>
         <tbody>
-          <tr class="scale-row"><td><code>--provenance-display</code></td><td><span class="scale-sample" style="font-size:var(--display)">Provenance</span></td><td>76 / 40 px</td><td>Banner, producer and article titles</td></tr>
-          <tr class="scale-row"><td><code>--provenance-h1</code></td><td><span class="scale-sample" style="font-size:var(--h1)">Our selection</span></td><td>62 / 34 px</td><td>Page titles, product name</td></tr>
-          <tr class="scale-row"><td><code>--provenance-h2</code></td><td><span class="scale-sample" style="font-size:var(--h2)">Journal</span></td><td>44 / 28 px</td><td>Quotes, newsletter title</td></tr>
-          <tr class="scale-row"><td><code>--provenance-h3</code></td><td><span class="scale-sample" style="font-size:var(--h3)">Made for the table.</span></td><td>30 / 22 px</td><td>Intro lead, paragraph headings</td></tr>
-          <tr class="scale-row"><td><code>--provenance-large</code></td><td><span class="scale-sample" style="font-size:var(--large)">Domaine Vaillant-Rey</span></td><td>26 / 20 px</td><td>Producer list, characteristics</td></tr>
-          <tr class="scale-row"><td><code>--provenance-medium</code></td><td><span class="scale-sample" style="font-size:var(--medium)">Côtes de Provence Rosé 2025</span></td><td>21 / 17 px</td><td>Tile names, prices</td></tr>
-          <tr class="scale-row"><td><code>--provenance-body</code></td><td><span style="font-size:17px">Every bottle can be traced to a producer, a place and a vintage.</span></td><td>17 px · 1.6</td><td>Body copy (Instrument Sans 400)</td></tr>
-          <tr class="scale-row"><td><code>--provenance-label</code></td><td><span class="label">About the producer</span></td><td>16 px italic</td><td>Labels and eyebrows (Fraunces italic, Rosewood)</td></tr>
+          <tr class="scale-row"><td><code>--provenance-display</code></td><td><span class="scale-sample" style="font-size:var(--display)">A sense of place.</span></td><td>56 / 38 px</td><td>Home hero, producer title (Manrope Medium)</td></tr>
+          <tr class="scale-row"><td><code>--provenance-h1</code></td><td><span class="scale-sample" style="font-size:var(--h1)">Our selection</span></td><td>44 / 32 px</td><td>Page titles, product name (Manrope Medium)</td></tr>
+          <tr class="scale-row"><td><code>--provenance-h2</code></td><td><span class="scale-sample" style="font-size:var(--h2)">Know the origin.</span></td><td>28 / 24 px</td><td>Section headings (Manrope Semibold)</td></tr>
+          <tr class="scale-row"><td><code>--provenance-accent</code></td><td><span style="font-family:var(--accent);font-size:var(--provenance-accent);color:var(--ink)">Wines that know where they come from.</span></td><td>30 / 22 px</td><td>Intro standfirst, quotations (Newsreader)</td></tr>
+          <tr class="scale-row"><td><code>--provenance-large</code></td><td><span class="scale-sample" style="font-size:var(--large)">Domaine Vaillant-Rey</span></td><td>22 / 19 px</td><td>Producer list, key facts</td></tr>
+          <tr class="scale-row"><td><code>--provenance-body</code></td><td><span style="font-size:18px">We work closely with the producers we represent.</span></td><td>18 / 28 px</td><td>Body copy (Manrope Regular, Charcoal)</td></tr>
+          <tr class="scale-row"><td><code>--provenance-label</code></td><td><span class="label">About the producer</span></td><td>12 / 16 px · +0.14em</td><td>Labels (Manrope Semibold, uppercase)</td></tr>
           <tr class="scale-row"><td><code>--provenance-caption</code></td><td><span style="font-size:12px">Rosé | France | 0,75 L | 13 %</span></td><td>12 px</td><td>Product key info, captions</td></tr>
         </tbody>
       </table>
@@ -244,28 +250,28 @@
   </section>
 
   <section class="ds-inner ds-sec" id="space">
-    <span class="label">06 · Visual language <span class="tag-proposal">Proposal</span></span>
+    <span class="label">06 · Visual language</span>
     <h2>Shape &amp; layout</h2>
-    <p class="lead">Centred, airy compositions and one recurring shape: the arch. Portraits, producer images and article thumbnails sit in an arch that echoes the loops of the signature. Interactive elements are pills; everything else stays square.</p>
+    <p class="lead">A calm, contemporary editorial system: square images, thin rules and generous space. The Origin Index — a small label, a rule and open corners — organises factual detail. Buttons are Forest with Ivory text; links are Earth Red with an underline. The page layout is unchanged from the agreed prototype.</p>
     <div class="shapes">
-      <figure><div class="arch"></div><figcaption>Arch · portraits, producers, articles</figcaption></figure>
-      <figure><div class="square"></div><figcaption>Square · cards, wide images</figcaption></figure>
-      <figure><span class="pill">Vinmonopolet →</span><figcaption>Pill · links-as-buttons, filter tags</figcaption></figure>
+      <figure><div class="index"><b>Origin index</b>Region / Producer / Year</div><figcaption>Origin Index · factual detail</figcaption></figure>
+      <figure><div class="square"></div><figcaption>Square images, no rounded corners</figcaption></figure>
+      <figure><span class="btn-forest">Contact →</span><figcaption>Default button · Forest, Ivory text</figcaption></figure>
     </div>
     <div class="space-bars">
       <div><span><code>container</code> 1440 px</span><i style="width:100%"></i></div>
       <div><span>Section rhythm 64–120 px</span><i style="width:min(120px,100%)"></i></div>
-      <div><span>Side gutter 24–48 px</span><i style="width:48px"></i></div>
+      <div><span>Side margin 24–64 px</span><i style="width:64px"></i></div>
       <div><span>Grid gap 12–24 px</span><i style="width:24px"></i></div>
     </div>
     <div class="tbl-wrap">
       <table class="tbl">
         <thead><tr><th>Rule</th><th>Value</th><th>Note</th></tr></thead>
         <tbody>
-          <tr><td>Arch</td><td><code>border-radius: 999px 999px 0 0</code></td><td>On portrait-format images only (4:5)</td></tr>
-          <tr><td>Pills</td><td><code>border-radius: 999px</code></td><td>Vinmonopolet link, filter tags</td></tr>
-          <tr><td>Hairlines</td><td><code>rgba(71,69,69,.16)</code> on light, <code>rgba(250,246,244,.2)</code> on Charcoal</td><td>Tables, paragraph rows, header</td></tr>
-          <tr><td>Alignment</td><td>Centred</td><td>Intro (<code>textAlignment: center</code>), product page, about-producer, footer and menu</td></tr>
+          <tr><td>Grid</td><td>12 columns desktop, 4 mobile</td><td>Spacing scale 8, 16, 24, 32, 48, 64 px</td></tr>
+          <tr><td>Rules</td><td><code>rgba(27,43,29,.14)</code> on light, <code>rgba(247,243,239,.2)</code> on Forest; Earth Red for accent rules</td><td>Tables, label rules, producer name</td></tr>
+          <tr><td>Radius</td><td>0</td><td>Square images and buttons; only the producer page “All wines” link stays a pill (bona-fide layout)</td></tr>
+          <tr><td>Alignment</td><td>As agreed on 27 Oct</td><td>Centred intro, product page, about-producer, footer and menu. The brand book prefers left-aligned paragraphs — see open questions</td></tr>
           <tr><td>Motion</td><td><code>cubic-bezier(.33, 0, .33, 1)</code></td><td>Same curve as <code>--ease-in-out-belmonte</code>; respects reduced motion</td></tr>
         </tbody>
       </table>
@@ -275,14 +281,14 @@
   <section class="ds-inner ds-sec" id="icons">
     <span class="label">07 · Visual language</span>
     <h2>Icons</h2>
-    <p class="lead">Thin Charcoal linework with rounded ends. The Provenance arrow is long and horizontal, like the underline stroke of the signature.</p>
+    <p class="lead">Thin Forest linework with rounded ends. The Provenance arrow is long and horizontal, like the underline stroke of the signature. No ornamental crests, grape icons or invented maps.</p>
     <div class="preview"><div class="stage"><div class="icons" data-icons></div></div><div class="cap"><span>ThemedIcon arrow, product specification icons and taste meter (0–12)</span><span>themed-actions-elements.tsx · public/images/icons/*</span></div></div>
   </section>
 
   <section class="ds-inner ds-sec" id="photo">
-    <span class="label">08 · Visual language <span class="tag-proposal">Proposal</span></span>
+    <span class="label">08 · Visual language</span>
     <h2>Photography</h2>
-    <p class="lead">No photography was supplied. Proposed direction: warm natural light, producers at work and close-ups of soil, vines and hands, with soft blush and stone tones rather than saturated colour. Until real images arrive, the prototype uses illustrations in the palette.</p>
+    <p class="lead">Be close enough to notice. Real people and real places: natural gestures, hands and tools, vineyards, cellars and everyday spaces. Edit lightly — truthful greens, natural skin tones, no heavy filters. The photos in this prototype are placeholders chosen by the client (Les Quatre Piliers and others) to show the direction; they are not the final website photography.</p>
     <div class="photo-grid" data-photos></div>
   </section>
 
@@ -292,19 +298,19 @@
     <p class="lead">Each preview is the Provenance style of a component that already exists in the BBG frontend. The caption names the component in the code.</p>
 
     <h3>Links and labels</h3>
-    <div class="preview"><div class="stage"><div class="row-prev" data-links></div></div><div class="cap"><span>ThemedLink with the Provenance arrow · italic label</span><span>ui/themed-actions-elements.tsx</span></div></div>
-    <div class="preview"><div class="stage mini-band dark"><div class="row-prev" data-links-dark></div></div><div class="cap"><span>On Charcoal</span><span>ThemedLink</span></div></div>
+    <div class="preview"><div class="stage"><div class="row-prev" data-links></div></div><div class="cap"><span>ThemedLink in Earth Red with the Provenance arrow · uppercase label with rule</span><span>ui/themed-actions-elements.tsx</span></div></div>
+    <div class="preview"><div class="stage mini-band dark"><div class="row-prev" data-links-dark></div></div><div class="cap"><span>On Forest: Signature Pink</span><span>ThemedLink</span></div></div>
 
     <h3>Product tile</h3>
-    <div class="preview"><div class="stage"><div class="tiles-3" data-products></div></div><div class="cap"><span>Shell card, warms to Blush on hover, bottle lifts</span><span>features/product-tile</span></div></div>
+    <div class="preview"><div class="stage"><div class="tiles-3" data-products></div></div><div class="cap"><span>Stone card, white on hover, bottle lifts</span><span>features/product-tile</span></div></div>
 
     <h3>Article tile and team member</h3>
-    <div class="preview"><div class="stage"><div class="tiles-3" data-articles></div></div><div class="cap"><span>Arch thumbnails, slow zoom on hover</span><span>features/article/article-tile.tsx</span></div></div>
-    <div class="preview"><div class="stage"><div class="tiles-3 narrow" data-team></div></div><div class="cap"><span>Arch portrait, centred text</span><span>features/team-members/team-member-tile.tsx</span></div></div>
+    <div class="preview"><div class="stage"><div class="tiles-3" data-articles></div></div><div class="cap"><span>Square 4:5 photographs, slow zoom on hover</span><span>features/article/article-tile.tsx</span></div></div>
+    <div class="preview"><div class="stage"><div class="tiles-3 narrow" data-team></div></div><div class="cap"><span>Square portrait, centred text</span><span>features/team-members/team-member-tile.tsx</span></div></div>
 
     <h3>Intro, quote and counter</h3>
-    <div class="preview"><div class="stage" data-intro></div><div class="cap"><span>Centred intro (textAlignment: center)</span><span>blocks/intro</span></div></div>
-    <div class="preview"><div class="stage"><section class="quote-block"><blockquote>“A wine should taste of the place it comes from.”</blockquote><cite class="label">Provenance Wines</cite></section></div><div class="cap"><span>Light italic Fraunces, Blush dot</span><span>blocks/quote</span></div></div>
+    <div class="preview"><div class="stage" data-intro></div><div class="cap"><span>Centred intro, Newsreader standfirst</span><span>blocks/intro</span></div></div>
+    <div class="preview"><div class="stage"><section class="quote-block"><blockquote>“A wine should taste of the place it comes from.”</blockquote><cite class="label">Provenance Wines</cite></section></div><div class="cap"><span>Newsreader quotation, Earth rule</span><span>blocks/quote</span></div></div>
     <div class="preview"><div class="stage" data-counter></div><div class="cap"><span>Centred values without rules</span><span>blocks/counter</span></div></div>
 
     <h3>Filters and search</h3>
@@ -323,18 +329,18 @@
           <div class="sort" style="margin-left:0"><label for="ds-sort" class="sr">Sort by</label><select id="ds-sort"><option>Relevance</option><option>Price (Lowest first)</option></select><span data-icon="chevron"></span></div>
         </div>
       </div>
-    </div><div class="cap"><span>Search, filter accordion, pill filter tag, sort select</span><span>product-search · product-filters · ui/select</span></div></div>
+    </div><div class="cap"><span>Search, filter accordion, Forest filter tag, sort select</span><span>product-search · product-filters · ui/select</span></div></div>
 
     <h3>Product price and specification</h3>
-    <div class="preview"><div class="stage" data-price></div><div class="cap"><span>Centred column, pill Vinmonopolet link, Blush zebra table</span><span>features/product-detail/*</span></div></div>
+    <div class="preview"><div class="stage" data-price></div><div class="cap"><span>Centred column, Forest Vinmonopolet button, Stone zebra table</span><span>features/product-detail/*</span></div></div>
 
     <h3>About the producer band</h3>
-    <div class="preview"><div class="stage" style="padding:0" data-about></div><div class="cap"><span>Charcoal band, stacked and centred, arch image</span><span>features/product-detail/about-producer</span></div></div>
+    <div class="preview"><div class="stage" style="padding:0" data-about></div><div class="cap"><span>Forest band, stacked and centred, Pink producer name</span><span>features/product-detail/about-producer</span></div></div>
 
     <h3>Newsletter</h3>
     <div class="preview"><div class="stage" style="padding:0">
       <div class="newsletter"><h2>Stories from our producers, a few times a year.</h2><form novalidate onsubmit="return false"><div class="checks"><label><input type="checkbox" checked> I work in hospitality</label><label><input type="checkbox"> I am a producer</label></div><div class="input"><label for="ds-nl" class="sr">Email</label><input id="ds-nl" type="email" placeholder="Your email"><button type="button" aria-label="Subscribe" data-icon="arrow"></button></div></form></div>
-    </div><div class="cap"><span>Charcoal panel replaces the grey default</span><span>blocks/newsletter</span></div></div>
+    </div><div class="cap"><span>Forest panel, Pink action</span><span>blocks/newsletter</span></div></div>
   </section>
 
   <section class="ds-inner ds-sec" id="implementation">
@@ -345,12 +351,11 @@
       <table class="tbl">
         <thead><tr><th>Provenance token</th><th>App target</th><th>Value</th></tr></thead>
         <tbody>
-          <tr><td><code>--provenance-charcoal</code> … <code>--provenance-stone</code></td><td><code>:root</code> + <code>@theme</code> in <code>globals.css</code> (<code>bg-theme-*</code>, <code>text-theme-*</code>)</td><td>6 colours + Blush Soft</td></tr>
-          <tr><td><code>--provenance-font-serif</code></td><td><code>font-provenance</code> (theme font) via <code>src/fonts/index.ts</code></td><td>Fraunces 300–500 + italic</td></tr>
-          <tr><td><code>--provenance-font-sans</code></td><td>Provenance replacement for <code>font-global</code></td><td>Instrument Sans 400/500/600</td></tr>
-          <tr><td><code>--provenance-display</code> … <code>--provenance-medium</code></td><td><code>--font-*-clamp</code> in <code>[data-domain="provenance"]</code></td><td>76 / 62 / 44 / 30 / 26 / 21 px max</td></tr>
-          <tr><td><code>--provenance-arch</code></td><td>Tailwind <code>rounded-t-full</code> on image wrappers in the Provenance style maps</td><td>999px 999px 0 0</td></tr>
-          <tr><td>Logo</td><td><code>provenance-brand.tsx</code> in <code>brand-renderer.tsx</code>; group logo branch in <code>logo-renderer.tsx</code></td><td>Needs SVG artwork</td></tr>
+          <tr><td><code>--provenance-ivory</code> … <code>--provenance-stone</code></td><td><code>:root</code> + <code>@theme</code> in <code>globals.css</code> (<code>bg-theme-*</code>, <code>text-theme-*</code>)</td><td>7 colours</td></tr>
+          <tr><td><code>--provenance-font-sans</code></td><td><code>font-provenance</code> (theme font) and the Provenance <code>font-global</code>, via <code>src/fonts/index.ts</code></td><td>Manrope 400–700</td></tr>
+          <tr><td><code>--provenance-font-accent</code></td><td>Second Provenance font class for intro, quotes and slogan</td><td>Newsreader 400 + italic</td></tr>
+          <tr><td><code>--provenance-display</code> … <code>--provenance-medium</code></td><td><code>--font-*-clamp</code> in <code>[data-domain="provenance"]</code></td><td>56 / 44 / 28 / 24 / 22 / 18 px max</td></tr>
+          <tr><td>Logo</td><td><code>provenance-brand.tsx</code> in <code>brand-renderer.tsx</code> (Forest on light, Pink on Forest); group logo branch in <code>logo-renderer.tsx</code></td><td>Needs the master SVG</td></tr>
         </tbody>
       </table>
     </div>
@@ -360,11 +365,11 @@
     <span class="label">11 · Open questions</span>
     <h2>What we need to confirm</h2>
     <div class="cards">
-      <div class="card"><h4>Colour values</h4><p>The PDF and the PNG exports differ (Charcoal #474545 vs black, Blush #EEBEB1 vs #F8BAAC). Which are the master values?</p></div>
-      <div class="card"><h4>Typefaces and palette</h4><p>Fraunces, Instrument Sans and the four supporting colours are proposals.</p></div>
-      <div class="card"><h4>SVG logo</h4><p>The SVG files in the package were empty. Vector artwork is needed for the header, footer and favicon.</p></div>
-      <div class="card"><h4>Copy</h4><p>No website text was supplied. All headings and body text are placeholders in the proposed voice.</p></div>
-      <div class="card"><h4>Photography</h4><p>Producers, vineyards and team portraits.</p></div>
+      <div class="card"><h4>Alignment</h4><p>The brand book prefers left-aligned paragraphs and shared edges; the agreed layout centres the intros, product page and footer. Keep the layout, or left-align?</p></div>
+      <div class="card"><h4>Footer colour</h4><p>The footer now uses the brand’s Forest Green #1B2B1D instead of the interim Belmonte green #162A19. They are almost the same; confirm.</p></div>
+      <div class="card"><h4>SVG logo</h4><p>The master SVG is needed for the app’s header, footer and favicon (the PW utility tile is optional).</p></div>
+      <div class="card"><h4>Photography rights</h4><p>The photos are placeholders taken from lesquatrepiliers.com and the client’s folder. Rights and producer approval are needed before any public use.</p></div>
+      <div class="card"><h4>Copy</h4><p>Only the core introduction and slogan come from the brand book; the rest is placeholder text in its voice.</p></div>
       <div class="card"><h4>Content</h4><p>Real producers, wines, articles and people in Crystallize.</p></div>
     </div>
   </section>
@@ -383,26 +388,26 @@
   const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
   const rgb = (hex) => hex.replace("#", "").match(/../g).map((x) => parseInt(x, 16)).join(" / ");
 
-  const LOGO = [["Charcoal", "charcoal", "Dark surfaces, body text and primary actions. Measured from the PDF."], ["Blush", "blush", "Logo on dark, accents on Charcoal, highlights. Measured from the PDF."]];
-  const PROPOSED = [["Porcelain", "porcelain", "Page background; light text on Charcoal."], ["Shell", "shell", "Cards and panels: Blush mixed into Porcelain."], ["Rosewood", "rosewood", "Accent text and labels on light surfaces."], ["Stone", "stone", "Secondary text and captions."]];
+  const LOGO = [["Warm Ivory", "ivory", "The breathing space: primary background, page rhythm."], ["Forest Green", "forest", "The structure: headlines, navigation, dark panels, buttons."], ["Signature Pink", "pink", "The personal accent: logo and controlled emphasis, on Forest."]];
+  const PROPOSED = [["Charcoal", "charcoal", "Primary body text."], ["Earth Red", "earth", "Alternative logo, links and emphasis."], ["Sage", "sage", "Quiet panels, diagrams."], ["Stone", "stone", "Dividers, secondary surfaces."]];
   const swatch = ([name, key, use]) => {
     const hex = tok("--provenance-" + key).toUpperCase();
-    const fg = ratio(hex, "#474545") > ratio(hex, "#FAF6F4") ? "#474545" : "#FAF6F4";
+    const fg = ratio(hex, "#1B2B1D") > ratio(hex, "#F7F3EF") ? "#1B2B1D" : "#F7F3EF";
     return `<div class="sw"><div class="chip" style="background:${hex};color:${fg}">${hex}</div><div class="info"><strong>${name}</strong><code>--provenance-${key}</code><span class="muted">RGB ${rgb(hex)}</span><span>${use}</span><button type="button" data-copy="${hex}">Copy HEX</button></div></div>`;
   };
   document.querySelector('[data-swatches="logo"]').innerHTML = LOGO.map(swatch).join("");
   document.querySelector('[data-swatches="proposed"]').innerHTML = PROPOSED.map(swatch).join("");
 
   const PAIRS = [
-    ["charcoal", "porcelain", "Body text on Porcelain", "Wines that know where they come from."],
-    ["charcoal", "shell", "Text on Shell cards", "Côtes de Provence Rosé"],
-    ["blush", "charcoal", "Blush on Charcoal (logo)", "Provenance Wines"],
-    ["porcelain", "charcoal", "Porcelain on Charcoal", "Stories from our producers"],
-    ["rosewood", "porcelain", "Rosewood labels on Porcelain", "About the producer"],
-    ["stone", "porcelain", "Stone secondary text", "Rosé | France | 0,75 L"],
-    ["charcoal", "blush", "Charcoal on Blush", "Hover state"],
-    ["blush", "porcelain", "Blush on Porcelain — decoration only", "Not for text"],
-    ["blush", "shell", "Blush on Shell — decoration only", "Not for text"],
+    ["forest", "ivory", "Body text and headings", "Aa Provenance"],
+    ["charcoal", "ivory", "Body text", "Aa Provenance"],
+    ["pink", "forest", "Text on dark panels", "Aa Provenance"],
+    ["earth", "ivory", "Links and emphasis", "Aa Provenance"],
+    ["forest", "sage", "Text on support panels", "Aa Provenance"],
+    ["forest", "stone", "Secondary surfaces", "Aa Provenance"],
+    ["ivory", "forest", "Ivory on Forest (buttons)", "Contact"],
+    ["forest", "pink", "Forest on Pink", "01"],
+    ["pink", "ivory", "Pink on Ivory — do not use for text", "Not for text"],
   ];
   document.querySelector("[data-pairs]").innerHTML = PAIRS.map(([fg, bg, name, sample]) => {
     const f = tok("--provenance-" + fg), b = tok("--provenance-" + bg), r = ratio(f, b);
@@ -426,13 +431,13 @@
     [["taste", "Taste profile"], ["pairing", "Food pairing"], ["grape", "Grape"], ["search", "Search"], ["menu", "Menu"], ["mail", "Email"], ["phone", "Phone"], ["file", "Product sheet"]]
     .map(([k, l]) => `<figure>${B.I[k]}<figcaption>${l}</figcaption></figure>`).join("") +
     [3, 6, 9, 12].map((v) => `<figure>${B.meter(v)}<figcaption>Meter ${v}/12</figcaption></figure>`).join("");
-  document.querySelector("[data-photos]").innerHTML = [["blush", 5, "Vineyard"], ["dusk", 9, "Producer portrait"], ["stone", 4, "Detail"]].map(([s, n, note]) => `<div>${B.scene(s, n, note)}</div>`).join("");
-  document.querySelector("[data-links]").innerHTML = B.tlink("Read more", "#components") + B.tlink("All wines", "#components", "down") + `<span class="label">Italic label</span><span class="label rule">Label with dot</span>`;
+  document.querySelector("[data-photos]").innerHTML = [["lqp-harvest", "People", "Natural gestures and working relationships."], ["lqp-old-vine", "Work", "Hands, tools, seasons and decisions."], ["lqp-barrels", "Place & process", "Vineyards, cellars and everyday spaces."], ["lqp-house", "Place", "A landscape with a recognisable sense of place."], ["cecillon-portrait", "Relationship", "A person in their working environment."], ["lqp-table", "Table", "A shared moment of work or conversation."]].map(([f, t, d]) => `<figure><div>${B.media({ photo: "assets/photos/" + f + ".jpg" })}</div><figcaption>${t}<span>${d}</span></figcaption></figure>`).join("");
+  document.querySelector("[data-links]").innerHTML = B.tlink("Read more", "#components") + B.tlink("All wines", "#components", "down") + `<span class="label">Uppercase label</span><span class="label rule">Label with rule</span>`;
   document.querySelector("[data-links-dark]").innerHTML = B.tlink("Read more", "#components") + `<span class="label">About the producer</span>`;
   document.querySelector("[data-products]").innerHTML = ["cotes-de-provence-rose-2025", "sancerre-les-caillottes-2024", "chianti-classico-2022"].map((s) => B.productTile(B.W[s])).join("");
   document.querySelector("[data-articles]").innerHTML = B.articles.slice(0, 3).map(B.articleTile).join("");
   document.querySelector("[data-team]").innerHTML = [B.team.lead, ...B.team.members.slice(0, 2)].map(B.teamTile).join("");
-  document.querySelector("[data-intro]").innerHTML = B.introModule({ label: "Our story", lead: "Every bottle can be traced to a producer, a place and a vintage.", body: ["We work with a small number of family estates and visit each of them every year."], links: [["Our producers", "#components"], ["Our selection", "#components"]] }).replace('class="container intro-module"', 'class="intro-module"');
+  document.querySelector("[data-intro]").innerHTML = B.introModule({ label: "Our story", lead: "Provenance Wines brings carefully selected wines from distinctive producers to Norway.", body: ["We work with a small number of family estates and visit each of them every year."], links: [["Our producers", "#components"], ["Our selection", "#components"]] }).replace('class="container intro-module"', 'class="intro-module"');
   document.querySelector("[data-counter]").innerHTML = B.counters([["Founded", "1958"], ["Hectares of Land (Approximately)", "18"], ["Winemaker", "Juliette Rey"]], 3);
   const w = B.W["cotes-de-provence-rose-2025"], t = w.taste;
   document.querySelector("[data-price]").innerHTML = `<div class="pd" style="padding:0"><div class="pd-section">
@@ -441,7 +446,7 @@
     <ul class="pd-table"><li><span>Country</span><span>France</span></li><li><span>Region</span><span>Côtes de Provence</span></li><li><span>Vinmonopol number</span><span>${w.vm}</span></li></ul></div></div>`;
   document.querySelectorAll("[data-products] a, [data-articles] a").forEach((a) => (a.href = "index.html" + a.getAttribute("href")));
   const p = B.producers[4];
-  document.querySelector("[data-about]").innerHTML = `<section class="about-producer dark"><div class="container" style="padding-block:clamp(40px,5vw,64px)"><div class="img">${B.scene(p.scene, 11, "Producer hero")}</div><div><span class="label rule">About the producer</span><h2>${p.name}</h2><p class="intro">${p.intro}</p>${B.tlink("Read more", "#components")}</div></div></section>`;
+  document.querySelector("[data-about]").innerHTML = `<section class="about-producer dark"><div class="container" style="padding-block:clamp(40px,5vw,64px)"><div class="img">${B.producerImg(p, 11, "Producer hero")}</div><div><span class="label rule">About the producer</span><h2>${p.name}</h2><p class="intro">${p.intro}</p>${B.tlink("Read more", "#components")}</div></div></section>`;
 })();
 </script>
 </body>

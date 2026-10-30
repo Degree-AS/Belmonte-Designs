@@ -46,8 +46,10 @@ shared/prototype.js     Prototype engine shared by every brand (components, page
   logos/                Logo files as supplied by the client (renamed), reference only
 ```
 
-Brand status: **bottinor** has a brand guide and real copy (from the client); **provenance** and **core** are
-proposals (only logo files were supplied; colours, fonts, copy and all data are invented examples).
+Brand status: **bottinor** has a brand guide and real copy (from the client); **provenance** follows the client's
+Visual Identity v1.0 (2026-10-30) with placeholder photography in `provenance/assets/photos/`; **core** is a proposal
+(only logo files were supplied; colours, fonts, copy and all data are invented examples). Wines, sample producers,
+articles and people are invented examples in every brand.
 
 ## How to run and check
 

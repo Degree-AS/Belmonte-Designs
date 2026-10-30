@@ -132,6 +132,8 @@
   }
 
   const media = (img, note) => img.photo ? `<img class="cover" src="${img.photo}" alt="" loading="lazy">` : scene(img.scene, img.seed, note ?? img.note ?? "");
+  // Producer images: a photo when brand.js gives one (producer.photo / producer.storyPhoto), otherwise an illustration
+  const producerImg = (p, seed, note, key = "photo") => (p[key] ? media({ photo: p[key] }) : scene(key === "storyPhoto" ? B.storyScene : p.scene, seed, note));
 
   function meter(v) {
     const c = 2 * Math.PI * 8.45, len = (v / 12) * c;
@@ -446,7 +448,7 @@
     </div>
     <section class="about-producer dark" aria-label="About the producer"${cms("parent › producer (name, intro, hero, path)", PD + "/about-producer")}>
       <div class="container">
-        <div class="img"${fld("hero")}>${scene(p.scene, 11, "Producer hero")}</div>
+        <div class="img"${fld("hero")}>${producerImg(p, 11, "Producer hero")}</div>
         <div>
           <span class="label rule">About the producer</span>
           <h2${fld("name")}>${esc(p.name)}</h2>
@@ -479,7 +481,7 @@
     const list = producers.filter((p) => (!pstate.country || p.country === pstate.country) && (!pstate.q || (p.name + p.district + p.country).toLowerCase().includes(pstate.q.toLowerCase())));
     el.innerHTML = list.length ? list.map((p, i) => `<a class="producer-row" href="#pr.${p.slug}"${i === 0 ? cms("producer", "features/producer/single-producer", "Fields: name, path, hero, attributes.properties (Country, District)") : ""}>
         <h2${i === 0 ? fld("name") : ""}>${esc(p.name)}</h2><span class="country"${i === 0 ? fld("properties › Country") : ""}>${esc(p.country)}</span><span class="district"${i === 0 ? fld("properties › District") : ""}>${esc(p.district)}</span>
-        <span class="float" aria-hidden="true">${scene(p.scene, i + 2)}</span>
+        <span class="float" aria-hidden="true">${producerImg(p, i + 2, "")}</span>
       </a>`).join("") : `<p class="empty">No producers match your search.</p>`;
     applyDev();
   }
@@ -495,13 +497,13 @@
       <h1${fld("name")}>${esc(p.name)}</h1>
       <div class="row"><span${fld("properties › Country, District")}>#${esc(p.country)} | #${esc(p.district)}</span>${tlink("All wines", "#all-wines", "down")}</div>
     </div>
-    <div class="container"><div class="producer-hero"${cms("producer › hero", PRD + " (hero image)")}>${scene(p.scene, 21, "Producer hero")}</div></div>
+    <div class="container"><div class="producer-hero"${cms("producer › hero", PRD + " (hero image)")}>${producerImg(p, 21, "Producer hero")}</div></div>
     <div class="container producer-intro"${cms("producer › intro", PRD + " (intro, rich text)")}><p>${esc(p.intro)}</p></div>
     <div class="container">
       ${counters([["Founded", p.founded], ["Hectares of Land (Approximately)", p.ha], ["Numbers of different wines", p.wines], ["Production Per year (bottles)", p.bottles], ["Winemaker", p.winemaker], ["Varietals", p.varietals]], 3, "producer › attributes.properties")}
     </div>
     <div class="container story">
-      <figure class="single-image large"${cms("producer › story[0].firstImage", "blocks/single-image")}>${scene(B.storyScene, 31, "Story image")}</figure>
+      <figure class="single-image large"${cms("producer › story[0].firstImage", "blocks/single-image")}>${producerImg(p, 31, "Story image", "storyPhoto")}</figure>
       ${story.map((s, i) => `<div class="paragraphs"${cms(`producer › story[${i}] (title, body)`, "blocks/paragraph-collection")}>
         <div class="row"><span class="label"${i === 0 ? fld("title") : ""}>${esc(s.title)}</span><p${i === 0 ? fld("body") : ""}>${esc(s.body)}</p></div>
       </div>`).join("")}
@@ -547,7 +549,7 @@
     </div>`;
 
   // Shared with design-system.html, which renders component previews from the same helpers.
-  window.Proto = { I, wines, W, producers, articles, team, bottle, scene, portrait, meter, tlink, keyInfo, tileInfo, kr, productTile, articleTile, teamTile, counters, introModule, BLOCKS };
+  window.Proto = { I, wines, W, producers, articles, team, bottle, scene, portrait, meter, tlink, keyInfo, tileInfo, kr, productTile, articleTile, teamTile, counters, introModule, BLOCKS, producerImg, media };
   if (!document.getElementById("app")) return;
 
   // ---------- Router ----------

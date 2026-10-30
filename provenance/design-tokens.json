@@ -1,35 +1,46 @@
 {
   "brand": "provenance",
-  "status": "proposal",
-  "source": "LOGO_PROVENANCE_WINES_OVERVIEW.pdf (last page) for charcoal and blush; other values proposed",
+  "status": "brand book v1.0",
+  "source": "Provenance Wines Visual Identity, proposal v1.0, 29 October 2026 (HEX / RGB masters p.29)",
   "color": {
-    "fromLogo": {
-      "charcoal": { "value": "#474545", "use": "Dark surfaces, body text, primary actions" },
-      "blush": { "value": "#EEBEB1", "use": "Logo on dark, accents on charcoal, highlights" }
+    "core": {
+      "warm-ivory": { "value": "#F7F3EF", "use": "Primary background, paper-like space and page rhythm" },
+      "forest-green": { "value": "#1B2B1D", "use": "Headlines, navigation, dark panels, buttons" },
+      "signature-pink": { "value": "#F5A092", "use": "Logo and controlled emphasis; on Forest only, never as text on Ivory" }
     },
-    "proposed": {
-      "porcelain": { "value": "#FAF6F4", "use": "Page background, light text on charcoal" },
-      "shell": { "value": "#F4E7E2", "use": "Cards and panels" },
-      "rosewood": { "value": "#9A5A4E", "use": "Accent text and labels on light surfaces" },
-      "stone": { "value": "#6F6A69", "use": "Secondary text" },
-      "blush-soft": { "value": "#F2D5CC", "use": "Hover tint for shell cards" }
+    "supporting": {
+      "charcoal": { "value": "#454342", "use": "Primary body text" },
+      "earth-red": { "value": "#8B463B", "use": "Alternative logo, links and emphasis" },
+      "sage": { "value": "#A9B1A2", "use": "Quiet panels, diagrams" },
+      "stone": { "value": "#E8E3DF", "use": "Dividers, secondary surfaces" }
     },
-    "pngExportValues": { "black": "#000000", "pink": "#F8BAAC", "note": "Differ from the PDF; to confirm" }
+    "derived": {
+      "muted": { "value": "#6B6662", "use": "Secondary text on Ivory (web)" }
+    },
+    "balance": "55% Ivory / 25% Forest / 10% Pink / 5% Stone / 3% Sage / 2% Earth (flat colour, excluding photographs)"
   },
   "font": {
-    "serif": { "family": "Fraunces", "weights": [300, 400, 500], "axes": "opsz, SOFT", "use": "Headings, labels (italic)" },
-    "sans": { "family": "Instrument Sans", "weights": [400, 500, 600], "use": "Body, UI (font-global)" }
+    "primary": { "family": "Manrope", "weights": [400, 500, 600, 700], "use": "Headlines, body copy, navigation, facts, tables, labels" },
+    "accent": { "family": "Newsreader", "weights": [400], "styles": ["normal", "italic"], "use": "Slogan, short introduction, occasional quotation" }
   },
   "typeScale": {
-    "display": { "desktop": "76px", "mobile": "40px" },
-    "h1": { "desktop": "62px", "mobile": "34px" },
-    "h2": { "desktop": "44px", "mobile": "28px" },
-    "h3": { "desktop": "30px", "mobile": "22px" },
-    "large": { "desktop": "26px", "mobile": "20px" },
-    "medium": { "desktop": "21px", "mobile": "17px" },
-    "body": "17px",
-    "label": { "size": "16px", "style": "italic serif", "transform": "none" }
+    "display": { "web": "56/60px", "mobile": "38px", "family": "Manrope Medium" },
+    "h1": { "web": "44/48px", "mobile": "32px", "family": "Manrope Medium" },
+    "h2": { "web": "28/34px", "mobile": "24px", "family": "Manrope Semibold" },
+    "body": { "web": "18/28px", "family": "Manrope Regular" },
+    "label": { "web": "12/16px", "family": "Manrope Semibold", "letterSpacing": "0.14em", "transform": "uppercase" },
+    "accent": { "web": "30/36px", "mobile": "22px", "family": "Newsreader Regular" }
   },
-  "shape": { "arch": "999px 999px 0 0", "pill": "999px" },
+  "contrast": {
+    "forest-on-ivory": "13.49:1",
+    "charcoal-on-ivory": "8.91:1",
+    "pink-on-forest": "7.32:1",
+    "earth-on-ivory": "6.26:1",
+    "forest-on-sage": "6.74:1",
+    "pink-on-ivory": "1.84:1 — do not use for text"
+  },
+  "logo": { "clearSpace": "x = 1/3 of the visible logo height", "minWidth": "180px screen / 48mm print" },
+  "layout": { "grid": "12 columns desktop, 4 mobile", "spacing": [8, 16, 24, 32, 48, 64], "margins": "64px desktop, 24px mobile" },
+  "shape": { "radius": "0" },
   "motion": { "ease": "cubic-bezier(0.33, 0, 0.33, 1)" }
 }
