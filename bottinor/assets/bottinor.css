@@ -145,6 +145,7 @@ ul { margin: 0; }
 @media (max-width: 760px) {
   .banner-gallery { height: auto; display: grid; gap: 24px; padding-block: 32px; }
   .banner-gallery h1, .banner-gallery .intro { position: static; transform: none; }
+  .banner-gallery h1 { max-width: none; text-wrap: balance; }
   .banner-gallery .intro { order: 2; max-width: none; text-align: center; }
   .banner-gallery .imgs { order: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .banner-gallery .img { position: relative; inset: auto; width: auto; }
