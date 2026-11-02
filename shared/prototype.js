@@ -134,6 +134,8 @@
   const media = (img, note) => img.photo ? `<img class="cover" src="${img.photo}" alt="" loading="lazy">` : scene(img.scene, img.seed, note ?? img.note ?? "");
   // Producer images: a photo when brand.js gives one (producer.photo / producer.storyPhoto), otherwise an illustration
   const producerImg = (p, seed, note, key = "photo") => (p[key] ? media({ photo: p[key] }) : scene(key === "storyPhoto" ? B.storyScene : p.scene, seed, note));
+  // Team portraits: a photo when brand.js gives one (member.photo), otherwise the drawn placeholder
+  const memberImg = (m, seed) => (m.photo ? media({ photo: m.photo }) : portrait(m.name, seed));
 
   function meter(v) {
     const c = 2 * Math.PI * 8.45, len = (v / 12) * c;
@@ -170,7 +172,7 @@
 
   // features/team-members/team-member-tile.tsx ← employee
   const teamTile = (m, i) => `<article class="t-tile"${cms("employee", "features/team-members/team-member-tile", "Fields: picture, name, roles.position, bio, email, phone")}>
-      <div class="img"${fld("picture")}>${portrait(m.name, i)}</div>
+      <div class="img"${fld("picture")}>${memberImg(m, i)}</div>
       <h3${fld("name")}>${esc(m.name)}</h3>
       <p class="role"${fld("roles › position")}>${esc(m.role)}</p>
       <div class="contact"><span${fld("email")}>${I.mail}${esc(m.email)}</span><span${fld("phone")}>${I.phone}${esc(m.phone)}</span></div>
@@ -243,7 +245,7 @@
       return `<section class="container employee-block" aria-label="Employees"${cms(shape + " › blocks › employees", "blocks/employee", "Fields: label, employeeList → employee (name, roles, picture, email, phone, bio)")}>
         ${b.label ? `<p class="label rule"${fld("label")}>${esc(b.label)}</p>` : ""}
         <article class="employee">
-          <div class="img"${fld("employee › picture")}>${portrait(m.name, 1)}</div>
+          <div class="img"${fld("employee › picture")}>${memberImg(m, 1)}</div>
           <div>
             <h4${fld(b.heading ? "NEW FIELD: heading (proposed, e.g. a first-person greeting)" : "employee › name")}>${esc(b.heading || m.name)}</h4>
             <p class="role"${fld("employee › roles")}>${esc(m.role)}</p>
@@ -549,7 +551,7 @@
     </div>`;
 
   // Shared with design-system.html, which renders component previews from the same helpers.
-  window.Proto = { I, wines, W, producers, articles, team, bottle, scene, portrait, meter, tlink, keyInfo, tileInfo, kr, productTile, articleTile, teamTile, counters, introModule, BLOCKS, producerImg, media };
+  window.Proto = { I, wines, W, producers, articles, team, bottle, scene, portrait, meter, tlink, keyInfo, tileInfo, kr, productTile, articleTile, teamTile, counters, introModule, BLOCKS, producerImg, memberImg, media };
   if (!document.getElementById("app")) return;
 
   // ---------- Router ----------

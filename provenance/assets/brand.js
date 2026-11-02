@@ -2,7 +2,8 @@
    Visual identity: Provenance Wines Visual Identity v1.0 (29 October 2026). The "Our story" text and the slogan come
    from it; the rest of the copy, wines, producers, articles and people are example content.
    Photos (client, 2026-10-30) are art-direction placeholders, not the final website photography: assets/photos/lqp-*
-   from lesquatrepiliers.com, the others from the client's folder. They are not portraits of the sample producers. */
+   from lesquatrepiliers.com, the others from the client's folder. They are not portraits of the sample producers.
+   Team portraits (assets/photos/team-*) are free Unsplash stock photos standing in for the real team. */
 (() => {
   const producers = [
     { slug: "vaillant-rey", photo: "assets/photos/lqp-house.jpg", storyPhoto: "assets/photos/lqp-pillar.jpg", name: "Domaine Vaillant-Rey", country: "France", district: "Loire", region: "Sancerre", founded: "1958", ha: "18", wines: "6", bottles: "90 000", winemaker: "Juliette Rey", varietals: "Sauvignon Blanc, Pinot Noir", scene: "stone",
@@ -56,7 +57,7 @@
     { slug: "from-vineyard-to-vinmonopolet", title: "From vineyard to Vinmonopolet", sub: "The route a bottle takes before it reaches a Norwegian shelf.", img: { photo: "assets/photos/lqp-tanks.jpg" } },
   ];
 
-  const person = (name, role) => ({ name, role, email: name.split(" ")[0].toLowerCase() + "@provenancewines.no", phone: "+47 000 00 000" });
+  const person = (name, role, photo) => ({ name, role, email: name.split(" ")[0].toLowerCase() + "@provenancewines.no", phone: "+47 000 00 000", ...(photo && { photo: `assets/photos/team-${photo}.jpg` }) });
 
   window.BRAND = {
     key: "provenance",
@@ -94,11 +95,11 @@
     storyScene: "cellar",  // fallback when a producer has no storyPhoto
     producers, wines, articles,
     team: {
-      lead: { ...person("Ingrid Solberg", "Managing Director"), bio: [
+      lead: { ...person("Ingrid Solberg", "Managing Director", "ingrid"), bio: [
         "Ingrid has spent twenty years in the Norwegian wine trade, on the restaurant floor and as an importer.",
         "She visits every producer in the portfolio at least once a year and still tastes every new vintage before it is offered in Norway.",
       ] },
-      members: [person("Jonas Berg", "Sales Director"), person("Mari Haugen", "Key Account Manager"), person("Anders Lie", "Area Sales Manager"), person("Sofie Dahl", "Brand Manager"), person("Henrik Moe", "Area Sales Manager"), person("Thea Nilsen", "On-trade Manager"), person("Erik Strand", "Area Sales Manager"), person("New colleague", "Joining January 2027")],
+      members: [person("Jonas Berg", "Sales Director", "jonas"), person("Mari Haugen", "Key Account Manager", "mari"), person("Anders Lie", "Area Sales Manager", "anders"), person("Sofie Dahl", "Brand Manager", "sofie"), person("Henrik Moe", "Area Sales Manager", "henrik"), person("Thea Nilsen", "On-trade Manager", "thea"), person("Erik Strand", "Area Sales Manager", "erik"), person("New colleague", "Joining January 2027")],
     },
 
     // domain shape › blocks[] (only blocks FetchDomainPage requests)

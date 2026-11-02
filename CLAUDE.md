@@ -174,6 +174,8 @@ Defines `window.BRAND`. Keys (see `core/assets/brand.js` for a complete example)
 - `nav` (header links `[label, href, routePrefix]`), `footerSecondary[]`, `titles.articles`
 - `demo`: `product`, `producer` slugs used by the prototype navigator
 - `producers[]`, `wines[]`, `articles[]`, `team { lead (with bio[]), members[] }`
+  (producer `photo` / `storyPhoto` and member `photo` are optional image paths; without them the engine draws a
+  placeholder)
 - `home[]`: domain block list; `articleBlocks[]`: article block list (the cover image is added automatically)
 - `producerStory[]`: `{title, body}` with `{field}` placeholders filled from the producer (e.g. `{region}`)
 - `contact`: the contact page introModule (`label`, `lead`, `body[]`)

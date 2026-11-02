@@ -21,8 +21,8 @@ with real photos as a general idea of the site. Done as follows:
 - **Layout: unchanged.** Same pages, blocks, order and alignment as agreed on 2026-10-27.
 - **Visual identity: replaced.** The earlier proposal (Charcoal/Blush, Fraunces + Instrument Sans, arch-shaped
   images) is gone; everything now follows the brand book.
-- **Photos:** illustrations replaced by photographs everywhere except the team portraits (no team photos yet) and
-  the product bottles (illustrated, as before).
+- **Photos:** illustrations replaced by photographs everywhere except the product bottles (illustrated, as before).
+  Team tiles use sample stock portraits until the real team photos arrive.
 
 ## Visual identity applied
 
@@ -49,6 +49,7 @@ photos"). They are not portraits of the sample producers on the site.
 |---|---|
 | `assets/photos/lqp-*.jpg` | lesquatrepiliers.com (Les Quatre Piliers; several credited Marco Strullu on the site) |
 | `assets/photos/lqp-house-vines.jpg`, `curley-horse-tower.jpg`, `boxler-village.jpg`, `cecillon-portrait.jpg`, `cecillon-horse.jpg`, `cecillon-terraces.jpg`, `desloges-portrait.jpg` | Client's photo folder (filemail, 2026-10-30) |
+| `assets/photos/team-*.jpg` | Free Unsplash stock portraits (Unsplash licence), sample team only; the "New colleague" slot keeps the drawn placeholder |
 
 Not used: `hammeken ff.jpg` — Hammeken Cellars is listed in the brand book as a prospect, and prospects must not be
 shown as partners (p.24). Rights and producer approval are needed before any public use; the prototype is published
@@ -68,7 +69,7 @@ on GitHub Pages, so treat the link as internal.
 | `logos/` | Supplied PNG exports (renamed) and the old overview's last page, reference only |
 
 The page markup comes from `../shared/prototype.js`, shared by every brand. Producer photos use the engine's
-`producer.photo` / `producer.storyPhoto` fields (illustration fallback).
+`producer.photo` / `producer.storyPhoto` fields and team portraits `member.photo` (drawn placeholder as fallback).
 
 ## Components
 
@@ -133,5 +134,5 @@ Needs app/CMS work (shown in the dev view as "NEW FIELD"):
   the intros, product page and footer. Keep the agreed layout or left-align?
 - **Footer colour:** Forest `#1B2B1D` now replaces the interim Belmonte green `#162A19` — confirm.
 - **Logo:** the master SVG is needed for the app.
-- **Photography:** final photography, rights and producer approval; team portraits.
+- **Photography:** final photography, rights and producer approval; real team portraits to replace the stock samples.
 - **Content:** real producers, wines, articles and people in Crystallize; the rest of the website copy.
