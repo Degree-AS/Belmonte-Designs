@@ -95,8 +95,9 @@ Agreed in the meeting and built in the prototype:
 - Products: real products of these producers as listed at Vinmonopolet (name, number, price, volume, alcohol and
   photo, checked 2026-11-04), one or two per producer. Brother's Bond is not at Vinmonopolet and keeps the drawn
   bottle (the agreed fallback). The full list comes from the client.
-- Home hero: title "The core of quality.", slogan "Spirits with a soul and a clear origin, curated by people who know
-  the trade." (proposal; the client will look for a slogan). Image: the original Graphite landscape with **agave
+- Home hero: title **"Quality at the heart of everything we do."** (from Sabrina by email after the meeting, "Core —
+  quality at the heart of everything we do."; the logo above supplies "Core"), intro "Spirits with a soul and a clear
+  origin, curated by people who know the trade." (proposal). Image: the original Graphite landscape with **agave
   fields instead of vine rows** ("perfekt"). Busier options (back bar, apothecary shelves, botanical plates, photos
   around the title) were tried and dropped as "too much".
 - No cognac in Core's own copy.

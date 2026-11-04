@@ -139,7 +139,7 @@
 
     // domain shape › blocks[] (only blocks FetchDomainPage requests)
     home: [
-      { type: "banner", title: "The core<br>of quality.", intro: "Spirits with a soul and a clear origin, curated by people who know the trade.", image: { photo: "assets/hero-landscape.svg" } },
+      { type: "banner", title: "Quality at the heart<br>of everything we do.", intro: "Spirits with a soul and a clear origin, curated by people who know the trade.", image: { photo: "assets/hero-landscape.svg" } },
       { type: "intro", label: "Core Beverages",
         lead: "Decades of industry knowledge, and an uncompromising search for the genuine.",
         body: ["Core Beverages was founded to unite decades of industry knowledge with an uncompromising search for the genuine. We are built on a solid foundation of experience, from world-leading producers to carefully selected craft products.",
