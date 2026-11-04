@@ -47,9 +47,10 @@ shared/prototype.js     Prototype engine shared by every brand (components, page
 ```
 
 Brand status: **bottinor** has a brand guide and real copy (from the client); **provenance** follows the client's
-Visual Identity v1.0 (2026-10-30) with placeholder photography in `provenance/assets/photos/`; **core** is a proposal
-(only logo files were supplied; colours, fonts, copy and all data are invented examples). Wines, sample producers,
-articles and people are invented examples in every brand.
+Visual Identity v1.0 (2026-10-30) with placeholder photography in `provenance/assets/photos/`; **core** sells
+**spirits, not wine** (reviewed 2026-11-04): real producers and descriptions from the client, real products from
+Vinmonopolet, colours and fonts still a proposal. Otherwise wines, sample producers, articles and people are invented
+examples. Norwegian alcohol law also rules out links from the sites to producers' websites.
 
 ## How to run and check
 
@@ -155,6 +156,17 @@ implemented, and the dev view labels them "NEW FIELD". Use them only where a bra
 - `producerList`: `links: [[text, href], …]` instead of `link`; no link at all if both are left out.
 - `employees`: `heading` (shown instead of the name), or `tiles: n` (+ `skipLead`, `link`) for a row of team tiles.
 - Wines: `vmPhoto: "<Vinmonopolet product number>"` shows the Vinmonopolet photo; otherwise the illustrated bottle.
+
+Added in the 2026-11-04 Core review:
+
+- `employees`: `member: "<name>"` shows that employee instead of the lead, `reverse: true` puts the picture on the
+  right (alternating rows); with `tiles`, `skip: n` leaves out the first n of `[lead, ...members]`.
+- `contactGroups: [{ label, names: [...] }]` in `brand.js`: the contact page's employee list in labelled groups.
+
+Brand data options (no app change, just data or wording): `wines[].volume` (default "0,75 L"), bottle `shape:
+"spirit" | "decanter"` and `glass: "amber" | "straw"`, `producerFacts: [[label, producerKey], …]` for the producer
+page key facts, `titles.allProducts` / `titles.productsWord` ("All wines" / "wines" by default) and
+`colors.sceneRows: false` (landscape placeholders without vine rows, for spirits).
 
 In `shared/prototype.js` write `\n` in strings with an editor, not through a shell heredoc (the shell eats the
 backslash).

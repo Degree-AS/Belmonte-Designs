@@ -218,6 +218,7 @@ ul { margin: 0; }
 .employee-block > .label { padding-bottom: 36px; }
 .employee { display: grid; grid-template-columns: 542fr 541fr; gap: clamp(40px, 8vw, 146px); align-items: center; }
 .employee .img { aspect-ratio: 542 / 687; overflow: hidden; }
+.employee.reverse .img { order: 2; } /* proposed: picture on the right */
 .employee h4 { font-size: var(--h1); }
 .employee .role { margin-top: 10px; font-size: var(--small); color: var(--muted); }
 .employee .contact { margin-top: 20px; display: flex; gap: 28px; flex-wrap: wrap; font-size: 14px; }

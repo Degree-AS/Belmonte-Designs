@@ -45,8 +45,11 @@
     burgundy: { path: "M34 8h12v58c0 32 24 52 24 88v130c0 5-3 8-8 8H18c-5 0-8-3-8-8V154c0-36 24-56 24-88Z", cap: 56, label: [15, 176, 50, 74] },
     flute: { path: "M33 8h14v54c0 36 26 54 26 92v130c0 5-3 8-8 8H15c-5 0-8-3-8-8V154c0-38 26-56 26-92Z", cap: 84, label: [13, 180, 54, 64] },
     alsace: { path: "M35 8h10v92c0 22 17 30 17 52v132c0 5-3 8-8 8H26c-5 0-8-3-8-8V152c0-22 17-30 17-52Z", cap: 58, label: [21, 182, 38, 72] },
+    // Spirits: straight-sided bottle with a short neck, and a squat decanter (cognac)
+    spirit: { path: "M33 8h14v58c0 10 23 12 23 26v192c0 5-3 8-8 8H18c-5 0-8-3-8-8V92c0-14 23-16 23-26Z", cap: 36, label: [14, 150, 52, 84] },
+    decanter: { path: "M34 8h12v74c0 14 30 24 30 62v140c0 5-3 8-8 8H12c-5 0-8-3-8-8V144c0-38 30-48 30-62Z", cap: 40, label: [10, 182, 60, 76] },
   };
-  const GLASS = { red: ["#1c1714", "#2c2420"], white: ["#b9b98a", "#d4d3ab"], rose: ["#e2aea4", "#efc9c0"], sparkling: ["#1c2a1d", "#2b3d2c"], clear: ["#d8d2c4", "#ece7dc"] };
+  const GLASS = { red: ["#1c1714", "#2c2420"], white: ["#b9b98a", "#d4d3ab"], rose: ["#e2aea4", "#efc9c0"], sparkling: ["#1c2a1d", "#2b3d2c"], clear: ["#d8d2c4", "#ece7dc"], amber: ["#7a4513", "#b8742a"], straw: ["#b8923a", "#dcc078"] };
 
   // Product photo from Vinmonopolet by product number (as the client does today); illustrated bottle as fallback
   const VM_PHOTO = (n) => `https://bilder.vinmonopolet.no/cache/1500x1500-0/${n}-1.jpg`;
@@ -116,7 +119,7 @@
       <path d="${hill(120, 34, 3)}" fill="${h1}"/>
       <path d="${hill(150, 26, 4)}" fill="${h2}"/>
       <path d="M0 ${vy + 2} Q200 ${vy - 18} 400 ${vy + 6} V300 H0Z" fill="${h3}"/>
-      ${rows}${posts}
+      ${C.sceneRows === false ? "" : rows + posts}
     </svg></span>`;
   }
 
@@ -151,8 +154,8 @@
   // ---------- Shared components ----------
   const tlink = (text, href, cls = "", extra = "") => `<a class="tlink ${cls}" href="${href}"${extra}>${esc(text)} ${I.arrow}</a>`;
   // Product page key info (FetchProductPage has region); the list query does not fetch region
-  const keyInfo = (w) => [w.type, w.country, w.region, "0,75 L", w.alc.replace(".", ",")].join(" | ");
-  const tileInfo = (w) => [w.type, w.country, "0,75 L", w.alc.replace(".", ",")].join(" | ");
+  const keyInfo = (w) => [w.type, w.country, w.region, w.volume || "0,75 L", w.alc.replace(".", ",")].join(" | ");
+  const tileInfo = (w) => [w.type, w.country, w.volume || "0,75 L", w.alc.replace(".", ",")].join(" | ");
 
   // features/product-tile/product-tile.tsx ← defaultProduct
   const productTile = (w) => `<a class="p-tile" href="#p.${w.slug}"${cms("defaultProduct", "features/product-tile", "Fields: name, productSubtype, country, volume, alcoholContent, defaultVariant.priceVariants, defaultVariant.firstImage")}>
@@ -238,19 +241,20 @@
       // Proposed variant: several employees as team tiles plus a link to the team page (employeeList holds a list)
       if (b.tiles) return `<section class="container employee-block" aria-label="Team"${cms(shape + " › blocks › employees", "blocks/employee", "Fields: label, employeeList → employee. Tile layout + team link: proposed")}>
         ${b.label ? `<p class="label rule"${fld("label")}>${esc(b.label)}</p>` : ""}
-        <div class="team-grid">${(b.skipLead ? team.members : [team.lead, ...team.members]).slice(0, b.tiles).map(teamTile).join("")}</div>
+        <div class="team-grid">${[team.lead, ...team.members].slice(b.skip ?? (b.skipLead ? 1 : 0)).slice(0, b.tiles).map(teamTile).join("")}</div>
         ${b.link ? `<p class="contact-more">${tlink(b.link, "#team", "", fld("NEW FIELD: team link"))}</p>` : ""}
       </section>`;
-      const m = team.lead;
+      // Proposed: `member` picks another employee than the lead, `reverse` puts the picture on the right (alternating rows)
+      const m = (b.member && [team.lead, ...team.members].find((x) => x.name === b.member)) || team.lead;
       return `<section class="container employee-block" aria-label="Employees"${cms(shape + " › blocks › employees", "blocks/employee", "Fields: label, employeeList → employee (name, roles, picture, email, phone, bio)")}>
         ${b.label ? `<p class="label rule"${fld("label")}>${esc(b.label)}</p>` : ""}
-        <article class="employee">
+        <article class="employee${b.reverse ? " reverse" : ""}"${b.reverse ? fld("NEW FIELD: picture position (right)") : ""}>
           <div class="img"${fld("employee › picture")}>${memberImg(m, 1)}</div>
           <div>
             <h4${fld(b.heading ? "NEW FIELD: heading (proposed, e.g. a first-person greeting)" : "employee › name")}>${esc(b.heading || m.name)}</h4>
             <p class="role"${fld("employee › roles")}>${esc(m.role)}</p>
             <div class="contact"${fld("employee › email, phone")}><span>${esc(m.email)}</span><span>${esc(m.phone)}</span></div>
-            <div class="bio"${fld("employee › bio")}>${m.bio.map((p) => p.startsWith("“") ? `<blockquote>${esc(p)}</blockquote>` : `<p>${esc(p)}</p>`).join("")}</div>
+            <div class="bio"${fld("employee › bio")}>${(m.bio || []).map((p) => p.startsWith("“") ? `<blockquote>${esc(p)}</blockquote>` : `<p>${esc(p)}</p>`).join("")}</div>
           </div>
         </article>
       </section>`;
@@ -406,7 +410,7 @@
     const list = filtered();
     const el = document.querySelector("[data-list]");
     if (!el) return;
-    el.innerHTML = list.length ? list.map(productTile).join("") : `<p class="empty">No wines match these filters.</p>`;
+    el.innerHTML = list.length ? list.map(productTile).join("") : `<p class="empty">No ${B.titles?.productsWord || "wines"} match these filters.</p>`;
     const tags = [];
     ["type", "country", "price", "producer"].forEach((k) => state[k].forEach((v) => tags.push(`<button class="tag" type="button" data-remove="${k}" data-v="${esc(v)}">${esc(v)} ${I.close}</button>`)));
     document.querySelector("[data-tags]").innerHTML = tags.length ? tags.join("") + `<button class="tag clear" type="button" data-clear>Remove all</button>` : "";
@@ -460,7 +464,7 @@
       </div>
     </section>
     ${related.length ? `<section class="container related" aria-label="Related wines"${cms("parent › producer.children (defaultProduct)", PD + "/related-products")}>
-      <div class="module-head"><span class="label rule">Wines from ${esc(p.name)}</span></div>
+      <div class="module-head"><span class="label rule">${esc((B.titles?.productsWord || "wines").replace(/^./, (c) => c.toUpperCase()))} from ${esc(p.name)}</span></div>
       <div class="product-list">${related.map(productTile).join("")}</div>
     </section>` : ""}`;
   };
@@ -497,12 +501,12 @@
     return `
     <div class="container producer-head"${cms("producer › name + attributes.properties", PRD, "Header: name, #Country | #District, All wines link")}>
       <h1${fld("name")}>${esc(p.name)}</h1>
-      <div class="row"><span${fld("properties › Country, District")}>#${esc(p.country)} | #${esc(p.district)}</span>${tlink("All wines", "#all-wines", "down")}</div>
+      <div class="row"><span${fld("properties › Country, District")}>#${esc(p.country)} | #${esc(p.district)}</span>${tlink(B.titles?.allProducts || "All wines", "#all-wines", "down")}</div>
     </div>
     <div class="container"><div class="producer-hero"${cms("producer › hero", PRD + " (hero image)")}>${producerImg(p, 21, "Producer hero")}</div></div>
     <div class="container producer-intro"${cms("producer › intro", PRD + " (intro, rich text)")}><p>${esc(p.intro)}</p></div>
     <div class="container">
-      ${counters([["Founded", p.founded], ["Hectares of Land (Approximately)", p.ha], ["Numbers of different wines", p.wines], ["Production Per year (bottles)", p.bottles], ["Winemaker", p.winemaker], ["Varietals", p.varietals]], 3, "producer › attributes.properties")}
+      ${counters(B.producerFacts ? B.producerFacts.map(([label, key]) => [label, p[key]]) : [["Founded", p.founded], ["Hectares of Land (Approximately)", p.ha], ["Numbers of different wines", p.wines], ["Production Per year (bottles)", p.bottles], ["Winemaker", p.winemaker], ["Varietals", p.varietals]], 3, "producer › attributes.properties")}
     </div>
     <div class="container story">
       <figure class="single-image large"${cms("producer › story[0].firstImage", "blocks/single-image")}>${producerImg(p, 31, "Story image", "storyPhoto")}</figure>
@@ -511,7 +515,7 @@
       </div>`).join("")}
     </div>
     <section class="container all-wines" id="all-wines" aria-label="Wines"${cms("producer children → defaultProduct[]", "features/product-list (#all-wines)")}>
-      <div class="module-head"><span class="label rule">Wines from ${esc(p.name)}</span></div>
+      <div class="module-head"><span class="label rule">${esc((B.titles?.productsWord || "wines").replace(/^./, (c) => c.toUpperCase()))} from ${esc(p.name)}</span></div>
       <div class="product-list">${list.map(productTile).join("")}</div>
     </section>`;
   };
@@ -545,7 +549,10 @@
     <div class="contact-view">
       ${introModule({ ...B.contact, source: "contact › introModule" })}
       <div class="container"${cms("contact › employeeList (employeeContact, link)", "views/contact-view")}>
-        <div class="team-grid"${fld("employeeContact.items")}>${[team.lead, ...team.members.slice(0, 3)].map(teamTile).join("")}</div>
+        ${B.contactGroups
+          // Proposed: the contact list in labelled groups (e.g. the main contacts, then the sales team)
+          ? B.contactGroups.map((g, i) => `<p class="label rule"${i === 0 ? fld("NEW FIELD: group label") : ""}>${esc(g.label)}</p><div class="team-grid"${i === 0 ? fld("employeeContact.items") : ""}>${g.names.map((n) => [team.lead, ...team.members].find((x) => x.name === n)).filter(Boolean).map(teamTile).join("")}</div>`).join("")
+          : `<div class="team-grid"${fld("employeeContact.items")}>${[team.lead, ...team.members.slice(0, 3)].map(teamTile).join("")}</div>`}
         <div class="contact-more">${tlink("View all team members", "#team", "", fld("link"))}</div>
       </div>
     </div>`;
