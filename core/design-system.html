@@ -427,12 +427,12 @@
   document.querySelector("[data-photos]").innerHTML = [["mist", 5, "Vineyard"], ["amber", 9, "Product"], ["graphite", 4, "Service"]].map(([s, n, note]) => `<div>${B.scene(s, n, note)}</div>`).join("");
   document.querySelector("[data-links]").innerHTML = B.tlink("Read more", "#components") + B.tlink("All wines", "#components", "down") + `<span class="label">Uppercase label</span><span class="label rule">Label with rule</span>`;
   document.querySelector("[data-links-dark]").innerHTML = B.tlink("Read more", "#components") + `<span class="label">About the producer</span>`;
-  document.querySelector("[data-products]").innerHTML = ["altamira-tempranillo-2023", "kaltberg-riesling-trocken-2024", "valdoro-primitivo-2023"].map((s) => B.productTile(B.W[s])).join("");
+  document.querySelector("[data-products]").innerHTML = ["lazzaroni-amaretto", "zafiro-gin", "takamaka-zenn"].map((s) => B.productTile(B.W[s])).join("");
   document.querySelector("[data-articles]").innerHTML = B.articles.slice(0, 3).map(B.articleTile).join("");
   document.querySelector("[data-team]").innerHTML = [B.team.lead, ...B.team.members.slice(0, 2)].map(B.teamTile).join("");
   document.querySelector("[data-intro]").innerHTML = B.introModule({ label: "Core Beverages", lead: "Dependable wines at fair prices, from producers who deliver every vintage.", body: ["We work with established producers who can supply large volumes.", "Our job is to keep the right wines available."], links: [["Our selection", "#components"], ["Our producers", "#components"]] }).replace('class="container intro-module"', 'class="intro-module"');
   document.querySelector("[data-counter]").innerHTML = B.counters([["Producers", "7"], ["Wines in the core range", "65"], ["Countries", "6"]], 3);
-  const w = B.W["altamira-tempranillo-2023"], t = w.taste;
+  const w = B.W["lazzaroni-amaretto"], t = w.taste;
   document.querySelector("[data-price]").innerHTML = `<div class="pd" style="padding:0;grid-template-columns:1fr"><div class="pd-section">
     <div class="pd-block"><p class="label">Characteristics</p><p class="pd-char">${w.char}</p></div>
     <div class="pd-price"><div><p class="amount">${B.kr(w.price)}</p><p class="label">Price at Vinmonopolet incl. VAT</p></div>${B.tlink("Vinmonopolet", "#components")}</div>

@@ -48,8 +48,9 @@ shared/prototype.js     Prototype engine shared by every brand (components, page
 
 Brand status: **bottinor** has a brand guide and real copy (from the client); **provenance** follows the client's
 Visual Identity v1.0 (2026-10-30) with placeholder photography in `provenance/assets/photos/`; **core** sells
-**spirits, not wine** (reviewed 2026-11-04): real producers and descriptions from the client, real products from
-Vinmonopolet, colours and fonts still a proposal. Otherwise wines, sample producers, articles and people are invented
+**spirits, not wine** (reviewed 2026-11-04): real producers, descriptions and producer photos from the client, the
+client's product list with data from Vinmonopolet, the four main contacts with real bios and portraits; colours and
+fonts still a proposal. Otherwise wines, sample producers, articles and people are invented
 examples. Norwegian alcohol law also rules out links from the sites to producers' websites.
 
 ## How to run and check
@@ -155,7 +156,8 @@ implemented, and the dev view labels them "NEW FIELD". Use them only where a bra
   `image` (image left or right, optional `image.caption`). Line breaks in `lead` with `\n` (media layout).
 - `producerList`: `links: [[text, href], …]` instead of `link`; no link at all if both are left out.
 - `employees`: `heading` (shown instead of the name), or `tiles: n` (+ `skipLead`, `link`) for a row of team tiles.
-- Wines: `vmPhoto: "<Vinmonopolet product number>"` shows the Vinmonopolet photo; otherwise the illustrated bottle.
+- Wines: `vmPhoto: "<Vinmonopolet product number>"` shows the Vinmonopolet photo, `photo: "assets/…jpg"` a packshot
+  file on white (products not at Vinmonopolet); otherwise the illustrated bottle.
 
 Added in the 2026-11-04 Core review:
 
@@ -163,7 +165,9 @@ Added in the 2026-11-04 Core review:
   right (alternating rows); with `tiles`, `skip: n` leaves out the first n of `[lead, ...members]`.
 - `contactGroups: [{ label, names: [...] }]` in `brand.js`: the contact page's employee list in labelled groups.
 
-Brand data options (no app change, just data or wording): `wines[].volume` (default "0,75 L"), bottle `shape:
+Brand data options (no app change, just data or wording): `wines[].volume` (default "0,75 L"), `wines[].sugar`
+(the product table's sugar row; otherwise guessed from the sweetness meter), `vm: ""` for a product not at
+Vinmonopolet (no number or GTIN row), bottle `shape:
 "spirit" | "decanter"` and `glass: "amber" | "straw"`, `producerFacts: [[label, producerKey], …]` for the producer
 page key facts, `titles.allProducts` / `titles.productsWord` ("All wines" / "wines" by default) and
 `colors.sceneRows: false` (landscape placeholders without vine rows, for spirits).
@@ -188,7 +192,8 @@ Defines `window.BRAND`. Keys (see `core/assets/brand.js` for a complete example)
 - `producers[]`, `wines[]`, `articles[]`, `team { lead (with bio[]), members[] }`
   (producer `photo` / `storyPhoto` and member `photo` are optional image paths; without them the engine draws a
   placeholder)
-- `home[]`: domain block list; `articleBlocks[]`: article block list (the cover image is added automatically)
+- `home[]`: domain block list; `articleBlocks[]`: article block list shared by all articles, or `articles[].blocks`
+  for an article's own body (the cover image is added automatically; `sub` is optional)
 - `producerStory[]`: `{title, body}` with `{field}` placeholders filled from the producer (e.g. `{region}`)
 - `contact`: the contact page introModule (`label`, `lead`, `body[]`)
 

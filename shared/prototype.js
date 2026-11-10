@@ -51,13 +51,14 @@
   };
   const GLASS = { red: ["#1c1714", "#2c2420"], white: ["#b9b98a", "#d4d3ab"], rose: ["#e2aea4", "#efc9c0"], sparkling: ["#1c2a1d", "#2b3d2c"], clear: ["#d8d2c4", "#ece7dc"], amber: ["#7a4513", "#b8742a"], straw: ["#b8923a", "#dcc078"] };
 
-  // Product photo from Vinmonopolet by product number (as the client does today); illustrated bottle as fallback
+  // Product photo from Vinmonopolet by product number (as the client does today), or a packshot file (w.photo, on
+  // white) for products not at Vinmonopolet; illustrated bottle as fallback
   const VM_PHOTO = (n) => `https://bilder.vinmonopolet.no/cache/1500x1500-0/${n}-1.jpg`;
   function bottle(w) {
-    if (w.vmPhoto) return `<img class="vm-photo" src="${VM_PHOTO(w.vmPhoto)}" alt="${esc(w.name)}" loading="lazy">`;
+    if (w.vmPhoto || w.photo) return `<img class="vm-photo" src="${w.photo || VM_PHOTO(w.vmPhoto)}" alt="${esc(w.name)}" loading="lazy">`;
     const s = SHAPES[w.shape], g = GLASS[w.glass], p = P[w.producer];
     const [lx, ly, lw, lh] = s.label;
-    const id = "g" + w.vm;
+    const id = "g-" + w.slug;
     const initials = p.name.split(/\s+/).filter((x) => /^[A-ZÀ-Ý]/.test(x)).slice(-2).map((x) => x[0]).join("");
     // Up to two words on the label, one if they would not fit
     const words = w.name.replace(/\s\d{4}$/, "").split(" ");
@@ -444,7 +445,7 @@
         </div>
         <div class="pd-block"${cms("description", PD + "/about-product")}><p class="label">About wine</p><p>${esc(w.desc)}</p></div>
         <ul class="pd-table"${cms("packagingType, closureType, sugarContent, country, region, subRegion, skanlogNumber, vinmonopoletId, epdNumber, gtin, allergens", PD + "/product-table", "Rows render only when the field has a value")}>
-          ${[["Packaging type", "Glass bottle"], ["Closure type", w.type === "Sparkling" ? "Cork with muselet" : "Natural cork"], ["Sugar", w.taste.sweetness > 3 ? "38 g/l" : "Under 3 g/l"], ["Country", w.country], ["Location", p.district], ["Region", p.region], ["Vinmonopol number", w.vm], ["GTIN", "70" + w.vm + "00012"], ["Allergens", "Contains sulphites"]].map(([a, b]) => `<li><span>${a}</span><span>${esc(b)}</span></li>`).join("")}
+          ${[["Packaging type", "Glass bottle"], ["Closure type", w.type === "Sparkling" ? "Cork with muselet" : "Natural cork"], ["Sugar", w.sugar || (w.taste.sweetness > 3 ? "38 g/l" : "Under 3 g/l")], ["Country", w.country], ["Location", p.district], ["Region", p.region], ["Vinmonopol number", w.vm], ["GTIN", w.vm && "70" + w.vm + "00012"], ["Allergens", "Contains sulphites"]].filter(([, b]) => b).map(([a, b]) => `<li><span>${a}</span><span>${esc(b)}</span></li>`).join("")}
         </ul>
         <div class="pd-attach"${cms("code: product sheet PDF + image download", PD + "/product-attachments")}>
           <div class="dl"><a>${I.file}Download product sheet</a><a>${I.image}Download product image</a></div>
@@ -501,7 +502,7 @@
     return `
     <div class="container producer-head"${cms("producer › name + attributes.properties", PRD, "Header: name, #Country | #District, All wines link")}>
       <h1${fld("name")}>${esc(p.name)}</h1>
-      <div class="row"><span${fld("properties › Country, District")}>#${esc(p.country)} | #${esc(p.district)}</span>${tlink(B.titles?.allProducts || "All wines", "#all-wines", "down")}</div>
+      <div class="row"><span${fld("properties › Country, District")}>#${esc(p.country)} | #${esc(p.district)}</span>${list.length ? tlink(B.titles?.allProducts || "All wines", "#all-wines", "down") : ""}</div>
     </div>
     <div class="container"><div class="producer-hero"${cms("producer › hero", PRD + " (hero image)")}>${producerImg(p, 21, "Producer hero")}</div></div>
     <div class="container producer-intro"${cms("producer › intro", PRD + " (intro, rich text)")}><p>${esc(p.intro)}</p></div>
@@ -514,10 +515,10 @@
         <div class="row"><span class="label"${i === 0 ? fld("title") : ""}>${esc(s.title)}</span><p${i === 0 ? fld("body") : ""}>${esc(s.body)}</p></div>
       </div>`).join("")}
     </div>
-    <section class="container all-wines" id="all-wines" aria-label="Wines"${cms("producer children → defaultProduct[]", "features/product-list (#all-wines)")}>
+    ${list.length ? `<section class="container all-wines" id="all-wines" aria-label="Wines"${cms("producer children → defaultProduct[]", "features/product-list (#all-wines)")}>
       <div class="module-head"><span class="label rule">${esc((B.titles?.productsWord || "wines").replace(/^./, (c) => c.toUpperCase()))} from ${esc(p.name)}</span></div>
       <div class="product-list">${list.map(productTile).join("")}</div>
-    </section>`;
+    </section>` : ""}`;
   };
 
   // Articles list: views/articles-view ← articles shape + article children
@@ -530,11 +531,12 @@
   // Article: views/article-view ← article shape: title, subtitle, blocks[]
   pages.article = (slug) => {
     const a = A[slug] || articles[0];
-    const blocks = [{ type: "singleImage", image: a.img }, ...B.articleBlocks];
+    // An article's own blocks when brand.js gives them (article.blocks), otherwise the brand's shared sample body
+    const blocks = [{ type: "singleImage", image: a.img }, ...(a.blocks || B.articleBlocks || [])];
     return `
     <header class="container article-head"${cms("article › title, subtitle", "features/article/article-title")}>
       <h1${fld("title")}>${esc(a.title)}</h1>
-      <p${fld("subtitle")}>${esc(a.sub)}</p>
+      ${a.sub ? `<p${fld("subtitle")}>${esc(a.sub)}</p>` : ""}
     </header>
     <div class="blocks article-blocks">${renderBlocks(blocks, "article", { exclude: a.slug })}</div>`;
   };

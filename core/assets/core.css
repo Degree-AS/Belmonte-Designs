@@ -581,6 +581,8 @@ h1, h2, h3, h4, h5 { font-weight: 500; font-stretch: var(--stretch); letter-spac
 /* TeamMemberTile — framed (as pinnacle): image ruled off, padded info */
 .t-tile { border: 1px solid var(--line-strong); background: var(--ivory); }
 .t-tile .img { margin-bottom: 0; border-bottom: 1px solid var(--line-strong); }
+/* Portraits are cropped from the top edge, so heads are not cut off in the square-ish tile */
+.t-tile .img .cover { object-position: center top; }
 .t-tile h3 { padding: 18px 18px 0; font-weight: 500; font-stretch: var(--stretch); }
 .t-tile .role { padding: 4px 18px 0; border-bottom: 0; }
 .t-tile .contact { padding: 0 18px 18px; }

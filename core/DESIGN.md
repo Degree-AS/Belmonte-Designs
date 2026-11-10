@@ -79,6 +79,8 @@ In Crystallize: a `/core` folder (home, layout, articles, team, contact) and a `
 - All website copy will be rewritten by the client (English first; Norwegian/English to be decided). The home copy is
   written from the client's company text; articles and the sales team are samples.
 - Spelling of Sabrina's surname: the client's bio text has "Spinicic-Stuvland", Degree has "Spincic-Stuvland" (used).
+- Simon's surname: "Pizonni" (client's text) or "Pizzoni" (Belmonte's team page, used)?
+- Prices for Brother's Bond (two products) and Salmari 300 cl, which are not at Vinmonopolet.
 
 ## Review 2026-10-27
 
@@ -124,3 +126,28 @@ Data and next steps:
   approvals. Until then Degree loads the products into Crystallize manually (with AI); about 50 more come in the new
   year. Product photos come from Vinmonopolet by product number.
 - The sales team's details are on Belmonte's website (in Norwegian).
+
+## Content update 2026-11-10 (client's product list and producer photos)
+
+- **Products:** the 49 products of the client's "products for web" list replace the sample selection. Name, type,
+  price, volume, alcohol, sugar, ingredients, taste values, description and pairing come from Vinmonopolet by product
+  number (translated to English); photos are Vinmonopolet's. Mathilde is Maison Ferrand, Seven Keys and Razel's are
+  Perola, Suro and Fontbonne are Gabriel Boudier, Zafiro and the sherries are Williams & Humbert (as Vinmonopolet
+  lists them). Not at Vinmonopolet: Brother's Bond (both, "January" in the list) and Salmari 300 cl. Their packshots,
+  mash bills and descriptions come from brothersbondbourbon.com and a retailer listing of the Salmari 3 L XL
+  bottle; price, taste values and serves are samples. WhistlePig has no product in the list, so its page has no product section.
+- Vinmonopolet gives two or three taste values per spirit (Fylde, Friskhet, Sødme, Fat, Krydder/Urt, Frukt, Røyk);
+  they are mapped onto the app's wine meters and the others are 0. Some values look odd for the style (Pando Fino and
+  Manzanilla have sweetness 8 at under 3 g/l sugar); they are shown as Vinmonopolet has them. Barsol Pisco
+  Quebranta has none (sample values).
+- **Producer photos:** hero and story image from the client's folders (resized for the web in `assets/photos/`). Alias
+  Smith and Henkell-Freixenet only sent logos besides one photo, so their story image is still the illustration. The
+  producer page has one hero and one story image (`producer.hero`, `story[0].firstImage`); more photos per producer
+  need more story sections in the CMS. Logos and the "Stemningsbilder" mood photos are not used yet.
+- **News:** the client's nine articles replace the samples, title and text as supplied (no subtitles; "Ian Somerhalder,
+  Paul Wesley and Brother's Bond" is a heading in the Brother's Bond Bourbon article). Each article has its own body
+  (article `blocks[]`, one rich text); covers are producer photos, Tenders keeps an illustration. The Takamaka text
+  says twice that the swimming pool cooled the condenser (second and third paragraphs); left as supplied.
+- **Team:** Stein-Erik Helverschou-Treverket (CEO) and Simon Pizzoni (Brand Director) added after Tor Arne and Sabrina
+  on home (alternating rows), the team page and the contact page. Bios from the client; all four portraits from
+  belmonte.vercel.app/team. The client wrote "Pizonni"; Belmonte's team page has "Pizzoni" (used).
