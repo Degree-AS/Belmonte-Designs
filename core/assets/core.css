@@ -219,7 +219,7 @@ ul { margin: 0; }
 .employee .role { margin-top: 10px; font-size: var(--small); color: var(--muted); }
 .employee .contact { margin-top: 20px; display: flex; gap: 28px; flex-wrap: wrap; font-size: 14px; }
 .employee .bio { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); display: grid; gap: 14px; max-width: 54ch; }
-@media (max-width: 860px) { .employee { grid-template-columns: 1fr; } .employee .img { max-width: 420px; } }
+@media (max-width: 860px) { .employee { grid-template-columns: 1fr; } .employee .img { max-width: 420px; } .employee.reverse .img { order: 0; } } /* stacked: picture first, then text */
 
 .employee .bio blockquote { margin: 6px 0; padding-left: 22px; border-left: 1px solid var(--bottle); font-family: var(--serif); font-style: italic; font-size: var(--large); line-height: 1.3; }
 
