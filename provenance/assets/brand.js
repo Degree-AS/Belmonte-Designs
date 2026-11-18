@@ -148,7 +148,7 @@
       { type: "groupImage", large: { photo: "assets/photos/lqp-cellar-work.jpg" }, small: { photo: "assets/photos/cecillon-portrait.jpg" } },
       { type: "employees", label: "Your contacts", member: "Romain Ganglion" },
       { type: "employees", member: "Stein-Erik Helverschou-Treverket", reverse: true },
-      { type: "employees", label: "Our sales team", tiles: 4, skip: 2, link: "Meet the team" },
+      { type: "employees", label: "Our team", tiles: 4, skip: 2, link: "Meet the team" },
       { type: "latestArticles", label: "From the journal" },
       { type: "newsletter", title: "Stories from our producers, a few times a year.", checkboxes: ["I work in hospitality", "I am a producer"], done: "Thank you. You will receive the next letter." },
     ],
