@@ -423,6 +423,7 @@ ul { margin: 0; }
 .t-tile { display: flex; flex-direction: column; width: 312px; max-width: 100%; min-width: 0; }
 .team-grid .t-tile { width: auto; }
 .t-tile .img { aspect-ratio: 312 / 304; overflow: hidden; margin-bottom: 18px; }
+.t-tile .img .cover, .employee .img .cover { object-position: center top; }  /* portraits: keep heads in frame (as Core) */
 .t-tile h3 { font-size: 24px; }
 .t-tile .role { margin-top: 4px; padding-bottom: 14px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
 .t-tile .contact { margin-top: 12px; display: grid; gap: 6px; font-size: 13px; }

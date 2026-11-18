@@ -95,36 +95,60 @@
     storyScene: "cellar",  // fallback when a producer has no storyPhoto
     producers, wines, articles,
     team: {
-      lead: { ...person("Ingrid Solberg", "Managing Director", "ingrid"), bio: [
-        "Ingrid has spent twenty years in the Norwegian wine trade, on the restaurant floor and as an importer.",
-        "She visits every producer in the portfolio at least once a year and still tastes every new vintage before it is offered in Norway.",
+      // Your contacts (client 2026-11-18): Romain first, then Stein-Erik as on Core; then the sales team from bottinor.com
+      // (photos and contacts from belmonte.vercel.app/team and bottinor.com, 2026-11-18)
+      lead: { ...person("Romain Ganglion", "Portfolio Manager", "romain"), phone: "+47 948 04 825", bio: [
+        "Originally from France, Romain has spent the past decade living and working in several countries. He began his career in communications and held a variety of roles in hotels and restaurants before moving into the wine industry, where he worked in sales and export for a wine producer.",
+        "In 2022, he moved to Norway to take up a Brand Manager role with a wine importer. In 2026, he became Partner & Portfolio Manager at Provenance Wines, part of Belmonte Beverage Group.",
+        "Romain’s experience spans building wine portfolios, developing relationships with producers and overseeing marketing and communications. He holds an MBA in Wine & Spirits and an MBA in Hotel Management and is currently working towards his WSET Diploma.",
+        "Outside work, Romain is easily sidetracked by a wine list, especially if there’s a producer on it he’s never heard of. He loves good food, is a big rugby fan and will happily turn a casual game of pétanque into a very serious one.",
       ] },
-      members: [person("Jonas Berg", "Sales Director", "jonas"), person("Mari Haugen", "Key Account Manager", "mari"), person("Anders Lie", "Area Sales Manager", "anders"), person("Sofie Dahl", "Brand Manager", "sofie"), person("Henrik Moe", "Area Sales Manager", "henrik"), person("Thea Nilsen", "On-trade Manager", "thea"), person("Erik Strand", "Area Sales Manager", "erik"), person("New colleague", "Joining January 2027")],
+      members: [{ ...person("Stein-Erik Helverschou-Treverket", "CEO"), email: "stein.erik@belmonte.no", phone: "+47 480 10 821", photo: "assets/photos/team-stein-erik.jpg", bio: [
+        "Extensive experience in the wine and spirit industry, including 16 years at Solera. Background in the hotel industry with a degree in supply chain management.",
+        "Played a key role in building and structuring the nightlife scene in Norway and Sweden for Solera. Achieved strong financial results and negotiated major chain agreements in Norway and Sweden. Strong relationships both nationally and internationally.",
+      ] },
+        { name: "Simon Pizzoni", role: "Commercial Director Sales", email: "simon@belmonte.no", phone: "+47 908 00 983", photo: "assets/photos/team-simon.jpg" },
+        { name: "Silje Lindqvist", role: "Key Account Manager", email: "silje.lindqvist@belmonte.no", phone: "+47 455 02 285", photo: "assets/photos/team-silje.jpg" },
+        { name: "Petter Svanæs", role: "Area Sales Manager", email: "petter.svanaes@belmonte.no", phone: "+47 482 93 943", photo: "assets/photos/team-petter.jpg" },
+        { name: "Maira Scapin", role: "Area Sales Manager", email: "maira@belmonte.no", phone: "+47 486 24 139", photo: "assets/photos/team-maira.jpg" },
+        { name: "Håkon Fjelli", role: "Area Sales Manager", email: "hakon@belmonte.no", phone: "+47 984 99 901", photo: "assets/photos/team-hakon.jpg" },
+        { name: "Emil Wang", role: "Area Sales Manager", email: "emil@belmonte.no", phone: "+47 948 48 008", photo: "assets/photos/team-emil.jpg" },
+        { name: "Alf Erik Efraimsen", role: "Area Sales Manager", email: "alf.erik@belmonte.no", phone: "+47 992 72 396", photo: "assets/photos/team-alf-erik.jpg" },
+        { name: "Maren Guntveit", role: "Area Sales Manager", email: "maren@belmonte.no", phone: "+47 994 25 233", photo: "assets/photos/team-maren.jpg" },
+        { name: "Linus Larup", role: "Field Sales Manager", email: "linus@pinnaclebrands.no", phone: "+47 412 63 267", photo: "assets/photos/team-linus.jpg" },
+        { name: "Alen Tupkovic", role: "Area Sales Manager", email: "alen@pinnaclebrands.no", phone: "+47 913 69 789", photo: "assets/photos/team-alen.jpg" },
+        { name: "Tinius Schie Berntsen", role: "Area Sales Manager", email: "tinius@pinnaclebrands.no", phone: "+47 400 41 101", photo: "assets/photos/team-tinius.jpg" },
+      ],
     },
 
     // domain shape › blocks[] (only blocks FetchDomainPage requests)
     home: [
       { type: "bannerGallery", title: "Wines that know<br>where they come from.",
-        intro: "<p>Small producers, single places and honest wines, <strong>selected for Norway.</strong></p>",
+        intro: "<p>We seek out wineries whose work inspires us and share the wines we’re passionate about <strong>with our customers in Norway.</strong></p>",
         images: [
           { photo: "assets/photos/lqp-house-vines.jpg" }, { photo: "assets/photos/lqp-old-vine.jpg" },
           { photo: "assets/photos/lqp-barrels.jpg" }, { photo: "assets/photos/lqp-harvest.jpg" },
         ] },
-      // Front page agreed in the 2026-10-27 meeting: Magma layout; our producers (with links to all producers and the
-      // full selection), our story, what we do, team, articles, newsletter. The second link under the producer names
-      // needs a new CMS field on producerList (to do in the app).
-      { type: "intro", label: "Our producers", lead: "Six family estates in four countries, each chosen for a place." },
-      { type: "producerList", links: [["Meet all producers", "#producers"], ["See full selection", "#products"]] },
-      { type: "intro", label: "Our story",
-        // Core introduction from the brand book (p.05)
-        lead: "Provenance Wines brings carefully selected wines from distinctive producers to Norway.",
-        body: ["We build long-term relationships and combine specialist wine expertise with local market insight. Part of Belmonte Beverage Group."] },
+      // Front page agreed in the 2026-10-27 meeting: Magma layout; we are Provenance + producers, horse photo (Our story
+      // removed 2026-11-18), our philosophy + Vinmonopolet / On-Trade, team, articles, newsletter.
+      // Client 2026-11-18: "We are Provenance Wines" intro (as Magma's "We are Magma"), producer list, one link
+      { type: "intro", label: "We are Provenance Wines",
+        lead: "Provenance begins with where a wine comes from: its vineyards, the people who make it and the choices that shape its character.",
+        body: ["As a Norwegian wine importer and part of Belmonte Beverage Group, we work closely with our producers to represent their wines with the same care and conviction they bring to making them.", "Through personal relationships and knowledge of the Norwegian market, we help each producer build a lasting presence while staying true to their identity."] },
+      { type: "producerList", links: [["Meet Our Producers", "#producers"]] },
       { type: "singleImage", image: { photo: "assets/photos/curley-horse-tower.jpg" } },
-      { type: "intro", label: "What we do",
-        lead: "We visit our producers every year, taste every new vintage with them and bring the wines to Norway ourselves.",
-        body: ["From the first visit to the restaurant list, we follow each wine the whole way, so the producer's work arrives as it was meant."] },
+      { type: "intro", label: "Our philosophy",  // client 2026-11-18 (was "What we do")
+        lead: "When we represent a producer in Norway, we want their wines to be understood for what they are.",
+        body: ["That guides how we introduce them through Vinmonopolet and how we work with sommeliers."] },
+      // paragraphCollection under Our philosophy (client 2026-11-18, laid out as Magma's Sustainability / Our producers)
+      { type: "paragraphs", rows: [
+        { title: "Vinmonopolet", body: "We help our producers understand the Norwegian market, identify opportunities that suit their wines and navigate Vinmonopolet’s system. We work with each producer over time to build a lasting presence for their wines in Norway." },
+        { title: "On-Trade", body: "We bring our producers’ wines to restaurants, wine bars and hotels across Norway. We taste with sommeliers and their teams, share what we know about the people behind the wines and the philosophy of the estate." },
+      ] },
       { type: "groupImage", large: { photo: "assets/photos/lqp-cellar-work.jpg" }, small: { photo: "assets/photos/cecillon-portrait.jpg" } },
-      { type: "employees", label: "Our team", tiles: 4, link: "Meet the team" },
+      { type: "employees", label: "Your contacts", member: "Romain Ganglion" },
+      { type: "employees", member: "Stein-Erik Helverschou-Treverket", reverse: true },
+      { type: "employees", label: "Our sales team", tiles: 4, skip: 2, link: "Meet the team" },
       { type: "latestArticles", label: "From the journal" },
       { type: "newsletter", title: "Stories from our producers, a few times a year.", checkboxes: ["I work in hospitality", "I am a producer"], done: "Thank you. You will receive the next letter." },
     ],
@@ -137,7 +161,7 @@
         <ul><li>Does the producer farm the vineyards themselves?</li><li>Can we name the place, not just the region?</li><li>Is the wine balanced and made for food?</li><li>Will it keep its character from vintage to vintage?</li><li>Can we support it in Norway for years, not for one season?</li></ul>
         <blockquote>We would rather have six producers we know well than sixty we do not.</blockquote>` },
       { type: "groupImage", reverse: true, large: { photo: "assets/photos/boxler-village.jpg" }, small: { photo: "assets/photos/desloges-portrait.jpg" } },
-      { type: "quote", quote: "“The best wines in our portfolio are the ones you can place on a map with your eyes closed.”", attribution: "Ingrid Solberg, Managing Director" },
+      { type: "quote", quote: "“The best wines in our portfolio are the ones you can place on a map with your eyes closed.”", attribution: "Provenance Wines" },
     ],
 
     // producer shape › story[] (title, body); {placeholders} filled from the producer
@@ -146,11 +170,17 @@
       { title: "The producer", body: "{winemaker} leads the estate today. We visit every year at harvest and taste each new vintage together before it is offered in Norway." },
     ],
 
+    // contact › employeeList in two groups (as Core): the main contacts first, then the team
+    contactGroups: [
+      { label: "Your contacts", names: ["Romain Ganglion", "Stein-Erik Helverschou-Treverket"] },
+      { label: "Our sales team", names: ["Simon Pizzoni", "Silje Lindqvist", "Petter Svanæs", "Maira Scapin", "Håkon Fjelli", "Emil Wang", "Alf Erik Efraimsen", "Maren Guntveit", "Linus Larup", "Alen Tupkovic", "Tinius Schie Berntsen"] },
+    ],
+
     // contact shape › introModule
     contact: {
       label: "Contact",
       lead: "We would like to hear from you, whether you run a restaurant, a wine bar or a hotel, or you are a producer looking for a partner in Norway.",
-      body: ["For the portfolio and new producers, contact Ingrid Solberg at ingrid@provenancewines.no.", "For restaurants, hotels and wine bars, our on-trade team works with venues across Norway."],
+      body: ["For the portfolio and new producers, contact Romain Ganglion at romain@provenancewines.no.", "For restaurants, hotels and wine bars, our on-trade team works with venues across Norway."],
     },
   };
 })();
