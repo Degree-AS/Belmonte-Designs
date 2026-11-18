@@ -159,8 +159,8 @@ ul { margin: 0; }
   .banner-gallery h1 { max-width: none; text-wrap: balance; }
   .banner-gallery .intro { order: 2; max-width: none; text-align: center; }
   .banner-gallery .imgs { order: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .banner-gallery .img { position: relative; inset: auto; width: auto; }
-  .banner-gallery .i4 { grid-column: 1 / -1; }
+  /* 2 × 2 grid of equal portrait tiles, so no empty cell next to the barrels (client 2026-11-18) */
+  .banner-gallery .img { position: relative; inset: auto; width: auto; aspect-ratio: 4 / 5; }
 }
 
 /* intro (introModule) — intro-module.styles.ts: label left, serif intro with first-line indent, body, link row */
