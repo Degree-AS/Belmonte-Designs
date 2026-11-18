@@ -32,7 +32,7 @@ with real photos as a general idea of the site. Done as follows:
   Stone `#E8E3DF` dividers and secondary surfaces. Pink is never used for text on Ivory (1.84:1).
 - **Type** (p.15–16): Manrope for headlines (Medium), body (Regular 18/28), labels (Semibold 12 px uppercase) and data;
   Newsreader as the editorial accent — slogan/introduction in the hero, intro standfirsts, quotations, producer intro.
-- **Logo** (p.07–11): Pink on Forest (footer, menu, design system) and Forest on light (header); Earth Red as the warm
+- **Logo** (p.07–11): Pink on Forest (footer, menu, design system) and Pink on Ivory in the header (client 2026-11-18; Forest on light remains the guide's preferred version); Earth Red as the warm
   alternative. Recoloured from the supplied PNG to the brand book's HEX values. "Part of Belmonte Beverage Group" stays
   as the endorsement in the header.
 - **Shapes:** square images and buttons, thin rules; Earth Red accent rules on labels and under the producer name
@@ -77,7 +77,7 @@ Every row is a `provenance` entry in an existing `*.styles.ts` map, choosing amo
 
 | App component | Provenance styling | Precedent |
 |---|---|---|
-| `layout/header` + `LogoRenderer` | Ivory, group logo + "part of…" left, Forest signature centred (196 px), MENU only on the right | arcade/magma |
+| `layout/header` + `LogoRenderer` | Ivory, group logo + "part of…" left, Pink signature centred (196 px), headerLinks "Our producers" + "Our team" then MENU on the right (links hidden under 1000 px) | arcade/magma |
 | `HeaderDialog` | Forest, centred Ivory Manrope links, Pink on hover | arcade (centred) |
 | `layout/footer` | **Forest `#1B2B1D`** (brand structure colour; replaces the interim Belmonte green), centred links, Pink signature | pinnacle (dark green + pink) |
 | `blocks/banner-gallery` | Home hero: Forest headline, Newsreader intro in Earth Red, four photographs | magma |
@@ -115,7 +115,7 @@ Agreed in the meeting and still built this way:
 - Home follows the **Magma** layout: banner-gallery hero → Our producers (intro + names + "Meet all producers" and
   "See full selection") → Our story → single image → What we do + group image → Our team (tiles + "Meet the team")
   → latest articles → newsletter.
-- Header: MENU only. Footer: dark green with a reminder of Belmonte (now the brand's Forest Green).
+- Header: Pink signature; Our producers + Our team shortcuts left of MENU, both also kept in the menu (2026-11-18). Footer: dark green with a reminder of Belmonte (now the brand's Forest Green).
 - Producers page: rows without the hover image. Producer page: as Bona Fide's producer page.
 - Products page and product page: kept as they were.
 - Wording: "producers", never "growers".

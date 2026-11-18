@@ -64,7 +64,7 @@
     name: "Provenance Wines",
     shortName: "Provenance",
     logo: {
-      brandOnLight: "assets/wordmark-forest.png",
+      brandOnLight: "assets/wordmark-pink.png",  // client 2026-11-18: Pink signature in the header, as in the footer
       brandOnDark: "assets/wordmark-pink.png",
       groupOnLight: "assets/belmonte-group-logo-forest.svg",
       groupOnDark: "assets/belmonte-group-logo-ivory.svg",
@@ -87,8 +87,8 @@
       },
       lightScenes: ["stone", "sage", "earth"],
     },
-    // HeaderPiece.headerLinks left empty (client: the MENU is enough)
-    nav: [],
+    // HeaderPiece.headerLinks: shortcuts left of MENU (client 2026-11-18); both stay in menuLinks too
+    nav: [["Our producers", "#producers", "producer"], ["Our team", "#team", "team"]],
     footerSecondary: ["Privacy policy", "Cookie settings", "Alcohol and health", "Instagram", "LinkedIn"],
     titles: { articles: "Journal" },
     demo: { product: "cotes-de-provence-rose-2025", producer: "vaillant-rey" },
